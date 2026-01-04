@@ -131,11 +131,38 @@
             color: #8fa3bf;
             margin-top: 5px;
         }
+
+        /* Ad Container Styles */
+        .ad-container {
+            background: rgba(30, 50, 80, 0.3);
+            border: 1px dashed rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+        }
+
+        .ad-container.large {
+            min-height: 250px;
+        }
+
+        .ad-label {
+            color: #6b7c94;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <!-- Top Ad Banner -->
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <a href="index.html" class="btn-back">← Back to Calculator</a>
 
         <header>
@@ -269,8 +296,14 @@
             </p>
         </div>
 
+        <!-- Large Ad Unit -->
+        <div class="ad-container large">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <footer style="text-align: center; margin-top: 40px; color: #8fa3bf; font-size: 0.9em;">
             <p style="margin-bottom: 10px;">
+                <a href="generator.html" style="color: #8fa3bf;">PT Generator</a> |
                 <a href="privacy.html" style="color: #8fa3bf;">Privacy Policy</a> |
                 <a href="terms.html" style="color: #8fa3bf;">Terms of Use</a> |
                 <a href="mailto:administrator@navybca.com" style="color: #8fa3bf;">Contact</a>

@@ -213,6 +213,28 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
+        /* Ad Container Styles */
+        .ad-container {
+            background: rgba(30, 50, 80, 0.3);
+            border: 1px dashed rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+        }
+
+        .ad-container.large {
+            min-height: 250px;
+        }
+
+        .ad-label {
+            color: #6b7c94;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* PPAQ Section - Inline (Not Popup) */
         .ppaq-section {
             background: rgba(255, 215, 0, 0.05);
@@ -354,7 +376,8 @@
 
             .btn-back,
             .action-btn,
-            .search-link {
+            .search-link,
+            .ad-container {
                 display: none !important;
             }
 
@@ -425,6 +448,11 @@
 
 <body>
     <div class="container">
+        <!-- Top Ad Banner -->
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <a href="index.html" class="btn-back">← Back to Calculator</a>
 
         <header>
@@ -483,7 +511,9 @@
                     <select id="schemeSelect">
                         <option value="circuit">Circuit (3 Rounds x Reps)</option>
                         <option value="hiit">HIIT (40s Work / 20s Rest)</option>
-                        <option value="military">Military 4-Count (15 reps)</option>
+                        <option value="military">Military 4-Count (10 reps)</option>
+                        <option value="pyramid">Pyramid (2-4-6-8-10)</option>
+                        <option value="reversePyramid">Reverse Pyramid (10-8-6-4-2)</option>
                     </select>
                 </div>
             </div>
@@ -519,6 +549,11 @@
 
             <button class="action-btn" onclick="generateWorkout()">Generate 60-Minute Session</button>
 
+            <!-- Mid-Section Ad -->
+            <div class="ad-container">
+                <span class="ad-label">Advertisement</span>
+            </div>
+
             <div id="workoutOutput"></div>
 
             <p style="margin-top: 20px; font-size: 12px; color: #6b7c94; text-align: center;">
@@ -526,8 +561,15 @@
             </p>
         </main>
 
+        <!-- Large Ad Unit -->
+        <div class="ad-container large">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <footer>
             <p style="margin-bottom: 10px;">
+                <a href="references.html">References & Guides</a> |
+                <a href="index.html">BCA Calculator</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
                 <a href="mailto:administrator@navybca.com">Contact</a>
@@ -625,25 +667,29 @@
             },
             cardio: {
                 indoor: [
-                    { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged." },
-                    { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet." },
-                    { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option." },
-                    { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest." },
-                    { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot." },
-                    { name: "Jog in Place", tip: "Light on feet, natural arm swing. Steady pace." }
+                    { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged.", reps: "30-45 seconds" },
+                    { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet.", reps: "30 seconds" },
+                    { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option.", reps: "20-30 reps" },
+                    { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest.", reps: "20-30 reps" },
+                    { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot.", reps: "10-15 per side" },
+                    { name: "Jog (Gym Laps)", tip: "1 lap around gym/basketball court. Light on feet, steady pace.", reps: "2-4 laps" },
+                    { name: "Burpees (No Push-up)", tip: "Squat, jump back to plank, hop forward, stand. Modify as needed.", reps: "10-15 reps" },
+                    { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement. 10 yards each direction.", reps: "30-45 seconds" }
                 ],
                 outdoor: [
-                    { name: "Track Run (Steady State)", tip: "Maintain consistent pace. Breathe rhythmically." },
-                    { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk recovery. Repeat." },
-                    { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns." },
-                    { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline." },
-                    { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. Arm coordination." }
+                    { name: "Track Run (Steady State)", tip: "1 lap around the track at consistent pace. Breathe rhythmically.", reps: "1-2 laps" },
+                    { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk 100m recovery. Repeat.", reps: "4-6 sprints" },
+                    { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns.", reps: "4-6 shuttles" },
+                    { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline.", reps: "4-6 repeats" },
+                    { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. 25-50 yards.", reps: "2-4 lengths" },
+                    { name: "400m Run", tip: "1 lap around the track at moderate pace. Control breathing.", reps: "1 lap" },
+                    { name: "Indian Runs (Group)", tip: "Jog in formation, last person sprints to front. Repeat.", reps: "5-10 min" }
                 ],
                 jumprope: [
-                    { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed." },
-                    { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core." },
-                    { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill." },
-                    { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance." }
+                    { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed.", reps: "2 min" },
+                    { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core.", reps: "1 min" },
+                    { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill.", reps: "20-30 reps" },
+                    { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance.", reps: "3-4 rounds" }
                 ]
             }
         };
@@ -740,8 +786,37 @@
             const schemeDesc = {
                 circuit: { meta: "3 Rounds x 12-15 Reps", note: "Perform as a circuit. Rest 60s between rounds." },
                 hiit: { meta: "40s Work / 20s Rest", note: "Tabata style. Complete 3-4 rounds of all exercises." },
-                military: { meta: "15 Reps (4-Count)", note: "CFL leads count: 1-2-3-ONE, 1-2-3-TWO... to 15." }
+                military: { meta: "10 Reps (4-Count)", note: "CFL leads count: 1-2-3-ONE... to 1-2-3-TEN. Planks: 15+ echo count." },
+                pyramid: { meta: "Pyramid: 2-4-6-8-10", note: "Build up reps each round. Rest as needed between rounds." },
+                reversePyramid: { meta: "Reverse Pyramid: 10-8-6-4-2", note: "Decrease reps each round. Stay strong as fatigue sets in." }
             };
+
+            // Check if exercise is a plank-type exercise
+            function isPlankExercise(name) {
+                const plankKeywords = ['plank', 'pillar bridge'];
+                return plankKeywords.some(keyword => name.toLowerCase().includes(keyword));
+            }
+
+            // Check if exercise is cardio (has built-in reps)
+            function isCardioExercise(exercise) {
+                return exercise.reps !== undefined;
+            }
+
+            // Get exercise-specific rep scheme
+            function getExerciseReps(exercise, scheme) {
+                // Cardio exercises use their own reps
+                if (isCardioExercise(exercise)) {
+                    return exercise.reps;
+                }
+
+                // Planks use echo count for military 4-count
+                if (scheme === 'military' && isPlankExercise(exercise.name)) {
+                    return "15-20 Echo Count";
+                }
+
+                // Standard scheme reps
+                return schemeDesc[scheme].meta;
+            }
 
             // 1. Warmup (Collapsible)
             let html = renderCollapsibleHeader('1. Standardized Warm-Up (10-12 Min)', 'warmupContent');
@@ -781,7 +856,10 @@
             const shuffled = mainPool.sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, Math.min(count, shuffled.length));
 
-            selected.forEach(ex => html += renderItem(ex.name, schemeDesc[scheme].meta, ex.tip));
+            selected.forEach(ex => {
+                const reps = getExerciseReps(ex, scheme);
+                html += renderItem(ex.name, reps, ex.tip);
+            });
             html += `</ul>`;
 
             // 3. Cool-Down (Collapsible)
