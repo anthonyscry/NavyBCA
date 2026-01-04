@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navy PT Generator | Command PT Session Builder</title>
+    <meta name="description"
+        content="Generate safe, effective 60-minute Navy physical training sessions for Command PT. Print-ready format for CFLs and ACFLs.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <style>
+        /* Base Styles - Matching index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            min-height: 100vh;
+            color: #e8eef5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .calculator-card {
+            background: rgba(20, 35, 60, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .equip-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .equip-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            transition: all 0.2s;
+        }
+
+        .equip-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .equip-checkbox.none-selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .equip-checkbox input {
+            accent-color: #ffd700;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background: #1e3250;
+            border: 1px solid #4a90e2;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        select:focus {
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #0a1628;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* PPAQ Section - Inline (Not Popup) */
+        .ppaq-section {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .ppaq-title {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ppaq-list {
+            font-size: 0.95em;
+        }
+
+        .ppaq-item {
+            padding: 8px 0;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.1);
+        }
+
+        .ppaq-item:last-child {
+            border-bottom: none;
+        }
+
+        .ppaq-number {
+            color: #ffd700;
+            font-weight: bold;
+            min-width: 25px;
+        }
+
+        .ppaq-warning {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        /* Workout Output */
+        #workoutOutput {
+            display: none;
+            margin-top: 30px;
+            border-top: 1px solid rgba(100, 130, 180, 0.3);
+            padding-top: 30px;
+        }
+
+        .section-header {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding-bottom: 10px;
+            margin: 30px 0 15px 0;
+        }
+
+        .section-header:first-child {
+            margin-top: 0;
+        }
+
+        .exercise-list {
+            list-style: none;
+        }
+
+        .exercise-item {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-left: 3px solid #4a90e2;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .exercise-meta {
+            font-size: 0.9em;
+            color: #8fa3bf;
+        }
+
+        .search-link {
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .search-link:hover {
+            text-decoration: underline;
+            color: #ffd700;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #6b7c94;
+            font-size: 14px;
+            padding-bottom: 30px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #ffd700;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .btn-back,
+            .action-btn,
+            .search-link {
+                display: none !important;
+            }
+
+            header {
+                padding: 10px 0;
+            }
+
+            h1 {
+                -webkit-text-fill-color: black !important;
+                color: black !important;
+                font-size: 24px;
+            }
+
+            .subtitle {
+                color: #666 !important;
+            }
+
+            .calculator-card {
+                background: white !important;
+                border: 1px solid #ccc;
+                box-shadow: none;
+                padding: 15px;
+            }
+
+            .ppaq-section {
+                background: #f9f9f9 !important;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            .ppaq-title {
+                color: #333 !important;
+            }
+
+            .ppaq-number {
+                color: #333 !important;
+            }
+
+            .ppaq-warning {
+                color: red !important;
+            }
+
+            .section-header {
+                color: #333 !important;
+                border-color: #333 !important;
+            }
+
+            .exercise-item {
+                background: #f5f5f5 !important;
+                border-left-color: #333 !important;
+                page-break-inside: avoid;
+            }
+
+            .exercise-name {
+                color: black !important;
+            }
+
+            .exercise-meta {
+                color: #666 !important;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="btn-back">← Back to Calculator</a>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">⚓</div>
+                <h1>Navy PT Generator</h1>
+            </div>
+            <p class="subtitle">Command Physical Training Session Builder</p>
+        </header>
+
+        <main class="calculator-card">
+            <!-- PPAQ Section - Always Visible for CFLs -->
+            <div class="ppaq-section">
+                <div class="ppaq-title">📋 Pre-Physical Activity Questions (PPAQ)</div>
+                <p style="font-size: 0.85em; color: #8fa3bf; margin-bottom: 15px;">CFLs/ACFLs: Read aloud before each
+                    session.</p>
+                <div class="ppaq-list">
+                    <div class="ppaq-item"><span class="ppaq-number">1.</span><span>Do you have a current Periodic
+                            Health Assessment (PHA)?</span></div>
+                    <div class="ppaq-item"><span class="ppaq-number">2.</span><span>Do you have chest pain, bone/joint
+                            pain, high blood pressure, or high cholesterol?</span></div>
+                    <div class="ppaq-item"><span class="ppaq-number">3.</span><span>Do you have Sickle Cell Trait
+                            (SCT)?</span></div>
+                    <div class="ppaq-item"><span class="ppaq-number">4.</span><span>Have you had a change in medical
+                            status since your last PHA?</span></div>
+                    <div class="ppaq-item"><span class="ppaq-number">5.</span><span>Are you ill today or aware of any
+                            condition preventing participation?</span></div>
+                    <div class="ppaq-item"><span class="ppaq-number">6.</span><span>Reservists: Are you on active duty
+                            orders or in drill status?</span></div>
+                </div>
+                <p class="ppaq-warning">⚠️ If YES to risk factors or NO to PHA/Clearance ⇒ Do NOT Participate.</p>
+            </div>
+
+            <!-- Controls -->
+            <div class="card-header">
+                <h2>Session Options</h2>
+            </div>
+            <div class="controls-grid">
+                <div class="form-group">
+                    <label>Focus</label>
+                    <select id="focusSelect">
+                        <option value="mixed">Mixed (Strength & Cardio)</option>
+                        <option value="strength">Strength Focus</option>
+                        <option value="cardio">Cardio Focus</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select id="locationSelect">
+                        <option value="outdoor">Outdoor (Track/Field)</option>
+                        <option value="indoor">Indoor (Gym/Home)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Rep Scheme</label>
+                    <select id="schemeSelect">
+                        <option value="circuit">Circuit (3 Rounds x Reps)</option>
+                        <option value="hiit">HIIT (40s Work / 20s Rest)</option>
+                        <option value="military">Military 4-Count (15 reps)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Equipment Available</label>
+                <div class="equip-grid">
+                    <label class="equip-checkbox none-selected">
+                        <input type="checkbox" id="equipNone" checked onchange="toggleNone()"> None (Bodyweight Only)
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipBands" onchange="equipChanged()"> Resistance
+                        Bands
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipPullup" onchange="equipChanged()"> Pull-up
+                        Bar
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipKettlebells" onchange="equipChanged()">
+                        Kettlebells
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()">
+                        Dumbbells
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()"> Jump
+                        Rope
+                    </label>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="generateWorkout()">Generate 60-Minute Session</button>
+
+            <div id="workoutOutput"></div>
+
+            <p style="margin-top: 20px; font-size: 12px; color: #6b7c94; text-align: center;">
+                * All exercises filtered to remove contraindicated movements per NOFFS guidelines.
+            </p>
+        </main>
+
+        <footer>
+            <p style="margin-bottom: 10px;">
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Use</a> |
+                <a href="mailto:administrator@navybca.com">Contact</a>
+            </p>
+            <p>Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning
+                purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Data: Official Lists ---
+
+        const warmupExercises = [
+            { name: "90/90 Stretch", rep: "5 reps/side" },
+            { name: "Pillar Bridge", rep: "20 sec hold" },
+            { name: "Glute Bridge", rep: "10 reps" },
+            { name: "Bent Over T's", rep: "10 reps" },
+            { name: "Knee Hug", rep: "5 reps/side" },
+            { name: "Reverse Lunge w/ Rotation", rep: "5 reps/side" },
+            { name: "Heel-to-Glute w/ Reach", rep: "5 reps/side" },
+            { name: "Squats", rep: "10 reps" },
+            { name: "Drop Squat to 2-inch Run", rep: "2 reps (3s run)" },
+            { name: "Drop Squat to High Knees", rep: "2 reps (3s high knees)" }
+        ];
+
+        const preCardioWarmup = [
+            { name: "Inverted Hamstring", rep: "5 reps/side" },
+            { name: "Leg Cradle", rep: "5 reps/side" },
+            { name: "Linear March", rep: "10 yards" },
+            { name: "Squat Jump Countermovement", rep: "5 reps" }
+        ];
+
+        const cooldownExercises = [
+            { name: "Chest Stretch", desc: "Clasp hands behind neck, pull elbows back" },
+            { name: "Posterior Shoulder Stretch", desc: "Pull arm across body" },
+            { name: "Triceps Stretch", desc: "Reach behind back, push elbow" },
+            { name: "Hip Flexor Stretch", desc: "Lunge position, push hip forward" },
+            { name: "Groin/Butterfly Stretch", desc: "Seated, soles together" },
+            { name: "Modified Hurdler Stretch", desc: "Seated V-position, reach for toes" },
+            { name: "Outer Hip/Low Back Stretch", desc: "Seated twist" },
+            { name: "Piriformis Stretch", desc: "Lying, cross leg over thigh" },
+            { name: "Low Back Stretch", desc: "Knees to chest" },
+            { name: "Quadriceps Stretch", desc: "Standing/lying, pull heel to glute" },
+            { name: "Calf Stretch", desc: "Push-up position, press heel down" }
+        ];
+
+        const db = {
+            strength: {
+                bodyweight: [
+                    { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Feel it in chest and triceps." },
+                    { name: "Wide-Arm Pushups", tip: "Hands wider than shoulders. Focus on chest stretch at bottom." },
+                    { name: "Diamond Pushups", tip: "Hands form diamond under chest. Triceps focus. Modify on knees if needed." },
+                    { name: "Hand-Release Pushups", tip: "Chest touches deck, lift hands, then push. Full range of motion." },
+                    { name: "Decline Pushups", tip: "Feet elevated. Increases shoulder and upper chest activation." },
+                    { name: "Standard Plank", tip: "Straight line ear to ankle. Don't sag hips. Engage core." },
+                    { name: "Side Plank (L/R)", tip: "Stack feet or stagger. Keep hips high. Feel obliques working." },
+                    { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat. Core stability." },
+                    { name: "Dead Bug", tip: "Press low back into deck. Move slow and controlled." },
+                    { name: "Air Squats", tip: "Weight in heels, knees track toes. Thighs parallel. Core tight." },
+                    { name: "Walking Lunges", tip: "Chest up, front knee behind toes. Feel glutes and quads." },
+                    { name: "Calf Raises", tip: "Full extension at top, slow lower. Feel the burn in calves." },
+                    { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Quads should burn." },
+                    { name: "Glute Bridges", tip: "Squeeze glutes at top. Don't hyperextend back." }
+                ],
+                bands: [
+                    { name: "Band Pull-Aparts", tip: "Arms straight, squeeze shoulder blades together. Upper back." },
+                    { name: "Band Bicep Curls", tip: "Elbows pinned to sides. Control the negative." },
+                    { name: "Band Overhead Press", tip: "Press straight up, don't flare elbows. Core engaged." },
+                    { name: "Band Squats", tip: "Band above knees pushes them out. Focus on glute engagement." },
+                    { name: "Band Rows", tip: "Pull to ribcage, squeeze shoulder blades. Feel upper back." },
+                    { name: "Band Tricep Extensions", tip: "Keep elbows high and stable. Squeeze at extension." },
+                    { name: "Band Lateral Walks", tip: "Stay low in squat. Feel glute medius on outer hip." }
+                ],
+                pullup: [
+                    { name: "Pull-ups", tip: "Overhand grip. Pull chest to bar, control down. Lats and back." },
+                    { name: "Chin-ups", tip: "Underhand grip. More bicep involvement. Chin over bar." },
+                    { name: "Negative Pull-ups", tip: "Jump to top, lower slow (3-5 sec). Build pulling strength." },
+                    { name: "Hanging Leg Raises", tip: "Legs together, no swinging. Core and hip flexors." },
+                    { name: "Dead Hangs", tip: "Relax shoulders, decompress spine. Grip strength builder." }
+                ],
+                kettlebells: [
+                    { name: "Kettlebell Swings", tip: "Hinge at hips, not squat. Power from glutes. Arms are just hooks." },
+                    { name: "Goblet Squats", tip: "Hold KB at chest. Elbows inside knees. Deep squat." },
+                    { name: "KB Deadlifts", tip: "Hinge at hips, flat back. Drive through heels." },
+                    { name: "KB Rows", tip: "One arm at a time. Pull to hip, squeeze lat." },
+                    { name: "KB Lunges", tip: "Hold KB at chest or sides. Control the descent." }
+                ],
+                dumbbells: [
+                    { name: "Dumbbell Rows", tip: "One hand on bench. Pull to hip, squeeze back." },
+                    { name: "DB Overhead Press", tip: "Start at shoulders, press straight up. Don't arch back." },
+                    { name: "DB Lunges", tip: "DBs at sides. Step forward, control down and up." },
+                    { name: "DB Curls", tip: "No swinging. Elbows pinned. Full range of motion." },
+                    { name: "DB Tricep Extensions", tip: "One or both hands overhead. Lower behind head, extend." }
+                ]
+            },
+            cardio: {
+                indoor: [
+                    { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged." },
+                    { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet." },
+                    { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option." },
+                    { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest." },
+                    { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot." },
+                    { name: "Jog in Place", tip: "Light on feet, natural arm swing. Steady pace." }
+                ],
+                outdoor: [
+                    { name: "Track Run (Steady State)", tip: "Maintain consistent pace. Breathe rhythmically." },
+                    { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk recovery. Repeat." },
+                    { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns." },
+                    { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline." },
+                    { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. Arm coordination." }
+                ],
+                jumprope: [
+                    { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed." },
+                    { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core." },
+                    { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill." },
+                    { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance." }
+                ]
+            }
+        };
+
+        // --- Equipment Toggle Logic ---
+
+        function toggleNone() {
+            const noneBox = document.getElementById('equipNone');
+            const equipItems = document.querySelectorAll('.equip-item');
+            const noneLabel = noneBox.closest('.equip-checkbox');
+
+            if (noneBox.checked) {
+                equipItems.forEach(item => {
+                    item.checked = false;
+                    item.closest('.equip-checkbox').classList.remove('none-selected');
+                });
+                noneLabel.classList.add('none-selected');
+            }
+        }
+
+        function equipChanged() {
+            const noneBox = document.getElementById('equipNone');
+            const noneLabel = noneBox.closest('.equip-checkbox');
+            const equipItems = document.querySelectorAll('.equip-item');
+            const anyChecked = Array.from(equipItems).some(item => item.checked);
+
+            if (anyChecked) {
+                noneBox.checked = false;
+                noneLabel.classList.remove('none-selected');
+            } else {
+                noneBox.checked = true;
+                noneLabel.classList.add('none-selected');
+            }
+        }
+
+        function getSelectedEquipment() {
+            return {
+                bands: document.getElementById('equipBands').checked,
+                pullup: document.getElementById('equipPullup').checked,
+                kettlebells: document.getElementById('equipKettlebells').checked,
+                dumbbells: document.getElementById('equipDumbbells').checked,
+                jumprope: document.getElementById('equipJumprope').checked
+            };
+        }
+
+        // --- Collapsible Section Toggle ---
+
+        function toggleSection(id) {
+            const el = document.getElementById(id);
+            const header = el.previousElementSibling;
+            if (el.style.display === 'none') {
+                el.style.display = 'block';
+                header.querySelector('.toggle-icon').textContent = '▼';
+            } else {
+                el.style.display = 'none';
+                header.querySelector('.toggle-icon').textContent = '▶';
+            }
+        }
+
+        // --- Render Helpers ---
+
+        function getSearchLink(term) {
+            return `https://www.google.com/search?q=${encodeURIComponent(term + " exercise technique")}+site:youtube.com`;
+        }
+
+        function renderItem(name, meta, tip = null) {
+            const tipHtml = tip ? `<div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${tip}</div>` : '';
+            return `
+                <li class="exercise-item">
+                    <span class="exercise-name">${name}</span>
+                    <div class="exercise-meta">${meta}</div>${tipHtml}
+                    <a href="${getSearchLink(name)}" target="_blank" class="search-link">▶ Watch Demo</a>
+                </li>
+            `;
+        }
+
+        function renderCollapsibleHeader(title, contentId, expanded = true) {
+            const icon = expanded ? '▼' : '▶';
+            return `<div class="section-header" style="cursor:pointer;" onclick="toggleSection('${contentId}')">
+                        <span class="toggle-icon">${icon}</span> ${title}
+                    </div>`;
+        }
+
+        // --- Main Generate Function ---
+
+        function generateWorkout() {
+            const focus = document.getElementById('focusSelect').value;
+            const location = document.getElementById('locationSelect').value;
+            const scheme = document.getElementById('schemeSelect').value;
+            const equip = getSelectedEquipment();
+            const out = document.getElementById('workoutOutput');
+
+            // Scheme descriptions
+            const schemeDesc = {
+                circuit: { meta: "3 Rounds x 12-15 Reps", note: "Perform as a circuit. Rest 60s between rounds." },
+                hiit: { meta: "40s Work / 20s Rest", note: "Tabata style. Complete 3-4 rounds of all exercises." },
+                military: { meta: "15 Reps (4-Count)", note: "CFL leads count: 1-2-3-ONE, 1-2-3-TWO... to 15." }
+            };
+
+            // 1. Warmup (Collapsible)
+            let html = renderCollapsibleHeader('1. Standardized Warm-Up (10-12 Min)', 'warmupContent');
+            html += `<ul class="exercise-list" id="warmupContent">`;
+            warmupExercises.forEach(ex => html += renderItem(ex.name, ex.rep));
+
+            if (focus === 'mixed' || focus === 'cardio') {
+                html += `<li style="padding:10px; color:#4a90e2; font-weight:bold; background:none; border:none;">— Pre-Cardio Additions —</li>`;
+                preCardioWarmup.forEach(ex => html += renderItem(ex.name, ex.rep));
+            }
+            html += `</ul>`;
+
+            // 2. Main Workout
+            html += `<div class="section-header">2. Main Session (${focus.toUpperCase()} - 40 Min)</div>`;
+            html += `<p style="margin-bottom:15px; padding:10px; background:rgba(74,144,226,0.1); border-radius:6px; font-size:0.9em;">
+                        <strong>Format:</strong> ${schemeDesc[scheme].meta}<br>
+                        <em>${schemeDesc[scheme].note}</em>
+                     </p>`;
+            html += `<ul class="exercise-list">`;
+
+            let mainPool = [];
+
+            if (focus !== 'cardio') {
+                mainPool = [...mainPool, ...db.strength.bodyweight];
+                if (equip.bands) mainPool = [...mainPool, ...db.strength.bands];
+                if (equip.pullup) mainPool = [...mainPool, ...db.strength.pullup];
+                if (equip.kettlebells) mainPool = [...mainPool, ...db.strength.kettlebells];
+                if (equip.dumbbells) mainPool = [...mainPool, ...db.strength.dumbbells];
+            }
+
+            if (focus !== 'strength') {
+                mainPool = [...mainPool, ...(location === 'indoor' ? db.cardio.indoor : db.cardio.outdoor)];
+                if (equip.jumprope) mainPool = [...mainPool, ...db.cardio.jumprope];
+            }
+
+            const count = 8;
+            const shuffled = mainPool.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+
+            selected.forEach(ex => html += renderItem(ex.name, schemeDesc[scheme].meta, ex.tip));
+            html += `</ul>`;
+
+            // 3. Cool-Down (Collapsible)
+            html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent');
+            html += `<ul class="exercise-list" id="cooldownContent">`;
+            cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc));
+            html += `</ul>`;
+
+            out.innerHTML = html;
+            out.style.display = 'block';
+            out.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
