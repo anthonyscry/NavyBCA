@@ -504,6 +504,7 @@
                         <option value="strength">Strength Focus</option>
                         <option value="cardio">Cardio Focus</option>
                         <option value="funday">Fun Day (Team Sports)</option>
+                        <option value="yoga">Chill Day (Yoga/Stretching)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -551,6 +552,30 @@
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()"> Jump
                         Rope
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()"> Barbell
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipFlatBench" onchange="equipChanged()"> Flat Bench
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipAdjBench" onchange="equipChanged()"> Adjustable Bench
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipAssaultBike" onchange="equipChanged()"> Assault Bike
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipRower" onchange="equipChanged()"> Rowing Machine
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipCycle" onchange="equipChanged()"> Stationary Cycle
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()"> Treadmill
                     </label>
                 </div>
             </div>
@@ -671,6 +696,44 @@
                     { name: "DB Lunges", tip: "DBs at sides. Step forward, control down and up." },
                     { name: "DB Curls", tip: "No swinging. Elbows pinned. Full range of motion." },
                     { name: "DB Tricep Extensions", tip: "One or both hands overhead. Lower behind head, extend." }
+                ],
+                barbell: [
+                    { name: "Barbell Deadlift", tip: "Hinge at hips, flat back. Bar close to body. Drive through heels." },
+                    { name: "Barbell Back Squat", tip: "Bar on upper back, not neck. Depth to parallel or below." },
+                    { name: "Barbell Front Squat", tip: "Elbows high, bar on shoulders. Keep torso upright." },
+                    { name: "Barbell Overhead Press", tip: "Start at shoulders, press straight up. Squeeze glutes for stability." },
+                    { name: "Barbell Bent Over Row", tip: "Hinge forward 45°, pull to belly button. Squeeze back." },
+                    { name: "Barbell RDL", tip: "Slight knee bend, hinge at hips. Feel hamstrings stretch." },
+                    { name: "Barbell Lunges", tip: "Bar on back, step forward. Keep torso upright." },
+                    { name: "Barbell Floor Press", tip: "Lying on floor, press up. Great for triceps and lockout strength." },
+                    { name: "Barbell Hip Thrust", tip: "Upper back on bench, bar on hips. Squeeze glutes at top." },
+                    { name: "Barbell Good Mornings", tip: "Bar on back, hinge forward. Feel hamstrings and low back." }
+                ],
+                flatBench: [
+                    { name: "Dumbbell Bench Press", tip: "DBs at chest level, press up and together. Control the negative." },
+                    { name: "Dumbbell Flyes", tip: "Slight elbow bend, lower wide. Feel chest stretch." },
+                    { name: "Bench Step-Ups", tip: "Drive through front heel. Alternate legs." },
+                    { name: "Bench Hip Thrusts", tip: "Upper back on bench, drive hips up. Squeeze glutes." },
+                    { name: "Incline Push-ups", tip: "Hands on bench, easier angle. Good for beginners." },
+                    { name: "Bench Tricep Dips", tip: "Hands on edge, lower body. Elbows back, not out." },
+                    { name: "Single-Leg Bench Squats", tip: "One foot on bench behind, squat on front leg. Bulgarian split squat." }
+                ],
+                adjBench: [
+                    { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Press up from upper chest." },
+                    { name: "Incline Dumbbell Flyes", tip: "Bench at 30°, arms wide. Upper chest focus." },
+                    { name: "Seated Shoulder Press", tip: "Bench upright, press dumbbells overhead." },
+                    { name: "Incline Dumbbell Rows", tip: "Chest on incline bench, pull DBs up. Upper back focus." },
+                    { name: "Decline Push-ups", tip: "Feet on bench. Increases difficulty and shoulder engagement." },
+                    { name: "Seated Incline Curls", tip: "Bench at 45°, curl with stretch at bottom." },
+                    { name: "Prone Y-T-W Raises", tip: "Lie face down on incline, raise arms in Y, T, W patterns. Shoulder health." }
+                ],
+                sled: [
+                    { name: "Sled Push (High Handles)", tip: "Arms extended, drive with legs. Stay low and powerful." },
+                    { name: "Sled Push (Low Handles)", tip: "Hands low, chest down. More quad and glute drive." },
+                    { name: "Sled Pull (Backward)", tip: "Face sled, pull toward you walking backward. Quads burn." },
+                    { name: "Sled Drag (Forward)", tip: "Strap around waist, walk forward. Great for conditioning." },
+                    { name: "Sled Row", tip: "Face sled, row handle to chest. Upper back and biceps." },
+                    { name: "Sled Sprint", tip: "Explosive push for 20-40 yards. Max effort." }
                 ]
             },
             cardio: {
@@ -698,8 +761,61 @@
                     { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core.", reps: "1 min" },
                     { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill.", reps: "20-30 reps" },
                     { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance.", reps: "3-4 rounds" }
+                ],
+                assaultBike: [
+                    { name: "Assault Bike Intervals", tip: "15-30s max effort with full recovery. Push and pull with arms.", reps: "15-30s on / 45-60s rest x 6-8" },
+                    { name: "Assault Bike Sprints", tip: "All-out effort, take full rest between. It's a killer!", reps: "20-30s sprint / 60s rest x 5-6" },
+                    { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min", isFinisher: true },
+                    { name: "Assault Bike Tabata", tip: "Maximum intensity. Take extra rest between sets if needed.", reps: "20s on / 10s off x 8 (rest 2 min, repeat)" },
+                    { name: "Assault Bike Calorie Sprints", tip: "Sprint to hit target calories, rest fully between rounds.", reps: "10 cal sprint / 60s rest x 5-6 rounds" }
+                ],
+                rower: [
+                    { name: "Rowing Intervals (500m)", tip: "500m hard, 1 min rest. Drive with legs first.", reps: "500m x 4-6 intervals" },
+                    { name: "Rowing Sprints (250m)", tip: "All-out effort for 250m, rest 1 min between.", reps: "250m x 5-6 sprints" },
+                    { name: "Rowing Steady State (2000m)", tip: "Moderate pace 18-22 strokes/min. Focus on form.", reps: "2000m", isFinisher: true },
+                    { name: "Rowing Pyramid", tip: "250m-500m-750m-500m-250m. Control pace on longer pieces.", reps: "2250m total" },
+                    { name: "Rowing 1000m", tip: "Build pace throughout. Sprint last 200m.", reps: "1000m" }
+                ],
+                cycle: [
+                    { name: "Cycling Intervals", tip: "1 min high resistance, 1 min low. Maintain cadence.", reps: "6-8 rounds" },
+                    { name: "Cycling Sprints", tip: "30s max speed, 30s easy. Seated or standing.", reps: "6-8 sprints" },
+                    { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace. Good recovery.", reps: "5-10 min", isFinisher: true },
+                    { name: "Cycling Hills", tip: "Increase resistance, stand and climb. 1 min on, 1 min off.", reps: "5-6 hills" },
+                    { name: "Cycling Tabata", tip: "20s sprint, 10s rest x 8. High cadence.", reps: "4 min" }
+                ],
+                treadmill: [
+                    { name: "Treadmill Intervals", tip: "1 min sprint, 1 min walk. Adjust speed for ability.", reps: "6-8 rounds" },
+                    { name: "Treadmill Sprints", tip: "30s at 80-90% effort, 30s rest. Hold rails to hop on/off.", reps: "6-8 sprints" },
+                    { name: "Incline Walk", tip: "10-15% incline, moderate pace. Great for glutes and calves.", reps: "5-10 min", isFinisher: true },
+                    { name: "Treadmill Run", tip: "Steady pace jog. Focus on breathing rhythm.", reps: "5-10 min", isFinisher: true },
+                    { name: "Incline Sprints", tip: "5-8% incline, sprint 20s, rest 40s. Power builder.", reps: "5-6 sprints" }
                 ]
             },
+            yoga: [
+                { name: "Cat-Cow Stretch", duration: "30-45 seconds", tip: "Flow between arching and rounding back. Sync with breath." },
+                { name: "Child's Pose", duration: "30-60 seconds", tip: "Knees wide, arms extended. Rest forehead on mat." },
+                { name: "Downward Dog", duration: "30-45 seconds", tip: "Hips high, heels reaching down. Press hands into mat." },
+                { name: "Forward Fold", duration: "30-45 seconds", tip: "Let head hang heavy. Bend knees if hamstrings tight." },
+                { name: "Low Lunge", duration: "30 seconds/side", tip: "Back knee down, hips sink forward. Hip flexor stretch." },
+                { name: "Pigeon Pose", duration: "45-60 seconds/side", tip: "Front shin across mat. Deep hip opener." },
+                { name: "Seated Twist", duration: "30 seconds/side", tip: "Tall spine, twist from core. Look over back shoulder." },
+                { name: "Thread the Needle", duration: "30-45 seconds/side", tip: "On all fours, reach arm under body. Shoulder stretch." },
+                { name: "Supine Twist", duration: "30-45 seconds/side", tip: "Lying on back, knees to one side. Arms out in T." },
+                { name: "Cobra Pose", duration: "20-30 seconds", tip: "Gentle backbend, shoulders down. Don't strain neck." },
+                { name: "Butterfly Stretch", duration: "30-60 seconds", tip: "Soles of feet together, knees drop. Inner thigh stretch." },
+                { name: "Happy Baby", duration: "30-45 seconds", tip: "Grab outside of feet, rock gently. Low back release." },
+                { name: "Figure Four Stretch", duration: "30-45 seconds/side", tip: "Ankle on opposite knee, pull thigh in. Piriformis stretch." },
+                { name: "Supine Hamstring Stretch", duration: "30-45 seconds/side", tip: "Leg straight up, use strap or hands. Keep other leg flat." },
+                { name: "Neck Rolls", duration: "30 seconds each direction", tip: "Slow circles, release tension. Don't force range." },
+                { name: "Shoulder Rolls", duration: "30 seconds", tip: "Roll forward then backward. Release upper body tension." },
+                { name: "Wrist Circles", duration: "20-30 seconds each direction", tip: "Circle wrists both ways. Good for desk workers." },
+                { name: "Standing Side Stretch", duration: "20-30 seconds/side", tip: "Reach arm overhead, lean to opposite side. Stretch obliques." },
+                { name: "Warrior I", duration: "30 seconds/side", tip: "Front knee bent, back leg straight. Arms reach up." },
+                { name: "Warrior II", duration: "30 seconds/side", tip: "Arms parallel to ground, gaze over front hand. Strong legs." },
+                { name: "Triangle Pose", duration: "30 seconds/side", tip: "Front leg straight, reach down and up. Open chest." },
+                { name: "Tree Pose", duration: "30 seconds/side", tip: "Foot on inner thigh or calf. Balance practice." },
+                { name: "Corpse Pose (Savasana)", duration: "2-3 minutes", tip: "Final relaxation. Lie completely still, focus on breath." }
+            ],
             funday: {
                 outdoor: [
                     { name: "Kickball", tip: "Split into teams. Standard baseball rules with a rubber ball. Great for all fitness levels." },
@@ -763,7 +879,15 @@
                 pullup: document.getElementById('equipPullup').checked,
                 kettlebells: document.getElementById('equipKettlebells').checked,
                 dumbbells: document.getElementById('equipDumbbells').checked,
-                jumprope: document.getElementById('equipJumprope').checked
+                jumprope: document.getElementById('equipJumprope').checked,
+                barbell: document.getElementById('equipBarbell').checked,
+                flatBench: document.getElementById('equipFlatBench').checked,
+                adjBench: document.getElementById('equipAdjBench').checked,
+                sled: document.getElementById('equipSled').checked,
+                assaultBike: document.getElementById('equipAssaultBike').checked,
+                rower: document.getElementById('equipRower').checked,
+                cycle: document.getElementById('equipCycle').checked,
+                treadmill: document.getElementById('equipTreadmill').checked
             };
         }
 
@@ -781,7 +905,14 @@
                 return;
             }
 
-            // Re-enable if coming back from fun day
+            // Yoga Day - disable rep scheme selector
+            if (focus === 'yoga') {
+                schemeSelect.disabled = true;
+                schemeSelect.innerHTML = '<option value="yoga">N/A - Time-Based Stretching</option>';
+                return;
+            }
+
+            // Re-enable if coming back from fun day or yoga
             schemeSelect.disabled = false;
 
             // All available schemes
@@ -918,9 +1049,9 @@
                 return schemeDesc[scheme].meta;
             }
 
-            // 1. Warmup (Collapsible)
-            let html = renderCollapsibleHeader('1. Standardized Warm-Up (10-12 Min)', 'warmupContent');
-            html += `<ul class="exercise-list" id="warmupContent">`;
+            // 1. Warmup (Collapsible - collapsed by default)
+            let html = renderCollapsibleHeader('1. Standardized Warm-Up (10-12 Min)', 'warmupContent', false);
+            html += `<ul class="exercise-list" id="warmupContent" style="display:none">`;
             warmupExercises.forEach(ex => html += renderItem(ex.name, ex.rep));
 
             if (focus === 'mixed' || focus === 'cardio' || focus === 'funday') {
@@ -954,9 +1085,9 @@
                             and keep water breaks every 15-20 min. Focus on participation over competition.
                          </p>`;
 
-                // Skip to cool-down for fun day
-                html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent');
-                html += `<ul class="exercise-list" id="cooldownContent">`;
+                // Skip to cool-down for fun day (collapsed by default)
+                html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent', false);
+                html += `<ul class="exercise-list" id="cooldownContent" style="display:none">`;
                 cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc, ex.tip));
                 html += `</ul>`;
 
@@ -964,6 +1095,42 @@
                 out.style.display = 'block';
                 out.scrollIntoView({ behavior: 'smooth' });
                 return; // Exit early for fun day
+            }
+
+            // Handle Yoga/Chill Day separately (no warmup/cooldown needed)
+            if (focus === 'yoga') {
+                const yogaPoses = [...db.yoga].sort(() => 0.5 - Math.random());
+                const selectedPoses = yogaPoses.slice(0, 12); // Select 12 poses
+
+                // Always end with Corpse Pose (Savasana) if not already included
+                const savasana = db.yoga.find(p => p.name.includes('Savasana'));
+                const hasSavasana = selectedPoses.some(p => p.name.includes('Savasana'));
+                if (!hasSavasana && savasana) {
+                    selectedPoses.pop();
+                    selectedPoses.push(savasana);
+                }
+
+                let html = `<div class="section-header">🧘 Chill Day - Yoga & Stretching (45-60 Min)</div>`;
+                html += `<p style="margin-bottom:15px; padding:15px; background:rgba(147,112,219,0.15); border-radius:8px; border:1px solid rgba(147,112,219,0.3); font-size:0.95em;">
+                            <strong style="color:#9370db;">Today's Focus: Recovery & Relaxation</strong><br>
+                            <span style="color:#8fa3bf;">Move slowly, breathe deeply, and listen to your body. Hold each pose for the indicated time.</span>
+                         </p>`;
+
+                html += `<ul class="exercise-list">`;
+                selectedPoses.forEach(pose => {
+                    html += renderItem(pose.name, pose.duration, pose.tip);
+                });
+                html += `</ul>`;
+
+                html += `<p style="margin-top:15px; padding:12px; background:rgba(74,144,226,0.1); border-radius:6px; font-size:0.85em; color:#8fa3bf;">
+                            <strong>CFL Tips:</strong> Dim lights if possible, play calming music, encourage deep breathing throughout.
+                            Remind participants to never push through pain - modifications are always okay.
+                         </p>`;
+
+                out.innerHTML = html;
+                out.style.display = 'block';
+                out.scrollIntoView({ behavior: 'smooth' });
+                return; // Exit early for yoga day
             }
 
             // 2. Main Workout (for non-fun day)
@@ -982,11 +1149,19 @@
                 if (equip.pullup) mainPool = [...mainPool, ...db.strength.pullup];
                 if (equip.kettlebells) mainPool = [...mainPool, ...db.strength.kettlebells];
                 if (equip.dumbbells) mainPool = [...mainPool, ...db.strength.dumbbells];
+                if (equip.barbell) mainPool = [...mainPool, ...db.strength.barbell];
+                if (equip.flatBench) mainPool = [...mainPool, ...db.strength.flatBench];
+                if (equip.adjBench) mainPool = [...mainPool, ...db.strength.adjBench];
+                if (equip.sled) mainPool = [...mainPool, ...db.strength.sled];
             }
 
             if (focus !== 'strength') {
                 mainPool = [...mainPool, ...(location === 'indoor' ? db.cardio.indoor : db.cardio.outdoor)];
                 if (equip.jumprope) mainPool = [...mainPool, ...db.cardio.jumprope];
+                if (equip.assaultBike) mainPool = [...mainPool, ...db.cardio.assaultBike];
+                if (equip.rower) mainPool = [...mainPool, ...db.cardio.rower];
+                if (equip.cycle) mainPool = [...mainPool, ...db.cardio.cycle];
+                if (equip.treadmill) mainPool = [...mainPool, ...db.cardio.treadmill];
             }
 
             // Separate finishers from regular exercises
@@ -1028,9 +1203,9 @@
             });
             html += `</ul>`;
 
-            // 3. Cool-Down (Collapsible)
-            html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent');
-            html += `<ul class="exercise-list" id="cooldownContent">`;
+            // 3. Cool-Down (Collapsible - collapsed by default)
+            html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent', false);
+            html += `<ul class="exercise-list" id="cooldownContent" style="display:none">`;
             cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc, ex.tip));
             html += `</ul>`;
 
