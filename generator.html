@@ -509,6 +509,7 @@
                 <div class="form-group">
                     <label>Rep Scheme</label>
                     <select id="schemeSelect">
+                        <option value="surprise">Surprise Me!</option>
                         <option value="circuit">Circuit (3 Rounds x Reps)</option>
                         <option value="hiit">HIIT (40s Work / 20s Rest)</option>
                         <option value="military">Military 4-Count (10 reps)</option>
@@ -603,17 +604,17 @@
         ];
 
         const cooldownExercises = [
-            { name: "Chest Stretch", desc: "Clasp hands behind neck, pull elbows back" },
-            { name: "Posterior Shoulder Stretch", desc: "Pull arm across body" },
-            { name: "Triceps Stretch", desc: "Reach behind back, push elbow" },
-            { name: "Hip Flexor Stretch", desc: "Lunge position, push hip forward" },
-            { name: "Groin/Butterfly Stretch", desc: "Seated, soles together" },
-            { name: "Modified Hurdler Stretch", desc: "Seated V-position, reach for toes" },
-            { name: "Outer Hip/Low Back Stretch", desc: "Seated twist" },
-            { name: "Piriformis Stretch", desc: "Lying, cross leg over thigh" },
-            { name: "Low Back Stretch", desc: "Knees to chest" },
-            { name: "Quadriceps Stretch", desc: "Standing/lying, pull heel to glute" },
-            { name: "Calf Stretch", desc: "Push-up position, press heel down" }
+            { name: "Chest Stretch", desc: "10 echo count", tip: "Clasp hands behind neck, pull elbows back" },
+            { name: "Posterior Shoulder Stretch", desc: "10 echo count/side", tip: "Pull arm across body" },
+            { name: "Triceps Stretch", desc: "10 echo count/side", tip: "Reach behind back, push elbow" },
+            { name: "Hip Flexor Stretch", desc: "10 echo count/side", tip: "Lunge position, push hip forward" },
+            { name: "Groin/Butterfly Stretch", desc: "10 echo count", tip: "Seated, soles together" },
+            { name: "Modified Hurdler Stretch", desc: "10 echo count/side", tip: "Seated V-position, reach for toes" },
+            { name: "Outer Hip/Low Back Stretch", desc: "10 echo count/side", tip: "Seated twist" },
+            { name: "Piriformis Stretch", desc: "10 echo count/side", tip: "Lying, cross leg over thigh" },
+            { name: "Low Back Stretch", desc: "10 echo count", tip: "Knees to chest" },
+            { name: "Quadriceps Stretch", desc: "10 echo count/side", tip: "Standing/lying, pull heel to glute" },
+            { name: "Calf Stretch", desc: "10 echo count/side", tip: "Push-up position, press heel down" }
         ];
 
         const db = {
@@ -672,18 +673,18 @@
                     { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option.", reps: "20-30 reps" },
                     { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest.", reps: "20-30 reps" },
                     { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot.", reps: "10-15 per side" },
-                    { name: "Jog (Gym Laps)", tip: "1 lap around gym/basketball court. Light on feet, steady pace.", reps: "2-4 laps" },
                     { name: "Burpees (No Push-up)", tip: "Squat, jump back to plank, hop forward, stand. Modify as needed.", reps: "10-15 reps" },
-                    { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement. 10 yards each direction.", reps: "30-45 seconds" }
+                    { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement. 10 yards each direction.", reps: "30-45 seconds" },
+                    { name: "Jog (Gym Laps)", tip: "1 lap around gym/basketball court. Light on feet, steady pace.", reps: "2-4 laps", isFinisher: true }
                 ],
                 outdoor: [
-                    { name: "Track Run (Steady State)", tip: "1 lap around the track at consistent pace. Breathe rhythmically.", reps: "1-2 laps" },
                     { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk 100m recovery. Repeat.", reps: "4-6 sprints" },
                     { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns.", reps: "4-6 shuttles" },
                     { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline.", reps: "4-6 repeats" },
                     { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. 25-50 yards.", reps: "2-4 lengths" },
-                    { name: "400m Run", tip: "1 lap around the track at moderate pace. Control breathing.", reps: "1 lap" },
-                    { name: "Indian Runs (Group)", tip: "Jog in formation, last person sprints to front. Repeat.", reps: "5-10 min" }
+                    { name: "Track Run (Steady State)", tip: "1 lap around the track at consistent pace. Breathe rhythmically.", reps: "1-2 laps", isFinisher: true },
+                    { name: "400m Run", tip: "1 lap around the track at moderate pace. Control breathing.", reps: "1 lap", isFinisher: true },
+                    { name: "Warrior Run (Last Runner Up)", tip: "Jog in formation, last person sprints to front. Repeat.", reps: "5-10 min", isFinisher: true }
                 ],
                 jumprope: [
                     { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed.", reps: "2 min" },
@@ -735,6 +736,51 @@
             };
         }
 
+        // --- Focus Change Handler (update rep schemes for cardio-only) ---
+
+        function updateSchemeOptions() {
+            const focus = document.getElementById('focusSelect').value;
+            const schemeSelect = document.getElementById('schemeSelect');
+            const currentValue = schemeSelect.value;
+
+            // All available schemes
+            const allSchemes = [
+                { value: 'surprise', text: 'Surprise Me!' },
+                { value: 'circuit', text: 'Circuit (3 Rounds x Reps)' },
+                { value: 'hiit', text: 'HIIT (40s Work / 20s Rest)' },
+                { value: 'military', text: 'Military 4-Count (10 reps)' },
+                { value: 'pyramid', text: 'Pyramid (2-4-6-8-10)' },
+                { value: 'reversePyramid', text: 'Reverse Pyramid (10-8-6-4-2)' }
+            ];
+
+            // Cardio-only appropriate schemes
+            const cardioSchemes = [
+                { value: 'surprise', text: 'Surprise Me!' },
+                { value: 'circuit', text: 'Circuit (3 Rounds x Time)' },
+                { value: 'hiit', text: 'HIIT (40s Work / 20s Rest)' }
+            ];
+
+            const schemes = (focus === 'cardio') ? cardioSchemes : allSchemes;
+
+            // Clear and rebuild options
+            schemeSelect.innerHTML = '';
+            schemes.forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.value;
+                option.textContent = s.text;
+                schemeSelect.appendChild(option);
+            });
+
+            // Try to restore previous selection, or default to first
+            const validValues = schemes.map(s => s.value);
+            if (validValues.includes(currentValue)) {
+                schemeSelect.value = currentValue;
+            }
+        }
+
+        // Initialize on page load and on focus change
+        document.getElementById('focusSelect').addEventListener('change', updateSchemeOptions);
+
         // --- Collapsible Section Toggle ---
 
         function toggleSection(id) {
@@ -778,7 +824,7 @@
         function generateWorkout() {
             const focus = document.getElementById('focusSelect').value;
             const location = document.getElementById('locationSelect').value;
-            const scheme = document.getElementById('schemeSelect').value;
+            let scheme = document.getElementById('schemeSelect').value;
             const equip = getSelectedEquipment();
             const out = document.getElementById('workoutOutput');
 
@@ -790,6 +836,19 @@
                 pyramid: { meta: "Pyramid: 2-4-6-8-10", note: "Build up reps each round. Rest as needed between rounds." },
                 reversePyramid: { meta: "Reverse Pyramid: 10-8-6-4-2", note: "Decrease reps each round. Stay strong as fatigue sets in." }
             };
+
+            // Handle "Surprise Me" - pick random scheme appropriate for focus
+            if (scheme === 'surprise') {
+                if (focus === 'cardio') {
+                    // Cardio-only: HIIT is most appropriate, or circuit with time-based
+                    const cardioSchemes = ['hiit', 'circuit'];
+                    scheme = cardioSchemes[Math.floor(Math.random() * cardioSchemes.length)];
+                } else {
+                    // Strength or Mixed: any scheme works
+                    const allSchemes = ['circuit', 'hiit', 'military', 'pyramid', 'reversePyramid'];
+                    scheme = allSchemes[Math.floor(Math.random() * allSchemes.length)];
+                }
+            }
 
             // Check if exercise is a plank-type exercise
             function isPlankExercise(name) {
@@ -852,9 +911,38 @@
                 if (equip.jumprope) mainPool = [...mainPool, ...db.cardio.jumprope];
             }
 
+            // Separate finishers from regular exercises
+            const regularExercises = mainPool.filter(ex => !ex.isFinisher);
+            const finisherExercises = mainPool.filter(ex => ex.isFinisher);
+
+            // Shuffle both pools
+            const shuffledRegular = regularExercises.sort(() => 0.5 - Math.random());
+            const shuffledFinishers = finisherExercises.sort(() => 0.5 - Math.random());
+
+            // Select exercises: fill with regular first, then add one finisher at end if available
             const count = 8;
-            const shuffled = mainPool.sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+            let selected = [];
+
+            // Take regular exercises (leave room for 1 finisher if we have finishers)
+            const regularCount = shuffledFinishers.length > 0 ? Math.min(count - 1, shuffledRegular.length) : Math.min(count, shuffledRegular.length);
+            selected = shuffledRegular.slice(0, regularCount);
+
+            // Add one finisher at the end if available and we have room
+            if (shuffledFinishers.length > 0 && selected.length < count) {
+                selected.push(shuffledFinishers[0]);
+            }
+
+            // Fill remaining slots with more regular exercises if needed
+            if (selected.length < count && shuffledRegular.length > regularCount) {
+                const remaining = shuffledRegular.slice(regularCount, regularCount + (count - selected.length));
+                // Insert before the finisher if one exists
+                if (shuffledFinishers.length > 0 && selected.length > 0 && selected[selected.length - 1].isFinisher) {
+                    const finisher = selected.pop();
+                    selected = [...selected, ...remaining, finisher];
+                } else {
+                    selected = [...selected, ...remaining];
+                }
+            }
 
             selected.forEach(ex => {
                 const reps = getExerciseReps(ex, scheme);
@@ -865,7 +953,7 @@
             // 3. Cool-Down (Collapsible)
             html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent');
             html += `<ul class="exercise-list" id="cooldownContent">`;
-            cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc));
+            cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc, ex.tip));
             html += `</ul>`;
 
             out.innerHTML = html;
