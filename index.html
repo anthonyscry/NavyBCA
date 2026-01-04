@@ -551,6 +551,59 @@
             color: #ffd700;
         }
 
+        /* PT Generator Banner */
+        .pt-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 12px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .pt-banner-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .pt-banner-text h3 {
+            color: #ffd700;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .pt-banner-text p {
+            color: #8fa3bf;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .pt-banner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #0a1628;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pt-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             h1 {
@@ -564,6 +617,11 @@
             .step-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
+            }
+
+            .pt-banner {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -591,6 +649,17 @@
             </div>
             <p class="subtitle">Body Composition Assessment • Guide-4 • Dec 2025</p>
         </header>
+
+        <!-- PT Generator Banner -->
+        <div class="pt-banner">
+            <div class="pt-banner-text">
+                <h3>Need a Command PT Session?</h3>
+                <p>Generate 60-minute workouts with warm-up, exercises, and cool-down. Print-ready for CFLs.</p>
+            </div>
+            <a href="generator.html" class="pt-banner-btn">
+                PT Generator →
+            </a>
+        </div>
 
         <main>
             <div class="calculator-card">

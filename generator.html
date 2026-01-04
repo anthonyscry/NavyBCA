@@ -193,6 +193,12 @@
             box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
         }
 
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(30, 50, 80, 0.3);
+        }
+
         .action-btn {
             width: 100%;
             padding: 15px;
@@ -497,6 +503,7 @@
                         <option value="mixed">Mixed (Strength & Cardio)</option>
                         <option value="strength">Strength Focus</option>
                         <option value="cardio">Cardio Focus</option>
+                        <option value="funday">Fun Day (Team Sports)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -692,6 +699,30 @@
                     { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill.", reps: "20-30 reps" },
                     { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance.", reps: "3-4 rounds" }
                 ]
+            },
+            funday: {
+                outdoor: [
+                    { name: "Kickball", tip: "Split into teams. Standard baseball rules with a rubber ball. Great for all fitness levels." },
+                    { name: "Ultimate Frisbee", tip: "Non-contact sport. Score by catching in end zone. No running with disc." },
+                    { name: "Flag Football", tip: "Two-hand touch or flag pull. Set clear boundaries and end zones." },
+                    { name: "Soccer", tip: "Full field or small-sided games. Rotate goalies every 10 min." },
+                    { name: "Softball", tip: "Slow pitch recommended. Rotate positions each inning." },
+                    { name: "Capture the Flag", tip: "Two teams, two territories. Great for unit cohesion and strategy." },
+                    { name: "Relay Races", tip: "Mix up distances and styles. Include fun variations like wheelbarrow, three-legged, etc." },
+                    { name: "Tug of War", tip: "Equal teams by total weight. Best 2 of 3 rounds. Watch footing." },
+                    { name: "Obstacle Course", tip: "Set up stations with cones, hurdles, crawls. Time each team." }
+                ],
+                indoor: [
+                    { name: "Basketball", tip: "Full court or half court games. Rotate teams every 10-15 min." },
+                    { name: "Volleyball", tip: "Rally scoring to 25. Rotate servers. Modify net height as needed." },
+                    { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline." },
+                    { name: "Indoor Soccer (Futsal)", tip: "Smaller teams, smaller goals. No walls - out of bounds rules apply." },
+                    { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies." },
+                    { name: "Badminton", tip: "Singles or doubles. Rally scoring to 21." },
+                    { name: "Team Handball", tip: "Soccer meets basketball. Throw ball into goal. No running with ball." },
+                    { name: "Pickleball", tip: "Easy to learn. Great for mixed fitness levels. Doubles recommended." },
+                    { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable." }
+                ]
             }
         };
 
@@ -736,12 +767,22 @@
             };
         }
 
-        // --- Focus Change Handler (update rep schemes for cardio-only) ---
+        // --- Focus Change Handler (update rep schemes for cardio-only, disable for fun day) ---
 
         function updateSchemeOptions() {
             const focus = document.getElementById('focusSelect').value;
             const schemeSelect = document.getElementById('schemeSelect');
             const currentValue = schemeSelect.value;
+
+            // Fun Day - disable rep scheme selector
+            if (focus === 'funday') {
+                schemeSelect.disabled = true;
+                schemeSelect.innerHTML = '<option value="funday">N/A - Team Sports</option>';
+                return;
+            }
+
+            // Re-enable if coming back from fun day
+            schemeSelect.disabled = false;
 
             // All available schemes
             const allSchemes = [
@@ -882,13 +923,50 @@
             html += `<ul class="exercise-list" id="warmupContent">`;
             warmupExercises.forEach(ex => html += renderItem(ex.name, ex.rep));
 
-            if (focus === 'mixed' || focus === 'cardio') {
+            if (focus === 'mixed' || focus === 'cardio' || focus === 'funday') {
                 html += `<li style="padding:10px; color:#4a90e2; font-weight:bold; background:none; border:none;">— Pre-Cardio Additions —</li>`;
                 preCardioWarmup.forEach(ex => html += renderItem(ex.name, ex.rep));
             }
             html += `</ul>`;
 
-            // 2. Main Workout
+            // Handle Fun Day separately
+            if (focus === 'funday') {
+                const fundayActivities = location === 'indoor' ? db.funday.indoor : db.funday.outdoor;
+                const shuffled = fundayActivities.sort(() => 0.5 - Math.random());
+                const primary = shuffled[0];
+                const alternatives = shuffled.slice(1, 4);
+
+                html += `<div class="section-header">2. Fun Day Activity (40-45 Min)</div>`;
+                html += `<p style="margin-bottom:15px; padding:15px; background:rgba(255,215,0,0.1); border-radius:8px; border:1px solid rgba(255,215,0,0.3); font-size:0.95em;">
+                            <strong style="color:#ffd700; font-size:1.2em;">Today's Activity: ${primary.name}</strong><br>
+                            <span style="color:#8fa3bf;">💡 ${primary.tip}</span>
+                         </p>`;
+
+                html += `<p style="margin-bottom:10px; color:#8fa3bf; font-size:0.9em;"><strong>Alternative Options:</strong></p>`;
+                html += `<ul class="exercise-list">`;
+                alternatives.forEach(activity => {
+                    html += renderItem(activity.name, "Team Sport", activity.tip);
+                });
+                html += `</ul>`;
+
+                html += `<p style="margin-top:15px; padding:12px; background:rgba(74,144,226,0.1); border-radius:6px; font-size:0.85em; color:#8fa3bf;">
+                            <strong>CFL Tips:</strong> Ensure equal teams, establish clear rules before starting, rotate positions/teams regularly,
+                            and keep water breaks every 15-20 min. Focus on participation over competition.
+                         </p>`;
+
+                // Skip to cool-down for fun day
+                html += renderCollapsibleHeader('3. Cool-Down (5-8 Min)', 'cooldownContent');
+                html += `<ul class="exercise-list" id="cooldownContent">`;
+                cooldownExercises.forEach(ex => html += renderItem(ex.name, ex.desc, ex.tip));
+                html += `</ul>`;
+
+                out.innerHTML = html;
+                out.style.display = 'block';
+                out.scrollIntoView({ behavior: 'smooth' });
+                return; // Exit early for fun day
+            }
+
+            // 2. Main Workout (for non-fun day)
             html += `<div class="section-header">2. Main Session (${focus.toUpperCase()} - 40 Min)</div>`;
             html += `<p style="margin-bottom:15px; padding:10px; background:rgba(74,144,226,0.1); border-radius:6px; font-size:0.9em;">
                         <strong>Format:</strong> ${schemeDesc[scheme].meta}<br>
