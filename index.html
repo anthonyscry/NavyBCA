@@ -1781,6 +1781,7 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             updateRememberToggleState();
+            attachBcaSaveListeners();
         });
 
         function shouldRememberBca() {
@@ -1808,6 +1809,16 @@
                     localStorage.removeItem(rememberBcaStorageKey);
                     clearSavedData();
                 }
+            });
+        }
+
+        function attachBcaSaveListeners() {
+            const watchIds = ['heightFeet', 'heightInches', 'weight', 'waist'];
+            watchIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('change', saveData);
+                el.addEventListener('input', saveData);
             });
         }
 
@@ -1882,6 +1893,7 @@
             // Update display
             document.getElementById('maxBfDisplay').textContent = gender === 'male' ? '26%' : '36%';
             document.getElementById('genderDisplay').textContent = gender === 'male' ? 'males' : 'females';
+            saveData();
         }
 
         const bcaTables = {
