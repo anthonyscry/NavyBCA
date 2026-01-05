@@ -1003,17 +1003,17 @@
         function getMaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified against User Images)
             // BF = 39.0 - 0.76(Diff) + 0.04(Weight), table rounds down to whole percent.
-            weight = Math.max(100, Math.round(weight));
+            weight = Math.min(320, Math.max(100, Math.round(weight)));
             const baseBF = 39.0 - (0.76 * heightWaistDiff) + (0.04 * weight);
-            return Math.max(0, Math.floor(baseBF));
+            return Math.max(0, Math.floor(baseBF + 1e-6));
         }
 
         function getFemaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified 100-300lbs)
             // BF = 39.0 - 0.62(Diff) + 0.08(Weight), table rounds down to whole percent.
-            weight = Math.max(90, Math.round(weight));
+            weight = Math.min(320, Math.max(90, Math.round(weight)));
             const baseBF = 39.0 - (0.62 * heightWaistDiff) + (0.08 * weight);
-            return Math.max(0, Math.floor(baseBF));
+            return Math.max(0, Math.floor(baseBF + 1e-6));
         }
 
         function getMaxWaist(height) {
@@ -1042,7 +1042,7 @@
             const step1Pass = whtrRounded <= 0.5499;
 
             // Step 2: Body Fat
-            const heightWaistDiff = roundedHeight - roundedWaist;
+            const heightWaistDiff = Math.round((roundedHeight - roundedWaist) * 2) / 2;
             const bodyFatPercent = currentGender === 'male'
                 ? getMaleBF(heightWaistDiff, roundedWeight)
                 : getFemaleBF(heightWaistDiff, roundedWeight);
