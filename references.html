@@ -113,17 +113,18 @@
 
         .btn-back {
             display: inline-block;
-            background: #2a4065;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
             margin-bottom: 20px;
-            font-weight: 500;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
         }
 
         .btn-back:hover {
-            background: #3d5a80;
-            text-decoration: none;
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .note {
@@ -152,6 +153,22 @@
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7c94;
+            font-size: 12px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #ffd700;
         }
     </style>
 </head>
@@ -302,6 +319,7 @@
         </div>
 
         <footer>
+            <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
             <p>
                 <a href="references.html">References & Guides</a> |
                 <a href="index.html">BCA Calculator</a> |

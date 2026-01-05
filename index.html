@@ -565,6 +565,11 @@
             flex-wrap: wrap;
         }
 
+        .pt-banner.secondary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-color: rgba(59, 130, 246, 0.45);
+        }
+
         .pt-banner-text {
             flex: 1;
             min-width: 200px;
@@ -574,6 +579,10 @@
             color: #ffd700;
             font-size: 16px;
             margin-bottom: 3px;
+        }
+
+        .pt-banner.secondary .pt-banner-text h3 {
+            color: #93c5fd;
         }
 
         .pt-banner-text p {
@@ -602,6 +611,16 @@
         .pt-banner-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .pt-banner-btn.secondary {
+            background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+            color: #eaf2ff;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+        }
+
+        .pt-banner-btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
         }
 
         /* Animations */
@@ -681,6 +700,16 @@
             </div>
             <a href="generator.html" class="pt-banner-btn">
                 PT Generator →
+            </a>
+        </div>
+
+        <div class="pt-banner secondary">
+            <div class="pt-banner-text">
+                <h3>Need a Monthly PT Watchbill?</h3>
+                <p>Auto-generate PT schedules with CFL rotation. Select days, assign CFLs, print ready.</p>
+            </div>
+            <a href="watchbill.html" class="pt-banner-btn secondary">
+                Command PT Watchbill Generator →
             </a>
         </div>
 
@@ -1000,17 +1029,78 @@
             document.getElementById('genderDisplay').textContent = gender === 'male' ? 'males' : 'females';
         }
 
+        const bcaTables = {
+            male: new Map(),
+            female: new Map()
+        };
+        let bcaTablesLoaded = false;
+
+        function normalizeDiffKey(heightWaistDiff) {
+            return heightWaistDiff.toFixed(1);
+        }
+
+        function parseBcaTable(csvText) {
+            const table = new Map();
+            const lines = csvText.trim().split(/\r?\n/);
+            for (let i = 1; i < lines.length; i++) {
+                const [diffRaw, weightRaw, bfRaw] = lines[i].split(',');
+                const diffKey = normalizeDiffKey(parseFloat(diffRaw));
+                const weight = parseInt(weightRaw, 10);
+                const bodyFat = parseInt(bfRaw, 10);
+                if (!table.has(diffKey)) {
+                    table.set(diffKey, new Map());
+                }
+                table.get(diffKey).set(weight, bodyFat);
+            }
+            return table;
+        }
+
+        async function loadBcaTables() {
+            try {
+                const [maleResp, femaleResp] = await Promise.all([
+                    fetch('male_bca_table_FULL_NORMALIZED.csv'),
+                    fetch('female_bca_table_FULL_NORMALIZED%20(2).csv')
+                ]);
+                const [maleCsv, femaleCsv] = await Promise.all([
+                    maleResp.text(),
+                    femaleResp.text()
+                ]);
+                bcaTables.male = parseBcaTable(maleCsv);
+                bcaTables.female = parseBcaTable(femaleCsv);
+                bcaTablesLoaded = true;
+            } catch (error) {
+                console.error('Failed to load BCA tables:', error);
+            }
+        }
+
+        function getBcaTableValue(gender, heightWaistDiff, weight) {
+            const diffKey = normalizeDiffKey(heightWaistDiff);
+            const weightKey = Math.round(weight);
+            const table = bcaTables[gender];
+            if (!table || !table.has(diffKey)) {
+                return null;
+            }
+            const weightMap = table.get(diffKey);
+            return weightMap.has(weightKey) ? weightMap.get(weightKey) : null;
+        }
+
         function getMaleBF(heightWaistDiff, weight) {
-            // Updated to match Guide-4 2025 Tables (Linear fit verified against User Images)
-            // BF = 39.0 - 0.76(Diff) + 0.04(Weight), table rounds down to whole percent.
+            const tableValue = getBcaTableValue('male', heightWaistDiff, weight);
+            if (tableValue !== null) {
+                return tableValue;
+            }
+            // Fallback linear estimate outside the provided table.
             weight = Math.min(400, Math.max(100, Math.round(weight)));
             const baseBF = 39.0 - (0.76 * heightWaistDiff) + (0.04 * weight);
             return Math.max(0, Math.floor(baseBF + 1e-6));
         }
 
         function getFemaleBF(heightWaistDiff, weight) {
-            // Updated to match Guide-4 2025 Tables (Linear fit verified 100-300lbs)
-            // BF = 39.0 - 0.62(Diff) + 0.08(Weight), table rounds down to whole percent.
+            const tableValue = getBcaTableValue('female', heightWaistDiff, weight);
+            if (tableValue !== null) {
+                return tableValue;
+            }
+            // Fallback linear estimate outside the provided table.
             weight = Math.min(400, Math.max(61, Math.round(weight)));
             const baseBF = 39.0 - (0.62 * heightWaistDiff) + (0.08 * weight);
             return Math.max(0, Math.floor(baseBF + 1e-6));
@@ -1021,6 +1111,10 @@
         }
 
         function calculateBCA() {
+            if (!bcaTablesLoaded) {
+                alert('BCA tables are still loading. Please try again in a moment.');
+                return;
+            }
             // Save current inputs
             saveData();
 
@@ -1115,6 +1209,10 @@
             document.getElementById('waist').value = '34';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBcaTables();
+        });
     </script>
 </body>
 
