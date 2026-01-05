@@ -39,7 +39,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -100,16 +100,15 @@
         }
 
         .btn-back:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .calculator-card {
-            background: rgba(20, 35, 60, 0.95);
+            background: rgba(18, 32, 56, 0.9);
             border-radius: 16px;
-            border: 1px solid rgba(100, 130, 180, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             padding: 30px;
-            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 130, 180, 0.2);
         }
 
         .form-group {
@@ -118,36 +117,35 @@
 
         label {
             display: block;
-            font-size: 12px;
-            font-weight: 600;
             color: #8fa3bf;
-            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
-        select, input[type="text"], input[type="time"], input[type="number"] {
+        input[type="text"],
+        select {
             width: 100%;
             padding: 12px;
-            background: #1e3250;
-            border: 1px solid #4a90e2;
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
             border-radius: 8px;
-            color: white;
+            color: #e8eef5;
             font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
             outline: none;
-        }
-
-        select:focus, input:focus {
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
-        }
-
-        select option {
-            background: #1a2a4a;
+            border-color: #ffd700;
         }
 
         .row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
 
@@ -155,47 +153,52 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
-            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .day-checkbox {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 6px;
+            justify-content: center;
+            padding: 12px 8px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid rgba(100, 130, 180, 0.3);
             transition: all 0.2s;
-        }
-
-        .day-checkbox:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .day-checkbox.selected {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
+            user-select: none;
         }
 
         .day-checkbox input {
-            accent-color: #ffd700;
+            display: none;
+        }
+
+        .day-checkbox span {
+            color: #8fa3bf;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .day-checkbox.selected {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+        }
+
+        .day-checkbox.selected span {
+            color: #ffd700;
         }
 
         .cfl-list {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(100, 130, 180, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .cfl-input-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 10px;
         }
 
         .cfl-input-row input {
@@ -252,6 +255,43 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
+        .hint {
+            font-size: 12px;
+            color: #6b7c94;
+            margin-top: 8px;
+        }
+
+        .type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            color: #8fa3bf;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .type-btn.active {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .type-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Calendar Styles */
         #watchbillOutput {
             display: none;
             margin-top: 30px;
@@ -260,42 +300,106 @@
         .watchbill-header {
             text-align: center;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 20px;
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
         }
 
         .watchbill-header h2 {
             color: #ffd700;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 10px;
         }
 
-        .watchbill-table {
-            width: 100%;
-            border-collapse: collapse;
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
             margin-bottom: 20px;
         }
 
-        .watchbill-table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: #ffd700;
-            padding: 12px;
-            text-align: left;
-            border: 1px solid rgba(100, 130, 180, 0.3);
+        .calendar-day-header {
+            background: rgba(255, 215, 0, 0.15);
+            padding: 10px;
+            text-align: center;
             font-weight: 600;
+            color: #ffd700;
+            border-radius: 8px;
             text-transform: uppercase;
             font-size: 12px;
             letter-spacing: 1px;
         }
 
-        .watchbill-table td {
+        .calendar-day {
+            background: rgba(18, 32, 56, 0.9);
+            border: 1px solid rgba(100, 130, 180, 0.2);
+            border-radius: 8px;
             padding: 12px;
-            border: 1px solid rgba(100, 130, 180, 0.3);
-            color: #e8eef5;
+            min-height: 120px;
+            position: relative;
         }
 
-        .watchbill-table tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.02);
+        .calendar-day.empty {
+            background: rgba(10, 22, 40, 0.3);
+            border-color: rgba(100, 130, 180, 0.1);
+        }
+
+        .calendar-day.holiday {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .calendar-day.pt-day {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid rgba(34, 197, 94, 0.5);
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .holiday-name {
+            color: #ef4444;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .pt-info {
+            font-size: 11px;
+            color: #e8eef5;
+            line-height: 1.5;
+        }
+
+        .pt-info strong {
+            color: #22c55e;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .pt-info div {
+            margin-bottom: 3px;
+        }
+
+        .editable-field {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 11px;
+            color: #e8eef5;
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .editable-field:focus {
+            outline: none;
+            border-color: #ffd700;
         }
 
         .print-btn {
@@ -315,10 +419,56 @@
             background: rgba(74, 144, 226, 0.3);
         }
 
-        .hint {
+        .metrics-section {
+            margin-top: 30px;
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .metrics-section h3 {
+            color: #ffd700;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-card {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-card.total {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .metric-label {
+            color: #8fa3bf;
             font-size: 12px;
-            color: #6b7c94;
-            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            color: #ffd700;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .metric-card.total .metric-value {
+            font-size: 32px;
         }
 
         footer {
@@ -347,9 +497,14 @@
 
             .container {
                 max-width: 100%;
+                padding: 10px;
             }
 
-            .btn-back, .calculator-card, .action-btn, .print-btn, footer {
+            .btn-back,
+            .calculator-card,
+            .action-btn,
+            .print-btn,
+            footer {
                 display: none !important;
             }
 
@@ -357,24 +512,118 @@
                 display: block !important;
             }
 
+            .watchbill-header {
+                background: white !important;
+                border: 2px solid black;
+            }
+
             .watchbill-header h2 {
                 color: black !important;
-                -webkit-text-fill-color: black !important;
             }
 
-            .watchbill-table {
-                border: 1px solid black;
+            .calendar-grid {
+                gap: 5px;
             }
 
-            .watchbill-table th {
+            .calendar-day-header {
                 background: #f0f0f0 !important;
                 color: black !important;
                 border: 1px solid black;
             }
 
-            .watchbill-table td {
+            .calendar-day {
+                background: white !important;
+                border: 1px solid black !important;
+                page-break-inside: avoid;
+            }
+
+            .calendar-day.holiday {
+                background: #ffe0e0 !important;
+                border: 2px solid #cc0000 !important;
+            }
+
+            .calendar-day.pt-day {
+                background: #e0ffe0 !important;
+                border: 2px solid #00aa00 !important;
+            }
+
+            .day-number {
                 color: black !important;
-                border: 1px solid black;
+            }
+
+            .holiday-name {
+                color: #cc0000 !important;
+            }
+
+            .pt-info {
+                color: black !important;
+            }
+
+            .pt-info strong {
+                color: #006600 !important;
+            }
+
+            .editable-field {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            .metrics-section {
+                background: white !important;
+                border: 2px solid black;
+                page-break-before: always;
+            }
+
+            .metrics-section h3 {
+                color: black !important;
+            }
+
+            .metric-card {
+                background: #f5f5f5 !important;
+                border: 1px solid black !important;
+            }
+
+            .metric-card.total {
+                background: #ffffcc !important;
+                border: 2px solid black !important;
+            }
+
+            .metric-label {
+                color: #333 !important;
+            }
+
+            .metric-value {
+                color: black !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .calendar-day-header {
+                display: none;
+            }
+
+            .calendar-day {
+                border-left: 4px solid rgba(100, 130, 180, 0.5);
+            }
+
+            .calendar-day.pt-day {
+                border-left: 4px solid rgba(34, 197, 94, 0.8);
+            }
+
+            .calendar-day.holiday {
+                border-left: 4px solid rgba(239, 68, 68, 0.8);
+            }
+
+            .day-number::after {
+                content: ' - ' attr(data-day-name);
+                color: #8fa3bf;
+                font-size: 14px;
             }
         }
 
@@ -403,6 +652,15 @@
         </header>
 
         <main class="calculator-card">
+            <div class="form-group">
+                <label>PT Type</label>
+                <div class="type-selector">
+                    <button class="type-btn active" onclick="setPTType('pt')">Command PT</button>
+                    <button class="type-btn" onclick="setPTType('fep')">FEP</button>
+                </div>
+                <p class="hint">PT defaults to M/W/F, FEP defaults to T/Th</p>
+            </div>
+
             <div class="form-group">
                 <label>Select Month and Year</label>
                 <div class="row">
@@ -462,20 +720,6 @@
             </div>
 
             <div class="form-group">
-                <label>PT Time</label>
-                <div class="row">
-                    <input type="time" id="ptTime" value="06:30">
-                </div>
-                <p class="hint">Standard PT time (e.g., 0630)</p>
-            </div>
-
-            <div class="form-group">
-                <label>Default Location</label>
-                <input type="text" id="defaultLocation" value="Gym" placeholder="e.g., Gym, Track, Field">
-                <p class="hint">Can be customized per session in the output</p>
-            </div>
-
-            <div class="form-group">
                 <label>CFL/ACFL Roster</label>
                 <div class="cfl-list" id="cflList">
                     <div class="cfl-input-row">
@@ -510,10 +754,58 @@
     </div>
 
     <script>
-        // Populate year selector
+        // Federal Holidays for 2025-2027
+        const federalHolidays = {
+            2025: [
+                { date: '2025-01-01', name: 'New Year\'s Day' },
+                { date: '2025-01-20', name: 'Martin Luther King Jr. Day' },
+                { date: '2025-02-17', name: 'Presidents Day' },
+                { date: '2025-05-26', name: 'Memorial Day' },
+                { date: '2025-06-19', name: 'Juneteenth' },
+                { date: '2025-07-04', name: 'Independence Day' },
+                { date: '2025-09-01', name: 'Labor Day' },
+                { date: '2025-10-13', name: 'Columbus Day' },
+                { date: '2025-11-11', name: 'Veterans Day' },
+                { date: '2025-11-27', name: 'Thanksgiving' },
+                { date: '2025-12-25', name: 'Christmas' }
+            ],
+            2026: [
+                { date: '2026-01-01', name: 'New Year\'s Day' },
+                { date: '2026-01-19', name: 'Martin Luther King Jr. Day' },
+                { date: '2026-02-16', name: 'Presidents Day' },
+                { date: '2026-05-25', name: 'Memorial Day' },
+                { date: '2026-06-19', name: 'Juneteenth' },
+                { date: '2026-07-03', name: 'Independence Day (Observed)' },
+                { date: '2026-09-07', name: 'Labor Day' },
+                { date: '2026-10-12', name: 'Columbus Day' },
+                { date: '2026-11-11', name: 'Veterans Day' },
+                { date: '2026-11-26', name: 'Thanksgiving' },
+                { date: '2026-12-25', name: 'Christmas' }
+            ],
+            2027: [
+                { date: '2027-01-01', name: 'New Year\'s Day' },
+                { date: '2027-01-18', name: 'Martin Luther King Jr. Day' },
+                { date: '2027-02-15', name: 'Presidents Day' },
+                { date: '2027-05-31', name: 'Memorial Day' },
+                { date: '2027-06-18', name: 'Juneteenth (Observed)' },
+                { date: '2027-07-05', name: 'Independence Day (Observed)' },
+                { date: '2027-09-06', name: 'Labor Day' },
+                { date: '2027-10-11', name: 'Columbus Day' },
+                { date: '2027-11-11', name: 'Veterans Day' },
+                { date: '2027-11-25', name: 'Thanksgiving' },
+                { date: '2027-12-24', name: 'Christmas (Observed)' }
+            ]
+        };
+
+        let currentPTType = 'pt';
+        let ptSchedule = [];
+
+        // Populate year selector (2026-2027 only)
         const yearSelect = document.getElementById('yearSelect');
         const currentYear = new Date().getFullYear();
-        for (let i = currentYear - 1; i <= currentYear + 2; i++) {
+        const currentMonth = new Date().getMonth();
+
+        for (let i = 2026; i <= 2027; i++) {
             const option = document.createElement('option');
             option.value = i;
             option.textContent = i;
@@ -521,8 +813,45 @@
             yearSelect.appendChild(option);
         }
 
-        // Set current month
-        document.getElementById('monthSelect').value = new Date().getMonth();
+        // Set current month as default
+        document.getElementById('monthSelect').value = currentMonth;
+
+        // Set default PT days (M/W/F)
+        setPTType('pt');
+
+        function setPTType(type) {
+            currentPTType = type;
+
+            // Update button states
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Clear all day selections
+            ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(day => {
+                const checkbox = document.getElementById(`day-${day}`);
+                checkbox.querySelector('input').checked = false;
+                checkbox.classList.remove('selected');
+            });
+
+            // Set default days based on type
+            if (type === 'pt') {
+                // M/W/F
+                ['mon', 'wed', 'fri'].forEach(day => {
+                    const checkbox = document.getElementById(`day-${day}`);
+                    checkbox.querySelector('input').checked = true;
+                    checkbox.classList.add('selected');
+                });
+            } else {
+                // T/Th
+                ['tue', 'thu'].forEach(day => {
+                    const checkbox = document.getElementById(`day-${day}`);
+                    checkbox.querySelector('input').checked = true;
+                    checkbox.classList.add('selected');
+                });
+            }
+        }
 
         function toggleDay(day) {
             const checkbox = document.getElementById(`day-${day}`);
@@ -553,12 +882,17 @@
             }
         }
 
+        function isHoliday(date) {
+            const year = date.getFullYear();
+            const dateStr = date.toISOString().split('T')[0];
+            const holidays = federalHolidays[year] || [];
+            return holidays.find(h => h.date === dateStr);
+        }
+
         function generateWatchbill() {
             // Get inputs
             const month = parseInt(document.getElementById('monthSelect').value);
             const year = parseInt(document.getElementById('yearSelect').value);
-            const ptTime = document.getElementById('ptTime').value;
-            const defaultLocation = document.getElementById('defaultLocation').value;
 
             // Get selected days
             const selectedDays = [];
@@ -585,76 +919,163 @@
                 return;
             }
 
-            // Generate PT dates
-            const ptSessions = [];
+            // Generate PT schedule
+            ptSchedule = [];
             const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
             let cflIndex = 0;
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
                 const dayOfWeek = date.getDay();
+                const holiday = isHoliday(date);
 
-                if (selectedDays.includes(dayOfWeek)) {
-                    ptSessions.push({
+                // Only add PT if it's a selected day and NOT a holiday
+                if (selectedDays.includes(dayOfWeek) && !holiday) {
+                    ptSchedule.push({
                         date: date,
-                        dateString: date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+                        day: day,
+                        dayOfWeek: dayOfWeek,
                         cfl: cflRoster[cflIndex % cflRoster.length],
-                        time: ptTime,
-                        location: defaultLocation
+                        time: '06:00',
+                        location: 'Base Gym'
                     });
                     cflIndex++;
                 }
             }
 
-            // Render watchbill
+            // Build calendar
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-            let html = `
-                <div class="calculator-card">
-                    <div class="watchbill-header">
-                        <h2>Command PT Watchbill</h2>
-                        <p style="color: #8fa3bf; font-size: 16px;">${monthNames[month]} ${year}</p>
-                    </div>
+            let calendarHTML = `
+                <div class="watchbill-header">
+                    <h2>${monthNames[month]} ${year} - ${currentPTType.toUpperCase()} Watchbill</h2>
+                    <p>Total Sessions: ${ptSchedule.length}</p>
+                </div>
 
-                    <table class="watchbill-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 20%;">Date</th>
-                                <th style="width: 15%;">Time</th>
-                                <th style="width: 25%;">CFL/ACFL</th>
-                                <th style="width: 40%;">Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="calendar-grid">
             `;
 
-            ptSessions.forEach(session => {
-                html += `
-                    <tr>
-                        <td>${session.dateString}</td>
-                        <td>${session.time}</td>
-                        <td>${session.cfl}</td>
-                        <td>${session.location}</td>
-                    </tr>
-                `;
-            });
+            // Day headers
+            for (let i = 0; i < 7; i++) {
+                calendarHTML += `<div class="calendar-day-header">${dayNames[i]}</div>`;
+            }
 
-            html += `
-                        </tbody>
-                    </table>
+            // Empty cells before first day
+            for (let i = 0; i < firstDay; i++) {
+                calendarHTML += `<div class="calendar-day empty"></div>`;
+            }
 
-                    <p style="color: #6b7c94; font-size: 13px; margin-bottom: 15px;">
-                        Total PT Sessions: ${ptSessions.length} | CFLs/ACFLs: ${cflRoster.length}
-                    </p>
+            // Days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+                const holiday = isHoliday(date);
+                const ptSession = ptSchedule.find(pt => pt.day === day);
 
-                    <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill</button>
+                let dayClass = 'calendar-day';
+                let dayContent = '';
+
+                if (holiday) {
+                    dayClass += ' holiday';
+                    dayContent = `
+                        <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                        <div class="holiday-name">${holiday.name}</div>
+                        <div class="pt-info" style="color: #ef4444;">No PT - Federal Holiday</div>
+                    `;
+                } else if (ptSession) {
+                    dayClass += ' pt-day';
+                    const sessionIndex = ptSchedule.indexOf(ptSession);
+                    dayContent = `
+                        <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                        <div class="pt-info">
+                            <strong>PT Session</strong>
+                            <div>
+                                Time: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'time', this.value)">
+                                    <option value="05:30">0530</option>
+                                    <option value="06:00" selected>0600</option>
+                                    <option value="06:30">0630</option>
+                                    <option value="07:00">0700</option>
+                                    <option value="11:30">1130</option>
+                                    <option value="15:00">1500</option>
+                                </select>
+                            </div>
+                            <div>
+                                Location: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'location', this.value)">
+                                    <option value="Base Gym" selected>Base Gym</option>
+                                    <option value="Track">Track</option>
+                                    <option value="Field">Field</option>
+                                    <option value="Custom">Custom</option>
+                                </select>
+                            </div>
+                            <div>
+                                CFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
+                                    ${cflRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.cfl ? 'selected' : ''}>${cfl}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    dayContent = `<div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>`;
+                }
+
+                calendarHTML += `<div class="${dayClass}">${dayContent}</div>`;
+            }
+
+            calendarHTML += `
                 </div>
             `;
 
-            const output = document.getElementById('watchbillOutput');
-            output.innerHTML = html;
-            output.style.display = 'block';
-            output.scrollIntoView({ behavior: 'smooth' });
+            // Generate metrics report
+            const cflMetrics = {};
+            ptSchedule.forEach(session => {
+                if (!cflMetrics[session.cfl]) {
+                    cflMetrics[session.cfl] = 0;
+                }
+                cflMetrics[session.cfl]++;
+            });
+
+            calendarHTML += `
+                <div class="metrics-section">
+                    <h3>📊 CFL/ACFL Performance Metrics</h3>
+                    <p style="text-align: center; color: #8fa3bf; margin-bottom: 20px; font-size: 12px;">For Navy Evaluation Purposes</p>
+                    <div class="metrics-grid">
+                        <div class="metric-card total">
+                            <div class="metric-label">Total PT Sessions</div>
+                            <div class="metric-value">${ptSchedule.length}</div>
+                        </div>
+            `;
+
+            // Add individual CFL metrics
+            Object.entries(cflMetrics).sort((a, b) => b[1] - a[1]).forEach(([cfl, count]) => {
+                calendarHTML += `
+                    <div class="metric-card">
+                        <div class="metric-label">${cfl}</div>
+                        <div class="metric-value">${count}</div>
+                        <div style="color: #6b7c94; font-size: 11px; margin-top: 5px;">${count === 1 ? 'session' : 'sessions'} led</div>
+                    </div>
+                `;
+            });
+
+            calendarHTML += `
+                    </div>
+                </div>
+                <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill & Metrics</button>
+            `;
+
+            document.getElementById('watchbillOutput').innerHTML = calendarHTML;
+            document.getElementById('watchbillOutput').style.display = 'block';
+
+            // Scroll to output
+            document.getElementById('watchbillOutput').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateSession(index, field, value) {
+            if (ptSchedule[index]) {
+                ptSchedule[index][field] = value;
+            }
         }
     </script>
 </body>
