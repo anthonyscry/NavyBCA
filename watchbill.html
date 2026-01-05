@@ -764,47 +764,47 @@
             <div class="form-group">
                 <label>Schedule Days of the Week</label>
                 <div class="day-selector">
-                    <div class="day-row">
+                    <div class="day-row" data-day="mon">
                         <div class="day-name">Monday</div>
                         <div class="day-type-selector">
-                            <button class="day-type-btn pt" onclick="setDayType('mon', 'pt')">PT</button>
+                            <button class="day-type-btn pt active" onclick="setDayType('mon', 'pt')">PT</button>
                             <button class="day-type-btn fep" onclick="setDayType('mon', 'fep')">FEP</button>
-                            <button class="day-type-btn none active" onclick="setDayType('mon', 'none')">None</button>
+                            <button class="day-type-btn none" onclick="setDayType('mon', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="tue">
                         <div class="day-name">Tuesday</div>
                         <div class="day-type-selector">
                             <button class="day-type-btn pt" onclick="setDayType('tue', 'pt')">PT</button>
-                            <button class="day-type-btn fep" onclick="setDayType('tue', 'fep')">FEP</button>
-                            <button class="day-type-btn none active" onclick="setDayType('tue', 'none')">None</button>
+                            <button class="day-type-btn fep active" onclick="setDayType('tue', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('tue', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="wed">
                         <div class="day-name">Wednesday</div>
                         <div class="day-type-selector">
-                            <button class="day-type-btn pt" onclick="setDayType('wed', 'pt')">PT</button>
+                            <button class="day-type-btn pt active" onclick="setDayType('wed', 'pt')">PT</button>
                             <button class="day-type-btn fep" onclick="setDayType('wed', 'fep')">FEP</button>
-                            <button class="day-type-btn none active" onclick="setDayType('wed', 'none')">None</button>
+                            <button class="day-type-btn none" onclick="setDayType('wed', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="thu">
                         <div class="day-name">Thursday</div>
                         <div class="day-type-selector">
                             <button class="day-type-btn pt" onclick="setDayType('thu', 'pt')">PT</button>
-                            <button class="day-type-btn fep" onclick="setDayType('thu', 'fep')">FEP</button>
-                            <button class="day-type-btn none active" onclick="setDayType('thu', 'none')">None</button>
+                            <button class="day-type-btn fep active" onclick="setDayType('thu', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('thu', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="fri">
                         <div class="day-name">Friday</div>
                         <div class="day-type-selector">
-                            <button class="day-type-btn pt" onclick="setDayType('fri', 'pt')">PT</button>
+                            <button class="day-type-btn pt active" onclick="setDayType('fri', 'pt')">PT</button>
                             <button class="day-type-btn fep" onclick="setDayType('fri', 'fep')">FEP</button>
-                            <button class="day-type-btn none active" onclick="setDayType('fri', 'none')">None</button>
+                            <button class="day-type-btn none" onclick="setDayType('fri', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="sat">
                         <div class="day-name">Saturday</div>
                         <div class="day-type-selector">
                             <button class="day-type-btn pt" onclick="setDayType('sat', 'pt')">PT</button>
@@ -812,7 +812,7 @@
                             <button class="day-type-btn none active" onclick="setDayType('sat', 'none')">None</button>
                         </div>
                     </div>
-                    <div class="day-row">
+                    <div class="day-row" data-day="sun">
                         <div class="day-name">Sunday</div>
                         <div class="day-type-selector">
                             <button class="day-type-btn pt" onclick="setDayType('sun', 'pt')">PT</button>
@@ -960,42 +960,20 @@
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
 
-        // Initialize default day types (M/W/F for PT, T/Th for FEP)
-        ['mon', 'wed', 'fri'].forEach(day => {
-            setDayType(day, 'pt', true);
-        });
-        ['tue', 'thu'].forEach(day => {
-            setDayType(day, 'fep', true);
-        });
-
-        function setDayType(day, type, init = false) {
+        function setDayType(day, type) {
+            // Update the dayTypes object
             dayTypes[day] = type;
 
-            // Update button states
-            const dayRow = document.querySelector(`.day-row:has(.day-name:contains("${day}"))`);
-            if (!dayRow) {
-                // Find by day name
-                const dayNames = {mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday'};
-                const rows = document.querySelectorAll('.day-row');
-                rows.forEach(row => {
-                    if (row.querySelector('.day-name').textContent === dayNames[day]) {
-                        row.querySelectorAll('.day-type-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                            if (btn.classList.contains(type)) {
-                                btn.classList.add('active');
-                            }
-                        });
+            // Find the day row and update button states
+            const dayRow = document.querySelector(`.day-row[data-day="${day}"]`);
+            if (dayRow) {
+                dayRow.querySelectorAll('.day-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.classList.contains(type)) {
+                        btn.classList.add('active');
                     }
                 });
-                return;
             }
-
-            dayRow.querySelectorAll('.day-type-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.classList.contains(type)) {
-                    btn.classList.add('active');
-                }
-            });
         }
 
         function addLocation() {
