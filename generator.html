@@ -630,40 +630,75 @@
             </div>
 
             <div class="form-group" id="fundayEquipmentGroup" style="display: none;">
-                <label>Available Equipment/Courts for Fun Day</label>
-                <div class="equip-grid">
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="savePTGeneratorPreferences()"> Football
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="savePTGeneratorPreferences()"> Basketball
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayBasketballCourt" onchange="savePTGeneratorPreferences()"> Basketball Court
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="savePTGeneratorPreferences()"> Volleyball
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayVolleyballCourt" onchange="savePTGeneratorPreferences()"> Volleyball Court
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="savePTGeneratorPreferences()"> Soccer Ball
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundaySoccerField" onchange="savePTGeneratorPreferences()"> Soccer Field
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="savePTGeneratorPreferences()"> Frisbee
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="savePTGeneratorPreferences()"> Dodgeballs
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="savePTGeneratorPreferences()"> Kickball
+                <label>Available Equipment/Facilities for Fun Day</label>
+
+                <!-- No Equipment Option -->
+                <div class="equip-grid" style="margin-bottom: 15px;">
+                    <label class="equip-checkbox none-selected" id="fundayNoneLabel">
+                        <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()"> No Equipment (Games Only)
                     </label>
                 </div>
-                <p class="hint" style="margin-top: 10px; color: #8fa3bf;">Select available equipment/courts to get more relevant fun day activity suggestions</p>
+
+                <!-- Playing Areas -->
+                <div id="fundayFacilitiesSection">
+                    <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">PLAYING AREAS / FACILITIES</label>
+                    <div class="equip-grid" style="margin-bottom: 20px;">
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()"> Open Field
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-facility" id="fundayBasketballCourt" onchange="fundayEquipChanged()"> Basketball Court
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()"> Volleyball Court
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()"> Baseball/Softball Field
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-facility" id="fundayTrack" onchange="fundayEquipChanged()"> Track/Running Path
+                        </label>
+                    </div>
+
+                    <!-- Equipment -->
+                    <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">AVAILABLE EQUIPMENT</label>
+                    <div class="equip-grid">
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()"> Football
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="fundayEquipChanged()"> Basketball
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()"> Volleyball
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()"> Soccer Ball
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()"> Frisbee
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="fundayEquipChanged()"> Dodgeballs
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()"> Kickball
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()"> Softballs/Bats
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayFlagSet" onchange="fundayEquipChanged()"> Flag Set
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()"> Cones/Markers
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" class="funday-equip" id="fundayTugRope" onchange="fundayEquipChanged()"> Tug-of-War Rope
+                        </label>
+                    </div>
+                </div>
+                <p class="hint" style="margin-top: 10px; color: #8fa3bf;">Select "No Equipment" for games like tag, or choose available facilities/equipment for more options</p>
             </div>
 
             <div class="form-group" id="equipmentGroup">
@@ -966,26 +1001,60 @@
             ],
             funday: {
                 outdoor: [
-                    { name: "Kickball", tip: "Split into teams. Standard baseball rules with a rubber ball. Great for all fitness levels." },
-                    { name: "Ultimate Frisbee", tip: "Non-contact sport. Score by catching in end zone. No running with disc." },
-                    { name: "Flag Football", tip: "Two-hand touch or flag pull. Set clear boundaries and end zones." },
-                    { name: "Soccer", tip: "Full field or small-sided games. Rotate goalies every 10 min." },
-                    { name: "Softball", tip: "Slow pitch recommended. Rotate positions each inning." },
-                    { name: "Capture the Flag", tip: "Two teams, two territories. Great for unit cohesion and strategy." },
-                    { name: "Relay Races", tip: "Mix up distances and styles. Include fun variations like wheelbarrow, three-legged, etc." },
-                    { name: "Tug of War", tip: "Equal teams by total weight. Best 2 of 3 rounds. Watch footing." },
-                    { name: "Obstacle Course", tip: "Set up stations with cones, hurdles, crawls. Time each team." }
+                    // Equipment-based games
+                    { name: "Kickball", tip: "Split into teams. Standard baseball rules with a rubber ball. Great for all fitness levels.", requires: "kickball" },
+                    { name: "Ultimate Frisbee", tip: "Non-contact sport. Score by catching in end zone. No running with disc.", requires: "frisbee", link: "https://www.youtube.com/watch?v=LPd-XdI5tuk" },
+                    { name: "Flag Football", tip: "Two-hand touch or flag pull. Set clear boundaries and end zones.", requires: "football" },
+                    { name: "Soccer", tip: "Full field or small-sided games. Rotate goalies every 10 min.", requires: "soccer" },
+                    { name: "Softball", tip: "Slow pitch recommended. Rotate positions each inning.", requires: "baseball" },
+                    { name: "Capture the Flag", tip: "Two teams, two territories. Great for unit cohesion and strategy.", requires: "flagSet" },
+                    { name: "Tug of War", tip: "Equal teams by total weight. Best 2 of 3 rounds. Watch footing.", requires: "tugRope" },
+                    { name: "Obstacle Course", tip: "Set up stations with cones, hurdles, crawls. Time each team.", requires: "cones" },
+                    { name: "Speedball", tip: "Hybrid of soccer, basketball, and football. Kick or throw ball to score. Very dynamic!", requires: "soccer", link: "https://www.youtube.com/watch?v=yP3VvqYYlGI" },
+                    { name: "Spikeball (Roundnet)", tip: "4 players, 2 teams. Bounce ball off net, opponents have 3 touches to return. High energy!", requires: "spikeball", link: "https://www.youtube.com/watch?v=FRmjRZpHQH8" },
+                    { name: "Kan Jam", tip: "Frisbee game. Throw disc at can, partner deflects it in. First to 21 wins.", requires: "frisbee" },
+                    // No-equipment games
+                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tackle and hold for 3 sec. Tackled become bulldogs. Last one wins.", noEquipment: true, link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
+                    { name: "Manhunt", tip: "Hide and seek meets tag. Hunters find and tag hiders who become hunters. Great for large areas.", noEquipment: true },
+                    { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. Frozen players spread legs, teammates crawl through to unfreeze.", noEquipment: true },
+                    { name: "Red Light Green Light", tip: "Leader calls 'green light' to advance, 'red light' to freeze. Caught moving = restart.", noEquipment: true },
+                    { name: "Blob Tag", tip: "Tagged players join hands with tagger forming a 'blob'. Only end players can tag. Blob grows!", noEquipment: true },
+                    { name: "Relay Races", tip: "Sprint relays, wheelbarrow races, three-legged races, crab walks, bear crawls.", noEquipment: true },
+                    { name: "Sharks and Minnows", tip: "Minnows run across field while sharks try to tag. Tagged minnows become sharks.", noEquipment: true },
+                    { name: "Simon Says (PT Edition)", tip: "Leader calls exercises. Only do them if preceded by 'Simon Says'. Great warm-up game.", noEquipment: true },
+                    { name: "Duck Duck Goose", tip: "Circle game. 'Goose' chases tagger around circle. Light cardio and fun.", noEquipment: true },
+                    { name: "Partner Wheelbarrow Races", tip: "One holds ankles, partner walks on hands. Race to finish line. Great upper body.", noEquipment: true },
+                    { name: "Four Corners", tip: "Label corners 1-4. Leader calls number with eyes closed. Players in that corner are out.", noEquipment: true },
+                    { name: "Steal the Bacon", tip: "Two teams numbered. Leader calls number, those players race to grab object and return. Tag means no point.", noEquipment: true },
+                    { name: "Sardines (Reverse Hide & Seek)", tip: "One person hides, everyone seeks. Finders join hider in hiding spot until only one seeker left.", noEquipment: true },
+                    { name: "Team Elimination", tip: "Two teams at opposite ends. Sprint to center line, last team to get all members across loses one player. Repeat.", noEquipment: true },
+                    { name: "Fitness Bingo", tip: "Leader calls exercises. First team to complete 5 in a row (bingo card style) wins.", noEquipment: true },
+                    { name: "Around the World PT", tip: "Set up 8-10 exercise stations in circle. Teams rotate through stations, compete for fastest time.", noEquipment: true }
                 ],
                 indoor: [
-                    { name: "Basketball", tip: "Full court or half court games. Rotate teams every 10-15 min." },
-                    { name: "Volleyball", tip: "Rally scoring to 25. Rotate servers. Modify net height as needed." },
-                    { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline." },
-                    { name: "Indoor Soccer (Futsal)", tip: "Smaller teams, smaller goals. No walls - out of bounds rules apply." },
-                    { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies." },
-                    { name: "Badminton", tip: "Singles or doubles. Rally scoring to 21." },
-                    { name: "Team Handball", tip: "Soccer meets basketball. Throw ball into goal. No running with ball." },
-                    { name: "Pickleball", tip: "Easy to learn. Great for mixed fitness levels. Doubles recommended." },
-                    { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable." }
+                    // Equipment-based games
+                    { name: "Basketball", tip: "Full court or half court games. Rotate teams every 10-15 min.", requires: "basketball" },
+                    { name: "Basketball Knockout", tip: "Players shoot from free throw. Miss and you're eliminated by player behind you. Last standing wins.", requires: "basketball" },
+                    { name: "Around the World", tip: "Basketball shooting game. Make shot from each spot around arc to advance. Miss twice = restart.", requires: "basketball" },
+                    { name: "Volleyball", tip: "Rally scoring to 25. Rotate servers. Modify net height as needed.", requires: "volleyball" },
+                    { name: "Dodgeball Variations", tip: "Doctor Dodgeball: One 'doctor' per team can revive teammates. Or Jailbreak: Catch ball to free teammates.", requires: "dodgeball" },
+                    { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline.", requires: "dodgeball" },
+                    { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball", link: "https://www.youtube.com/watch?v=JQbqfK5Z8_A" },
+                    { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies.", requires: "hockey" },
+                    // No-equipment games
+                    { name: "Octopus Tag", tip: "Tagger in middle can only pivot on one foot. Others run past. Tagged join as octopi.", noEquipment: true },
+                    { name: "Fitness Tag", tip: "Tagged players do 10 pushups to get back in. Constant movement and exercise.", noEquipment: true },
+                    { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable.", noEquipment: true },
+                    { name: "Partner Exercises Circuit", tip: "Partner-based exercises: wheelbarrow, partner sit-ups, plank high-fives.", noEquipment: true },
+                    { name: "Mirror Drill", tip: "Partners face each other. One leads movements, other mirrors. Switch every 2 min.", noEquipment: true },
+                    { name: "Line Drills", tip: "Use court lines for sprints, shuffles, carioca, high knees between lines.", noEquipment: true },
+                    { name: "Ship Captain Crew", tip: "Leader calls commands (Port/Starboard/Captain's Coming). Last to respond is out.", noEquipment: true },
+                    { name: "Stuck in the Mud", tip: "Tagged players spread legs (stuck in mud). Freed when teammate crawls through. Fast-paced!", noEquipment: true },
+                    { name: "Chain Tag", tip: "Tagged players join hands with tagger. Chain grows. Only end players can tag.", noEquipment: true },
+                    { name: "Fitness Dice", tip: "Giant foam dice with exercises on each side. Roll dice, whole team does that exercise.", noEquipment: true },
+                    { name: "Ninja", tip: "Circle game. Take turns trying to 'chop' others' hands. Stay frozen until your turn. Strategy game!", noEquipment: true, link: "https://www.youtube.com/watch?v=Cq5WhjJpixk" },
+                    { name: "Human Knot", tip: "Circle up, grab random hands across circle. Untangle without letting go. Team building!", noEquipment: true },
+                    { name: "Follow the Leader PT", tip: "Leader calls movements (burpees, jumping jacks, etc). Everyone follows. Rotate leaders every 3 min.", noEquipment: true }
                 ]
             }
         };
@@ -1019,6 +1088,54 @@
                 noneBox.checked = true;
                 noneLabel.classList.add('none-selected');
             }
+        }
+
+        // --- Fun Day Equipment Toggle Logic ---
+
+        function toggleFundayNone() {
+            const noneBox = document.getElementById('fundayNoEquip');
+            const fundayEquipItems = document.querySelectorAll('.funday-equip, .funday-facility');
+            const noneLabel = document.getElementById('fundayNoneLabel');
+            const facilitiesSection = document.getElementById('fundayFacilitiesSection');
+
+            if (noneBox.checked) {
+                fundayEquipItems.forEach(item => {
+                    item.checked = false;
+                    item.closest('.equip-checkbox').classList.add('disabled');
+                });
+                noneLabel.classList.add('none-selected');
+                facilitiesSection.style.opacity = '0.4';
+                facilitiesSection.style.pointerEvents = 'none';
+            } else {
+                fundayEquipItems.forEach(item => {
+                    item.closest('.equip-checkbox').classList.remove('disabled');
+                });
+                noneLabel.classList.remove('none-selected');
+                facilitiesSection.style.opacity = '1';
+                facilitiesSection.style.pointerEvents = 'auto';
+            }
+            savePTGeneratorPreferences();
+        }
+
+        function fundayEquipChanged() {
+            const noneBox = document.getElementById('fundayNoEquip');
+            const noneLabel = document.getElementById('fundayNoneLabel');
+            const fundayEquipItems = document.querySelectorAll('.funday-equip, .funday-facility');
+            const facilitiesSection = document.getElementById('fundayFacilitiesSection');
+            const anyChecked = Array.from(fundayEquipItems).some(item => item.checked);
+
+            if (anyChecked) {
+                noneBox.checked = false;
+                noneLabel.classList.remove('none-selected');
+                facilitiesSection.style.opacity = '1';
+                facilitiesSection.style.pointerEvents = 'auto';
+            } else {
+                noneBox.checked = true;
+                noneLabel.classList.add('none-selected');
+                facilitiesSection.style.opacity = '0.4';
+                facilitiesSection.style.pointerEvents = 'none';
+            }
+            savePTGeneratorPreferences();
         }
 
         function getSelectedEquipment() {
@@ -1069,16 +1186,25 @@
                     sled: document.getElementById('equipSled').checked
                 },
                 fundayEquipment: {
+                    noEquip: document.getElementById('fundayNoEquip')?.checked || false,
+                    // Facilities
+                    openField: document.getElementById('fundayOpenField')?.checked || false,
+                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
+                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
+                    baseballField: document.getElementById('fundayBaseballField')?.checked || false,
+                    track: document.getElementById('fundayTrack')?.checked || false,
+                    // Equipment
                     football: document.getElementById('fundayFootball')?.checked || false,
                     basketball: document.getElementById('fundayBasketball')?.checked || false,
-                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
                     volleyball: document.getElementById('fundayVolleyball')?.checked || false,
-                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
                     soccer: document.getElementById('fundaySoccer')?.checked || false,
-                    soccerField: document.getElementById('fundaySoccerField')?.checked || false,
                     frisbee: document.getElementById('fundayFrisbee')?.checked || false,
                     dodgeball: document.getElementById('fundayDodgeball')?.checked || false,
-                    kickball: document.getElementById('fundayKickball')?.checked || false
+                    kickball: document.getElementById('fundayKickball')?.checked || false,
+                    baseball: document.getElementById('fundayBaseball')?.checked || false,
+                    flagSet: document.getElementById('fundayFlagSet')?.checked || false,
+                    cones: document.getElementById('fundayCones')?.checked || false,
+                    tugRope: document.getElementById('fundayTugRope')?.checked || false
                 }
             };
             localStorage.setItem(ptGeneratorStorageKey, JSON.stringify(preferences));
@@ -1125,6 +1251,12 @@
                             element.checked = value;
                         }
                     });
+                    // Update fun day UI
+                    if (preferences.fundayEquipment.noEquip) {
+                        toggleFundayNone();
+                    } else {
+                        fundayEquipChanged();
+                    }
                 }
 
                 // Update scheme options based on loaded focus
@@ -1356,34 +1488,46 @@
                 const fundayActivities = location === 'indoor' ? db.funday.indoor : db.funday.outdoor;
 
                 // Get selected fun day equipment
+                const noEquipment = document.getElementById('fundayNoEquip')?.checked || false;
                 const selectedFundayEquip = {
+                    // Facilities
+                    openField: document.getElementById('fundayOpenField')?.checked || false,
+                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
+                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
+                    baseballField: document.getElementById('fundayBaseballField')?.checked || false,
+                    track: document.getElementById('fundayTrack')?.checked || false,
+                    // Equipment
                     football: document.getElementById('fundayFootball')?.checked || false,
                     basketball: document.getElementById('fundayBasketball')?.checked || false,
-                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
                     volleyball: document.getElementById('fundayVolleyball')?.checked || false,
-                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
                     soccer: document.getElementById('fundaySoccer')?.checked || false,
-                    soccerField: document.getElementById('fundaySoccerField')?.checked || false,
                     frisbee: document.getElementById('fundayFrisbee')?.checked || false,
                     dodgeball: document.getElementById('fundayDodgeball')?.checked || false,
-                    kickball: document.getElementById('fundayKickball')?.checked || false
+                    kickball: document.getElementById('fundayKickball')?.checked || false,
+                    baseball: document.getElementById('fundayBaseball')?.checked || false,
+                    flagSet: document.getElementById('fundayFlagSet')?.checked || false,
+                    cones: document.getElementById('fundayCones')?.checked || false,
+                    tugRope: document.getElementById('fundayTugRope')?.checked || false
                 };
 
                 // Filter activities based on equipment availability
-                let filteredActivities = [...fundayActivities];
-                const hasAnyEquipment = Object.values(selectedFundayEquip).some(val => val);
+                let filteredActivities;
 
-                if (hasAnyEquipment) {
+                if (noEquipment) {
+                    // Only show no-equipment games
+                    filteredActivities = fundayActivities.filter(activity => activity.noEquipment === true);
+                } else {
+                    // Show games based on selected equipment
                     filteredActivities = fundayActivities.filter(activity => {
-                        const name = activity.name.toLowerCase();
-                        if (name.includes('football') && !selectedFundayEquip.football) return false;
-                        if (name.includes('basketball') && !selectedFundayEquip.basketball && !selectedFundayEquip.basketballCourt) return false;
-                        if (name.includes('volleyball') && !selectedFundayEquip.volleyball && !selectedFundayEquip.volleyballCourt) return false;
-                        if (name.includes('soccer') && !selectedFundayEquip.soccer && !selectedFundayEquip.soccerField) return false;
-                        if (name.includes('frisbee') && !selectedFundayEquip.frisbee) return false;
-                        if (name.includes('dodgeball') && !selectedFundayEquip.dodgeball) return false;
-                        if (name.includes('kickball') && !selectedFundayEquip.kickball) return false;
-                        // Always include generic activities (relay races, tug of war, obstacle course, etc.)
+                        // Always include no-equipment games
+                        if (activity.noEquipment) return true;
+
+                        // If activity requires specific equipment, check if we have it
+                        if (activity.requires) {
+                            return selectedFundayEquip[activity.requires] === true;
+                        }
+
+                        // Include all other activities
                         return true;
                     });
                 }
@@ -1401,12 +1545,18 @@
                 html += `<p style="margin-bottom:15px; padding:15px; background:rgba(255,215,0,0.1); border-radius:8px; border:1px solid rgba(255,215,0,0.3); font-size:0.95em;">
                             <strong style="color:#ffd700; font-size:1.2em;">Today's Activity: ${primary.name}</strong><br>
                             <span style="color:#8fa3bf;">💡 ${primary.tip}</span>
+                            ${primary.link ? `<br><a href="${primary.link}" target="_blank" style="color:#4a90e2; text-decoration:none; font-size:0.9em; margin-top:8px; display:inline-block;">▶ Watch How to Play</a>` : ''}
                          </p>`;
 
                 html += `<p style="margin-bottom:10px; color:#8fa3bf; font-size:0.9em;"><strong>Alternative Options:</strong></p>`;
                 html += `<ul class="exercise-list">`;
                 alternatives.forEach(activity => {
-                    html += renderItem(activity.name, "Team Sport", activity.tip);
+                    const linkHtml = activity.link ? `<br><a href="${activity.link}" target="_blank" style="color:#4a90e2; text-decoration:none; font-size:0.85em;">▶ Watch How to Play</a>` : '';
+                    html += `<li class="exercise-item">
+                                <span class="exercise-name">${activity.name}</span>
+                                <div class="exercise-meta">Team Sport</div>
+                                <div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${activity.tip}${linkHtml}</div>
+                             </li>`;
                 });
                 html += `</ul>`;
 
