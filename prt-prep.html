@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-Week PRT Prep Program | Navy Physical Readiness Test Training</title>
+    <meta name="description"
+        content="8-week structured training program focusing on pushups, planks, and 1.5-mile run. Build muscular endurance and cardio speed for Navy PRT.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            min-height: 100vh;
+            color: #e8eef5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #3b82f6, #fff, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .calculator-card {
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 130, 180, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-box h3 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #8fa3bf;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .week-card {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .week-title {
+            color: #3b82f6;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .week-focus {
+            color: #8fa3bf;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .day-row {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .day-header {
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .day-content {
+            color: #8fa3bf;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .rest-day {
+            border-left-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .test-day {
+            border-left-color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .ad-container {
+            background: rgba(30, 50, 80, 0.3);
+            border: 1px dashed rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+        }
+
+        .ad-container.large {
+            min-height: 250px;
+        }
+
+        .ad-label {
+            color: #6b7c94;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            text-align: center;
+            color: #6b7c94;
+            font-size: 12px;
+            padding: 30px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #3b82f6;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .btn-back,
+            .action-btn,
+            .ad-container,
+            footer {
+                display: none !important;
+            }
+
+            .calculator-card {
+                background: white !important;
+                border: 1px solid #ccc;
+                box-shadow: none;
+            }
+
+            .week-card {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ccc;
+            }
+
+            .week-title {
+                color: #000 !important;
+            }
+
+            .day-row {
+                background: #f5f5f5 !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <a href="generator.html" class="btn-back">← Back to PT Generator</a>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">💪</div>
+                <h1>8-Week PRT Prep Program</h1>
+            </div>
+            <p class="subtitle">Build Strength & Speed for Test Day</p>
+        </header>
+
+        <main class="calculator-card">
+            <div class="info-box">
+                <h3>Program Overview</h3>
+                <p style="margin-bottom: 15px;">This 8-week program is designed to improve your Navy PRT performance with a focus on:</p>
+                <ul>
+                    <li><strong>Muscular Endurance:</strong> Progressive pushup and plank training</li>
+                    <li><strong>Cardiovascular Endurance:</strong> 1.5-mile run speed and pacing</li>
+                    <li><strong>Recovery:</strong> Built-in rest days and active recovery</li>
+                    <li><strong>Progressive Overload:</strong> Gradually increasing volume and intensity</li>
+                </ul>
+                <p style="margin-top: 15px; color: #3b82f6; font-weight: 600;">
+                    📋 Complete each workout as written. Listen to your body and scale as needed. Consistency is key!
+                </p>
+            </div>
+
+            <!-- Week 1 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 1</div>
+                    <div class="week-focus">Foundation Building</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Pushup Focus</div>
+                    <div class="day-content">
+                        • 3 sets of max pushups (rest 2 min between sets)<br>
+                        • 3 sets of 30-45 sec plank hold<br>
+                        • Light 10-15 min jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Run Day</div>
+                    <div class="day-content">
+                        • 2-mile easy pace run (conversational pace)<br>
+                        • Focus on breathing and form
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Active Recovery</div>
+                    <div class="day-content">
+                        • 20 min walk or light stretching<br>
+                        • Foam rolling if available
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Plank & Core</div>
+                    <div class="day-content">
+                        • 4 sets of 45-60 sec plank hold (rest 90 sec)<br>
+                        • 3 sets of 15 pushups<br>
+                        • 3 sets of 20 mountain climbers
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Interval Run</div>
+                    <div class="day-content">
+                        • 10 min warm-up jog<br>
+                        • 6 x 400m at goal 1.5mi pace (2 min rest between)<br>
+                        • 10 min cool-down jog
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest or light activity<br>
+                        • Hydrate and recover
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Long Run</div>
+                    <div class="day-content">
+                        • 3-mile easy pace run<br>
+                        • Stay consistent, no walking
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 2</div>
+                    <div class="week-focus">Volume Increase</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Pushup Ladder</div>
+                    <div class="day-content">
+                        • Pushup ladder: 1-2-3-4-5-4-3-2-1 (rest 60 sec between sets)<br>
+                        • 4 sets of 45 sec plank hold<br>
+                        • Light 10-15 min jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Tempo Run</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 1 mile at comfortably hard pace (80% effort)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Active Recovery</div>
+                    <div class="day-content">
+                        • 20-30 min walk or swim<br>
+                        • Stretch major muscle groups
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Core Strength</div>
+                    <div class="day-content">
+                        • 5 sets of 60 sec plank hold<br>
+                        • 4 sets of 20 pushups<br>
+                        • 3 sets of 30 mountain climbers<br>
+                        • 3 sets of 15 dive bomber pushups
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Speed Work</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 8 x 400m at goal pace (90 sec rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Nutrition and hydration focus
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Long Run</div>
+                    <div class="day-content">
+                        • 3.5-mile easy pace run<br>
+                        • Negative split (2nd half faster)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 3</div>
+                    <div class="week-focus">Intensity Build</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Pushup Pyramid</div>
+                    <div class="day-content">
+                        • Pyramid: 5-10-15-10-5 pushups (2 min rest)<br>
+                        • 5 sets of 60 sec plank hold<br>
+                        • 15 min easy jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Hill Repeats</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 6 x 2 min hill sprints (walk down recovery)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Active Recovery</div>
+                    <div class="day-content">
+                        • 30 min bike or swim<br>
+                        • Mobility work
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Max Effort</div>
+                    <div class="day-content">
+                        • 6 sets of max plank hold (2 min rest)<br>
+                        • 5 sets of max pushups (2 min rest)<br>
+                        • 4 sets of 20 hand-release pushups
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Intervals</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 5 x 800m at 1.5mi goal pace (2 min rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest day<br>
+                        • Mental preparation
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Long Run</div>
+                    <div class="day-content">
+                        • 4-mile steady pace<br>
+                        • Practice pacing control
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4: Recovery Week -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 4</div>
+                    <div class="week-focus">Active Recovery (Deload)</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Light Pushups</div>
+                    <div class="day-content">
+                        • 3 sets of 50% max pushups<br>
+                        • 3 sets of 30 sec plank hold<br>
+                        • 10 min easy jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Easy Run</div>
+                    <div class="day-content">
+                        • 2-mile easy conversational pace<br>
+                        • Focus on form recovery
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Stretch and foam roll
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Light Core</div>
+                    <div class="day-content">
+                        • 3 sets of 45 sec plank hold<br>
+                        • 2 sets of 15 pushups<br>
+                        • Yoga or stretching
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Easy Intervals</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 4 x 400m at comfortable pace (2 min rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Recovery focus
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Short Run</div>
+                    <div class="day-content">
+                        • 2.5-mile easy pace<br>
+                        • Prep for next training block
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 5</div>
+                    <div class="week-focus">Strength Peak</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - High Volume Pushups</div>
+                    <div class="day-content">
+                        • 6 sets of max pushups (90 sec rest)<br>
+                        • 6 sets of 60 sec plank hold<br>
+                        • 15 min easy jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Threshold Run</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 1.5 miles at goal PRT pace<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Active Recovery</div>
+                    <div class="day-content">
+                        • 30 min bike or swim<br>
+                        • Light stretching
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Core Endurance</div>
+                    <div class="day-content">
+                        • 8 sets of 60-90 sec plank hold<br>
+                        • 6 sets of 25 pushups<br>
+                        • 4 sets of 30 diamond pushups
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Speed Endurance</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 4 x 1000m at goal pace (2 min rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Hydration and nutrition
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Long Run</div>
+                    <div class="day-content">
+                        • 4.5-mile steady pace<br>
+                        • Confidence builder
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 6</div>
+                    <div class="week-focus">Peak Performance</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Max Pushups</div>
+                    <div class="day-content">
+                        • 8 sets of max pushups (2 min rest)<br>
+                        • 8 sets of 90 sec plank hold<br>
+                        • Light 10 min jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Race Pace</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 1.5 miles at goal pace minus 15 sec<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Active Recovery</div>
+                    <div class="day-content">
+                        • 20-30 min walk<br>
+                        • Full body stretch
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Peak Core</div>
+                    <div class="day-content">
+                        • 10 sets of max plank hold (90 sec rest)<br>
+                        • 8 sets of 30 pushups<br>
+                        • 5 sets of 15 decline pushups
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Final Speed Work</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 3 x 800m at goal pace (3 min rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Mental preparation
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Easy Long Run</div>
+                    <div class="day-content">
+                        • 3-mile conversational pace<br>
+                        • Keep it easy
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 7: Taper -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 7</div>
+                    <div class="week-focus">Taper & Sharpen</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Maintenance Volume</div>
+                    <div class="day-content">
+                        • 4 sets of 75% max pushups<br>
+                        • 4 sets of 60 sec plank hold<br>
+                        • 15 min easy jog
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Tuesday - Short Intervals</div>
+                    <div class="day-content">
+                        • 10 min warm-up<br>
+                        • 5 x 400m at race pace (2 min rest)<br>
+                        • 10 min cool-down
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Wednesday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Sleep and recovery focus
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Thursday - Light Strength</div>
+                    <div class="day-content">
+                        • 3 sets of 60 sec plank hold<br>
+                        • 3 sets of 20 pushups<br>
+                        • Keep it light
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Easy Run</div>
+                    <div class="day-content">
+                        • 2-mile easy conversational pace<br>
+                        • Focus on feeling fresh
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Hydrate and prep
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Sunday - Shakeout</div>
+                    <div class="day-content">
+                        • 1.5-mile easy pace<br>
+                        • Practice pacing feel
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8: Test Week -->
+            <div class="week-card">
+                <div class="week-header">
+                    <div class="week-title">Week 8</div>
+                    <div class="week-focus">Test Week</div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Monday - Light Activation</div>
+                    <div class="day-content">
+                        • 2 sets of 15 pushups<br>
+                        • 2 sets of 30 sec plank hold<br>
+                        • 10 min easy jog<br>
+                        • Keep it light!
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Tuesday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Hydrate and sleep
+                    </div>
+                </div>
+                <div class="day-row test-day">
+                    <div class="day-header">Wednesday - MOCK PRT (Optional)</div>
+                    <div class="day-content">
+                        • Full PRT simulation if needed<br>
+                        • Only if you need final confidence check<br>
+                        • Otherwise REST
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Thursday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Mental preparation
+                    </div>
+                </div>
+                <div class="day-row">
+                    <div class="day-header">Friday - Pre-Test Activation</div>
+                    <div class="day-content">
+                        • 1 set of 10 pushups<br>
+                        • 1 set of 20 sec plank hold<br>
+                        • 10 min light jog with 2-3 strides<br>
+                        • Prime the body
+                    </div>
+                </div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Saturday - Rest</div>
+                    <div class="day-content">
+                        • Complete rest<br>
+                        • Early to bed<br>
+                        • Lay out test gear
+                    </div>
+                </div>
+                <div class="day-row test-day">
+                    <div class="day-header">Sunday - TEST DAY 🎯</div>
+                    <div class="day-content">
+                        <strong>YOU'RE READY!</strong><br>
+                        • Arrive early, warm up properly<br>
+                        • Trust your training<br>
+                        • Execute your plan<br>
+                        • Leave it all out there!
+                    </div>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="window.print()">🖨️ Print 8-Week Program</button>
+
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px;">
+                <h3 style="color: #ffd700; margin-bottom: 15px;">Training Tips</h3>
+                <ul style="color: #8fa3bf; margin-left: 20px;">
+                    <li style="margin-bottom: 10px;"><strong>Proper Form:</strong> Quality over quantity. Better to do fewer perfect reps than many sloppy ones.</li>
+                    <li style="margin-bottom: 10px;"><strong>Recovery:</strong> Sleep 7-9 hours per night. Deload weeks are mandatory, not optional.</li>
+                    <li style="margin-bottom: 10px;"><strong>Nutrition:</strong> Fuel your training. Adequate protein (0.8-1g per lb bodyweight) and carbs for energy.</li>
+                    <li style="margin-bottom: 10px;"><strong>Hydration:</strong> Drink water throughout the day, especially before/after runs.</li>
+                    <li style="margin-bottom: 10px;"><strong>Listen to Your Body:</strong> If you feel pain (not soreness), take an extra rest day. It's better to undertrain slightly than overtrain.</li>
+                    <li style="margin-bottom: 10px;"><strong>Track Progress:</strong> Log your max reps, plank times, and run times weekly to see improvement.</li>
+                </ul>
+            </div>
+        </main>
+
+        <div class="ad-container large">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
+        <footer>
+            <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
+            <p style="margin-top: 10px;">
+                <a href="references.html">References & Guides</a> |
+                <a href="index.html">BCA Calculator</a> |
+                <a href="generator.html">PT Generator</a> |
+                <a href="watchbill.html">Watchbill Generator</a> |
+                <a href="prt-prep.html">8-Week PRT Prep</a> |
+                <a href="about.html">About</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Use</a> |
+                <a href="mailto:administrator@navybca.com">Contact</a>
+            </p>
+            <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. Consult with your CFL and medical professional before starting any training program.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
