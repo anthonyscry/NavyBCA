@@ -975,15 +975,6 @@
                 </select>
                 <p class="hint">This will be the default time selected for all PT sessions</p>
             </div>
-
-            <div class="form-group">
-                <label>Remember Settings</label>
-                <div class="toggle-row">
-                    <input type="checkbox" id="rememberWatchbillToggle">
-                    <span>Save inputs on this device</span>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label>Location Options</label>
                 <div class="location-manager" id="locationManager">
@@ -1011,6 +1002,15 @@
                 </div>
                 <button class="btn-add" onclick="addCFL()">+ Add CFL/ACFL</button>
                 <p class="hint">Add all CFLs and ACFLs who will lead PT (will rotate automatically)</p>
+            </div>
+
+            <div class="form-group">
+                <label>Remember Settings</label>
+                <label class="toggle-pill">
+                    <input type="checkbox" id="rememberWatchbillToggle">
+                    <span class="toggle-pill-track"></span>
+                    <span>Save inputs on this device</span>
+                </label>
             </div>
 
             <button class="action-btn" onclick="generateWatchbill()">Generate Watchbill</button>

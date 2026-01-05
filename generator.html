@@ -713,14 +713,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Remember Settings</label>
-                    <label class="toggle-pill">
-                        <input type="checkbox" id="rememberPtToggle">
-                        <span class="toggle-pill-track"></span>
-                        <span class="toggle-pill-text">Save selections on this device</span>
-                    </label>
-                </div>
             </div>
 
             <div class="form-group" id="fundayEquipmentGroup" style="display: none;">
@@ -844,6 +836,15 @@
                         <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
                     </label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Remember Settings</label>
+                <label class="toggle-pill">
+                    <input type="checkbox" id="rememberPtToggle">
+                    <span class="toggle-pill-track"></span>
+                    <span class="toggle-pill-text">Save selections on this device</span>
+                </label>
             </div>
 
             <button class="action-btn" onclick="generateWorkout()">Generate 60-Minute Session</button>
