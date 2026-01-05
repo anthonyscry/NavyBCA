@@ -556,7 +556,18 @@
                 <p>Auto-generate PT schedules with CFL rotation. Select days, assign CFLs, print ready.</p>
             </div>
             <a href="watchbill.html" class="pt-banner-btn">
-                Command PT Watchbill Generator →
+                PT Watchbill Generator →
+            </a>
+        </div>
+
+        <!-- 8-Week PRT Prep Program Banner -->
+        <div class="pt-banner" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); border-color: rgba(59, 130, 246, 0.3);">
+            <div class="pt-banner-text">
+                <h3>8-Week PRT Prep Program</h3>
+                <p>Structured training plan focusing on pushups, planks, and 1.5mi run endurance. Build strength and speed for test day.</p>
+            </div>
+            <a href="prt-prep.html" class="pt-banner-btn" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                Start Training →
             </a>
         </div>
 
@@ -616,6 +627,43 @@
                         <option value="reversePyramid">Reverse Pyramid (10-8-6-4-2)</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="form-group" id="fundayEquipmentGroup" style="display: none;">
+                <label>Available Equipment/Courts for Fun Day</label>
+                <div class="equip-grid">
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="savePTGeneratorPreferences()"> Football
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="savePTGeneratorPreferences()"> Basketball
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayBasketballCourt" onchange="savePTGeneratorPreferences()"> Basketball Court
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="savePTGeneratorPreferences()"> Volleyball
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayVolleyballCourt" onchange="savePTGeneratorPreferences()"> Volleyball Court
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="savePTGeneratorPreferences()"> Soccer Ball
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundaySoccerField" onchange="savePTGeneratorPreferences()"> Soccer Field
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="savePTGeneratorPreferences()"> Frisbee
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="savePTGeneratorPreferences()"> Dodgeballs
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="savePTGeneratorPreferences()"> Kickball
+                    </label>
+                </div>
+                <p class="hint" style="margin-top: 10px; color: #8fa3bf;">Select available equipment/courts to get more relevant fun day activity suggestions</p>
             </div>
 
             <div class="form-group" id="equipmentGroup">
@@ -702,6 +750,7 @@
                 <a href="index.html">BCA Calculator</a> |
                 <a href="generator.html">PT Generator</a> |
                 <a href="watchbill.html">Watchbill Generator</a> |
+                <a href="prt-prep.html">8-Week PRT Prep</a> |
                 <a href="about.html">About</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
@@ -990,6 +1039,104 @@
             };
         }
 
+        // --- LocalStorage for PT Generator Preferences ---
+        const ptGeneratorStorageKey = 'navyPTGeneratorPreferences';
+        let isLoadingPreferences = false;
+
+        function savePTGeneratorPreferences() {
+            if (isLoadingPreferences) {
+                return;
+            }
+
+            const preferences = {
+                focus: document.getElementById('focusSelect').value,
+                location: document.getElementById('locationSelect').value,
+                scheme: document.getElementById('schemeSelect').value,
+                equipment: {
+                    none: document.getElementById('equipNone').checked,
+                    adjBench: document.getElementById('equipAdjBench').checked,
+                    assaultBike: document.getElementById('equipAssaultBike').checked,
+                    barbell: document.getElementById('equipBarbell').checked,
+                    dumbbells: document.getElementById('equipDumbbells').checked,
+                    flatBench: document.getElementById('equipFlatBench').checked,
+                    jumprope: document.getElementById('equipJumprope').checked,
+                    kettlebells: document.getElementById('equipKettlebells').checked,
+                    pullup: document.getElementById('equipPullup').checked,
+                    bands: document.getElementById('equipBands').checked,
+                    rower: document.getElementById('equipRower').checked,
+                    cycle: document.getElementById('equipCycle').checked,
+                    treadmill: document.getElementById('equipTreadmill').checked,
+                    sled: document.getElementById('equipSled').checked
+                },
+                fundayEquipment: {
+                    football: document.getElementById('fundayFootball')?.checked || false,
+                    basketball: document.getElementById('fundayBasketball')?.checked || false,
+                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
+                    volleyball: document.getElementById('fundayVolleyball')?.checked || false,
+                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
+                    soccer: document.getElementById('fundaySoccer')?.checked || false,
+                    soccerField: document.getElementById('fundaySoccerField')?.checked || false,
+                    frisbee: document.getElementById('fundayFrisbee')?.checked || false,
+                    dodgeball: document.getElementById('fundayDodgeball')?.checked || false,
+                    kickball: document.getElementById('fundayKickball')?.checked || false
+                }
+            };
+            localStorage.setItem(ptGeneratorStorageKey, JSON.stringify(preferences));
+        }
+
+        function loadPTGeneratorPreferences() {
+            const savedPreferences = localStorage.getItem(ptGeneratorStorageKey);
+            if (!savedPreferences) {
+                return;
+            }
+
+            isLoadingPreferences = true;
+            try {
+                const preferences = JSON.parse(savedPreferences);
+
+                if (preferences.focus) {
+                    document.getElementById('focusSelect').value = preferences.focus;
+                }
+                if (preferences.location) {
+                    document.getElementById('locationSelect').value = preferences.location;
+                }
+                if (preferences.scheme) {
+                    document.getElementById('schemeSelect').value = preferences.scheme;
+                }
+                if (preferences.equipment) {
+                    Object.entries(preferences.equipment).forEach(([key, value]) => {
+                        const element = document.getElementById(`equip${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                        if (element) {
+                            element.checked = value;
+                        }
+                    });
+                    // Update equipment UI
+                    if (preferences.equipment.none) {
+                        toggleNone();
+                    } else {
+                        equipChanged();
+                    }
+                }
+
+                if (preferences.fundayEquipment) {
+                    Object.entries(preferences.fundayEquipment).forEach(([key, value]) => {
+                        const element = document.getElementById(`funday${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                        if (element) {
+                            element.checked = value;
+                        }
+                    });
+                }
+
+                // Update scheme options based on loaded focus
+                updateSchemeOptions();
+                updateEquipmentOptions();
+            } catch (error) {
+                console.error('Failed to load PT Generator preferences:', error);
+            } finally {
+                isLoadingPreferences = false;
+            }
+        }
+
         // --- Focus Change Handler (update rep schemes for cardio-only, disable for fun day) ---
 
         function updateSchemeOptions() {
@@ -1051,11 +1198,22 @@
 
         function updateEquipmentOptions() {
             const focus = document.getElementById('focusSelect').value;
+            const equipmentGroup = document.getElementById('equipmentGroup');
+            const fundayEquipmentGroup = document.getElementById('fundayEquipmentGroup');
             const equipmentGrid = document.getElementById('equipmentGrid');
-            const equipmentCheckboxes = document.querySelectorAll('.equip-checkbox');
+            const equipmentCheckboxes = equipmentGrid.querySelectorAll('.equip-checkbox');
 
-            // Disable equipment for Fun Day and Chill Day (Yoga)
-            if (focus === 'funday' || focus === 'yoga') {
+            // Show/hide fun day equipment section
+            if (focus === 'funday') {
+                fundayEquipmentGroup.style.display = 'block';
+                equipmentGroup.style.display = 'none';
+            } else {
+                fundayEquipmentGroup.style.display = 'none';
+                equipmentGroup.style.display = 'block';
+            }
+
+            // Disable equipment for Chill Day (Yoga)
+            if (focus === 'yoga') {
                 equipmentGrid.classList.add('disabled');
                 equipmentCheckboxes.forEach(checkbox => {
                     checkbox.classList.add('disabled');
@@ -1072,7 +1230,19 @@
         document.getElementById('focusSelect').addEventListener('change', function() {
             updateSchemeOptions();
             updateEquipmentOptions();
+            savePTGeneratorPreferences();
         });
+
+        document.getElementById('locationSelect').addEventListener('change', savePTGeneratorPreferences);
+        document.getElementById('schemeSelect').addEventListener('change', savePTGeneratorPreferences);
+
+        // Add change listeners to all equipment checkboxes
+        document.querySelectorAll('.equip-checkbox input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', savePTGeneratorPreferences);
+        });
+
+        // Load preferences on page load
+        window.addEventListener('DOMContentLoaded', loadPTGeneratorPreferences);
 
         // --- Collapsible Section Toggle ---
 
@@ -1184,7 +1354,46 @@
             // Handle Fun Day separately
             if (focus === 'funday') {
                 const fundayActivities = location === 'indoor' ? db.funday.indoor : db.funday.outdoor;
-                const shuffled = fundayActivities.sort(() => 0.5 - Math.random());
+
+                // Get selected fun day equipment
+                const selectedFundayEquip = {
+                    football: document.getElementById('fundayFootball')?.checked || false,
+                    basketball: document.getElementById('fundayBasketball')?.checked || false,
+                    basketballCourt: document.getElementById('fundayBasketballCourt')?.checked || false,
+                    volleyball: document.getElementById('fundayVolleyball')?.checked || false,
+                    volleyballCourt: document.getElementById('fundayVolleyballCourt')?.checked || false,
+                    soccer: document.getElementById('fundaySoccer')?.checked || false,
+                    soccerField: document.getElementById('fundaySoccerField')?.checked || false,
+                    frisbee: document.getElementById('fundayFrisbee')?.checked || false,
+                    dodgeball: document.getElementById('fundayDodgeball')?.checked || false,
+                    kickball: document.getElementById('fundayKickball')?.checked || false
+                };
+
+                // Filter activities based on equipment availability
+                let filteredActivities = [...fundayActivities];
+                const hasAnyEquipment = Object.values(selectedFundayEquip).some(val => val);
+
+                if (hasAnyEquipment) {
+                    filteredActivities = fundayActivities.filter(activity => {
+                        const name = activity.name.toLowerCase();
+                        if (name.includes('football') && !selectedFundayEquip.football) return false;
+                        if (name.includes('basketball') && !selectedFundayEquip.basketball && !selectedFundayEquip.basketballCourt) return false;
+                        if (name.includes('volleyball') && !selectedFundayEquip.volleyball && !selectedFundayEquip.volleyballCourt) return false;
+                        if (name.includes('soccer') && !selectedFundayEquip.soccer && !selectedFundayEquip.soccerField) return false;
+                        if (name.includes('frisbee') && !selectedFundayEquip.frisbee) return false;
+                        if (name.includes('dodgeball') && !selectedFundayEquip.dodgeball) return false;
+                        if (name.includes('kickball') && !selectedFundayEquip.kickball) return false;
+                        // Always include generic activities (relay races, tug of war, obstacle course, etc.)
+                        return true;
+                    });
+                }
+
+                // If filtering resulted in empty list, use all activities
+                if (filteredActivities.length === 0) {
+                    filteredActivities = fundayActivities;
+                }
+
+                const shuffled = filteredActivities.sort(() => 0.5 - Math.random());
                 const primary = shuffled[0];
                 const alternatives = shuffled.slice(1, 4);
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Command PT Watchbill Generator | Navy Command PT Schedule</title>
+    <title>PT Watchbill Generator | Navy Command PT Schedule</title>
     <meta name="description"
         content="Generate Command PT and FEP watchbills with automatic CFL/ACFL rotation. Free tool for creating monthly PT schedules.">
     <link rel="icon" type="image/svg+xml"
@@ -814,7 +814,7 @@
         <header>
             <div class="logo-container">
                 <div class="logo">⚓</div>
-                <h1>Command PT Watchbill Generator</h1>
+                <h1>PT Watchbill Generator</h1>
             </div>
             <p class="subtitle">Command PT & FEP Schedule Builder</p>
         </header>
@@ -975,6 +975,7 @@
                 <a href="index.html">BCA Calculator</a> |
                 <a href="generator.html">PT Generator</a> |
                 <a href="watchbill.html">Watchbill Generator</a> |
+                <a href="prt-prep.html">8-Week PRT Prep</a> |
                 <a href="about.html">About</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
@@ -1513,7 +1514,13 @@
             calendarHTML += `
                     </div>
                 </div>
-                <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill & Metrics</button>
+                <p style="margin: 20px 0; padding: 15px; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 8px; color: #ffd700; font-size: 14px; text-align: center;">
+                    <strong>💡 Print Tip:</strong> For best results, print at 70% zoom to fit the entire calendar on one page.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                    <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill & Metrics</button>
+                    <button class="print-btn" onclick="exportToICS()" style="background: rgba(34, 197, 94, 0.2); border-color: #22c55e; color: #22c55e;">📅 Export to Calendar (.ics)</button>
+                </div>
             `;
 
             document.getElementById('watchbillOutput').innerHTML = calendarHTML;
@@ -1538,6 +1545,76 @@
                     }
                 });
             });
+        }
+
+        function exportToICS() {
+            if (ptSchedule.length === 0) {
+                alert('Please generate a watchbill first before exporting.');
+                return;
+            }
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const activeSessions = ptSchedule.filter(session => !session.offDay);
+
+            // ICS file format
+            let icsContent = 'BEGIN:VCALENDAR\r\n';
+            icsContent += 'VERSION:2.0\r\n';
+            icsContent += 'PRODID:-//Navy BCA//PT Watchbill Generator//EN\r\n';
+            icsContent += 'CALSCALE:GREGORIAN\r\n';
+            icsContent += 'METHOD:PUBLISH\r\n';
+            icsContent += `X-WR-CALNAME:${monthNames[currentWatchbillMonth]} ${currentWatchbillYear} PT Watchbill\r\n`;
+            icsContent += 'X-WR-TIMEZONE:UTC\r\n';
+
+            activeSessions.forEach(session => {
+                const date = session.date;
+                const [hours, minutes] = session.time.split(':');
+
+                // Create start and end times
+                const startDate = new Date(date);
+                startDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+                const endDate = new Date(startDate);
+                endDate.setHours(startDate.getHours() + 1); // 1 hour duration
+
+                // Format dates for ICS (YYYYMMDDTHHMMSS)
+                const formatICSDate = (d) => {
+                    return d.getFullYear() +
+                           String(d.getMonth() + 1).padStart(2, '0') +
+                           String(d.getDate()).padStart(2, '0') +
+                           'T' +
+                           String(d.getHours()).padStart(2, '0') +
+                           String(d.getMinutes()).padStart(2, '0') +
+                           String(d.getSeconds()).padStart(2, '0');
+                };
+
+                const uid = `${formatICSDate(startDate)}-${session.assignedCfl.replace(/\s+/g, '-')}@navybca.com`;
+                const sessionType = session.type === 'pt' ? 'Command PT' : 'FEP';
+
+                icsContent += 'BEGIN:VEVENT\r\n';
+                icsContent += `UID:${uid}\r\n`;
+                icsContent += `DTSTAMP:${formatICSDate(new Date())}\r\n`;
+                icsContent += `DTSTART:${formatICSDate(startDate)}\r\n`;
+                icsContent += `DTEND:${formatICSDate(endDate)}\r\n`;
+                icsContent += `SUMMARY:${sessionType} - ${session.assignedCfl}\r\n`;
+                icsContent += `DESCRIPTION:CFL/ACFL: ${session.assignedCfl}\\nLocation: ${session.location}\\nTime: ${session.time}\r\n`;
+                icsContent += `LOCATION:${session.location}\r\n`;
+                icsContent += 'STATUS:CONFIRMED\r\n';
+                icsContent += 'SEQUENCE:0\r\n';
+                icsContent += 'END:VEVENT\r\n';
+            });
+
+            icsContent += 'END:VCALENDAR\r\n';
+
+            // Download ICS file
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `PT-Watchbill-${monthNames[currentWatchbillMonth]}-${currentWatchbillYear}.ics`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         }
     </script>
 </body>
