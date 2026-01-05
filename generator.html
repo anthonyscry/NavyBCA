@@ -184,6 +184,65 @@
             pointer-events: none;
         }
 
+        .toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #dfe7f3;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-pill-track {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            background: rgba(216, 222, 231, 0.7);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-pill-track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track {
+            background: #4a90e2;
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track::after {
+            transform: translateX(16px);
+        }
+
+        .injury-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .injury-options .equip-checkbox {
+            font-size: 0.8em;
+            padding: 6px 10px;
+        }
+
         .equip-grid.disabled {
             opacity: 0.5;
         }
@@ -336,6 +395,36 @@
             border-left: 3px solid #4a90e2;
         }
 
+        .exercise-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-main {
+            min-width: 200px;
+        }
+
+        .exercise-alt {
+            min-width: 200px;
+            text-align: right;
+            color: #d1e6ff;
+        }
+
+        .exercise-alt-label {
+            display: block;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #8fa3bf;
+        }
+
+        .exercise-alt-name {
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
         .exercise-name {
             font-weight: 600;
             font-size: 1.1em;
@@ -370,10 +459,6 @@
         footer a {
             color: #8fa3bf;
             text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            line-height: 1.4;
-            padding: 2px 4px;
         }
 
         footer a:hover {
@@ -598,12 +683,6 @@
                         <option value="indoor">Indoor</option>
                     </select>
                 </div>
-                <div class="form-group" id="lowImpactGroup">
-                    <label>Low Impact / Injured Mode</label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" id="lowImpactToggle"> Enable low-impact alternatives
-                    </label>
-                </div>
                 <div class="form-group">
                     <label>Rep Scheme</label>
                     <select id="schemeSelect">
@@ -614,6 +693,25 @@
                         <option value="pyramid">Pyramid (2-4-6-8-10)</option>
                         <option value="reversePyramid">Reverse Pyramid (10-8-6-4-2)</option>
                     </select>
+                </div>
+                <div class="form-group" id="lowImpactGroup">
+                    <label>Low Impact / Injured Mode</label>
+                    <label class="toggle-pill">
+                        <input type="checkbox" id="lowImpactToggle">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">Low-impact alternatives</span>
+                    </label>
+                    <div class="injury-options" id="injuryOptions" style="display:none;">
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryBack"> Back
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryLower"> Lower Body
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryUpper"> Upper Body
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -631,58 +729,58 @@
                 <div id="fundayFacilitiesSection">
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">PLAYING AREAS / FACILITIES</label>
                     <div class="equip-grid" style="margin-bottom: 20px;">
-                        <label class="equip-checkbox" id="fundayOpenFieldLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()"> Open Field
+                        <label class="equip-checkbox" id="fundayBaseballFieldLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()"> Baseball/Softball Field
                         </label>
                         <label class="equip-checkbox" id="fundayBasketballCourtLabel">
                             <input type="checkbox" class="funday-facility" id="fundayBasketballCourt" onchange="fundayEquipChanged()"> Basketball Court
                         </label>
-                        <label class="equip-checkbox" id="fundayVolleyballCourtLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()"> Volleyball Court
-                        </label>
-                        <label class="equip-checkbox" id="fundayBaseballFieldLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()"> Baseball/Softball Field
+                        <label class="equip-checkbox" id="fundayOpenFieldLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()"> Open Field
                         </label>
                         <label class="equip-checkbox" id="fundayTrackLabel">
                             <input type="checkbox" class="funday-facility" id="fundayTrack" onchange="fundayEquipChanged()"> Track/Running Path
+                        </label>
+                        <label class="equip-checkbox" id="fundayVolleyballCourtLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()"> Volleyball Court
                         </label>
                     </div>
 
                     <!-- Equipment -->
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">AVAILABLE EQUIPMENT</label>
                     <div class="equip-grid">
-                        <label class="equip-checkbox" id="fundayFootballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()"> Football
+                        <label class="equip-checkbox" id="fundayBaseballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()"> Softballs/Bats
                         </label>
                         <label class="equip-checkbox" id="fundayBasketballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="fundayEquipChanged()"> Basketball
                         </label>
-                        <label class="equip-checkbox" id="fundayVolleyballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()"> Volleyball
-                        </label>
-                        <label class="equip-checkbox" id="fundaySoccerLabel">
-                            <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()"> Soccer Ball
-                        </label>
-                        <label class="equip-checkbox" id="fundayFrisbeeLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()"> Frisbee
+                        <label class="equip-checkbox" id="fundayConesLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()"> Cones/Markers
                         </label>
                         <label class="equip-checkbox" id="fundayDodgeballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="fundayEquipChanged()"> Dodgeballs
                         </label>
-                        <label class="equip-checkbox" id="fundayKickballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()"> Kickball
-                        </label>
-                        <label class="equip-checkbox" id="fundayBaseballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()"> Softballs/Bats
-                        </label>
                         <label class="equip-checkbox" id="fundayFlagSetLabel">
                             <input type="checkbox" class="funday-equip" id="fundayFlagSet" onchange="fundayEquipChanged()"> Flag Set
                         </label>
-                        <label class="equip-checkbox" id="fundayConesLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()"> Cones/Markers
+                        <label class="equip-checkbox" id="fundayFootballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()"> Football
+                        </label>
+                        <label class="equip-checkbox" id="fundayFrisbeeLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()"> Frisbee
+                        </label>
+                        <label class="equip-checkbox" id="fundayKickballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()"> Kickball
+                        </label>
+                        <label class="equip-checkbox" id="fundaySoccerLabel">
+                            <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()"> Soccer Ball
                         </label>
                         <label class="equip-checkbox" id="fundayTugRopeLabel">
                             <input type="checkbox" class="funday-equip" id="fundayTugRope" onchange="fundayEquipChanged()"> Tug-of-War Rope
+                        </label>
+                        <label class="equip-checkbox" id="fundayVolleyballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()"> Volleyball
                         </label>
                     </div>
                 </div>
@@ -703,6 +801,9 @@
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()"> Barbell
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipBicycle" onchange="equipChanged()"> Bicycles
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()"> Dumbbells
@@ -735,6 +836,15 @@
                         <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
                     </label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>Remember Settings</label>
+                <label class="toggle-pill">
+                    <input type="checkbox" id="rememberPtToggle">
+                    <span class="toggle-pill-track"></span>
+                    <span class="toggle-pill-text">Save selections on this device</span>
+                </label>
             </div>
 
             <button class="action-btn" onclick="generateWorkout()">Generate 60-Minute Session</button>
@@ -774,7 +884,6 @@
                 <a href="generator.html">PT Generator</a> |
                 <a href="watchbill.html">Watchbill Generator</a> |
                 <a href="prt-prep.html">8-Week PRT Prep</a> |
-                <br>
                 <a href="about.html">About</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
@@ -970,7 +1079,6 @@
                     ],
                     outdoor: [
                         { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
-                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
                         { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true }
                     ],
                     assaultBike: [
@@ -982,8 +1090,13 @@
                         { name: "Rowing Intervals (500m)", tip: "Moderate effort, focus on form.", reps: "500m x 4-5 intervals" }
                     ],
                     cycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
                         { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace.", reps: "5-10 min", isFinisher: true },
                         { name: "Cycling Intervals", tip: "1 min moderate, 1 min easy. Keep cadence smooth.", reps: "6-8 rounds" }
+                    ],
+                    bicycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
+                        { name: "Bike Ride Intervals", tip: "2 min steady, 1 min easy spin. Stay smooth.", reps: "6-8 rounds" }
                     ],
                     treadmill: [
                         { name: "Incline Walk", tip: "10-15% incline, moderate pace.", reps: "5-10 min", isFinisher: true },
@@ -1037,6 +1150,11 @@
                     { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace. Good recovery.", reps: "5-10 min", isFinisher: true },
                     { name: "Cycling Hills", tip: "Increase resistance, stand and climb. 1 min on, 1 min off.", reps: "5-6 hills" },
                     { name: "Cycling Tabata", tip: "20s sprint, 10s rest x 8. High cadence.", reps: "4 min" }
+                ],
+                bicycle: [
+                    { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
+                    { name: "Bike Ride Intervals", tip: "2 min steady, 1 min easy spin. Stay smooth.", reps: "6-8 rounds" },
+                    { name: "Bike Hill Climbs", tip: "Find a short hill, climb strong, easy coast down.", reps: "4-6 climbs" }
                 ],
                 treadmill: [
                     { name: "Treadmill Intervals", tip: "1 min sprint, 1 min walk. Adjust speed for ability.", reps: "6-8 rounds" },
@@ -1263,24 +1381,39 @@
                 assaultBike: document.getElementById('equipAssaultBike').checked,
                 rower: document.getElementById('equipRower').checked,
                 cycle: document.getElementById('equipCycle').checked,
+                bicycle: document.getElementById('equipBicycle').checked,
                 treadmill: document.getElementById('equipTreadmill').checked
             };
         }
 
         // --- LocalStorage for PT Generator Preferences ---
         const ptGeneratorStorageKey = 'navyPTGeneratorPreferences';
+        const rememberPtStorageKey = 'navyPTGeneratorRemember';
         let isLoadingPreferences = false;
+
+        function shouldRememberPTPreferences() {
+            return document.getElementById('rememberPtToggle')?.checked || false;
+        }
 
         function savePTGeneratorPreferences() {
             if (isLoadingPreferences) {
                 return;
             }
+            if (!shouldRememberPTPreferences()) {
+                return;
+            }
+            localStorage.setItem(rememberPtStorageKey, 'true');
 
             const preferences = {
                 focus: document.getElementById('focusSelect').value,
                 location: document.getElementById('locationSelect').value,
                 scheme: document.getElementById('schemeSelect').value,
                 lowImpact: document.getElementById('lowImpactToggle').checked,
+                injuries: {
+                    upper: document.getElementById('injuryUpper')?.checked || false,
+                    lower: document.getElementById('injuryLower')?.checked || false,
+                    back: document.getElementById('injuryBack')?.checked || false
+                },
                 equipment: {
                     none: document.getElementById('equipNone').checked,
                     adjBench: document.getElementById('equipAdjBench').checked,
@@ -1294,6 +1427,7 @@
                     bands: document.getElementById('equipBands').checked,
                     rower: document.getElementById('equipRower').checked,
                     cycle: document.getElementById('equipCycle').checked,
+                    bicycle: document.getElementById('equipBicycle').checked,
                     treadmill: document.getElementById('equipTreadmill').checked,
                     sled: document.getElementById('equipSled').checked
                 },
@@ -1323,6 +1457,9 @@
         }
 
         function loadPTGeneratorPreferences() {
+            if (!shouldRememberPTPreferences()) {
+                return;
+            }
             const savedPreferences = localStorage.getItem(ptGeneratorStorageKey);
             if (!savedPreferences) {
                 return;
@@ -1343,6 +1480,14 @@
                 }
                 if (preferences.lowImpact !== undefined) {
                     document.getElementById('lowImpactToggle').checked = preferences.lowImpact;
+                }
+                if (preferences.injuries) {
+                    const injuryUpper = document.getElementById('injuryUpper');
+                    const injuryLower = document.getElementById('injuryLower');
+                    const injuryBack = document.getElementById('injuryBack');
+                    if (injuryUpper) injuryUpper.checked = preferences.injuries.upper;
+                    if (injuryLower) injuryLower.checked = preferences.injuries.lower;
+                    if (injuryBack) injuryBack.checked = preferences.injuries.back;
                 }
                 if (preferences.equipment) {
                     Object.entries(preferences.equipment).forEach(([key, value]) => {
@@ -1477,6 +1622,15 @@
             }
         }
 
+        function updateInjuryOptionsVisibility() {
+            const injuryOptions = document.getElementById('injuryOptions');
+            const lowImpactToggle = document.getElementById('lowImpactToggle');
+            if (!injuryOptions || !lowImpactToggle) {
+                return;
+            }
+            injuryOptions.style.display = lowImpactToggle.checked ? 'flex' : 'none';
+        }
+
         function updateFundayFacilitiesForLocation() {
             const location = document.getElementById('locationSelect').value;
             const hideOutdoor = location === 'indoor';
@@ -1522,7 +1676,20 @@
             savePTGeneratorPreferences();
         });
         document.getElementById('schemeSelect').addEventListener('change', savePTGeneratorPreferences);
-        document.getElementById('lowImpactToggle').addEventListener('change', savePTGeneratorPreferences);
+        document.getElementById('lowImpactToggle').addEventListener('change', function() {
+            updateInjuryOptionsVisibility();
+            savePTGeneratorPreferences();
+        });
+        document.getElementById('rememberPtToggle').addEventListener('change', function() {
+            if (shouldRememberPTPreferences()) {
+                localStorage.setItem(rememberPtStorageKey, 'true');
+                loadPTGeneratorPreferences();
+                savePTGeneratorPreferences();
+            } else {
+                localStorage.removeItem(rememberPtStorageKey);
+                localStorage.removeItem(ptGeneratorStorageKey);
+            }
+        });
 
         // Add change listeners to all equipment checkboxes
         document.querySelectorAll('.equip-checkbox input[type="checkbox"]').forEach(checkbox => {
@@ -1531,8 +1698,18 @@
 
         // Load preferences on page load
         window.addEventListener('DOMContentLoaded', function() {
-            loadPTGeneratorPreferences();
+            const rememberToggle = document.getElementById('rememberPtToggle');
+            const rememberStored = localStorage.getItem(rememberPtStorageKey) === 'true';
+            if (rememberToggle) {
+                rememberToggle.checked = rememberStored;
+            }
+            if (rememberStored) {
+                loadPTGeneratorPreferences();
+            } else {
+                localStorage.removeItem(ptGeneratorStorageKey);
+            }
             updateFundayFacilitiesForLocation();
+            updateInjuryOptionsVisibility();
         });
 
         // --- Collapsible Section Toggle ---
@@ -1555,15 +1732,115 @@
             return `https://www.google.com/search?q=${encodeURIComponent(term + " exercise technique")}+site:youtube.com`;
         }
 
-        function renderItem(name, meta, tip = null) {
+        function isPlankExercise(name) {
+            const plankKeywords = ['plank', 'pillar bridge'];
+            return plankKeywords.some(keyword => name.toLowerCase().includes(keyword));
+        }
+
+        function isCardioExercise(exercise) {
+            return exercise.reps !== undefined;
+        }
+
+        function renderItem(name, meta, tip = null, alternative = null) {
             const tipHtml = tip ? `<div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${tip}</div>` : '';
+            const altHtml = alternative
+                ? `<div class="exercise-alt">
+                        <span class="exercise-alt-label">Low-impact option</span>
+                        <span class="exercise-alt-name">${alternative}</span>
+                   </div>`
+                : '';
             return `
                 <li class="exercise-item">
-                    <span class="exercise-name">${name}</span>
-                    <div class="exercise-meta">${meta}</div>${tipHtml}
+                    <div class="exercise-row">
+                        <div class="exercise-main">
+                            <span class="exercise-name">${name}</span>
+                            <div class="exercise-meta">${meta}</div>
+                        </div>
+                        ${altHtml}
+                    </div>${tipHtml}
                     <a href="${getSearchLink(name)}" target="_blank" class="search-link">▶ Watch Demo</a>
                 </li>
             `;
+        }
+
+        function getLowImpactAlternatives(equip, focus, location) {
+            let strengthAlternatives = [];
+            let cardioAlternatives = [];
+            if (focus !== 'cardio') {
+                const strengthDb = db.lowImpact.strength;
+                strengthAlternatives = [...strengthAlternatives, ...strengthDb.bodyweight];
+                if (equip.bands && strengthDb.bands) strengthAlternatives = [...strengthAlternatives, ...strengthDb.bands];
+                if (equip.kettlebells && strengthDb.kettlebells) strengthAlternatives = [...strengthAlternatives, ...strengthDb.kettlebells];
+                if (equip.dumbbells && strengthDb.dumbbells) strengthAlternatives = [...strengthAlternatives, ...strengthDb.dumbbells];
+                if (equip.flatBench && strengthDb.flatBench) strengthAlternatives = [...strengthAlternatives, ...strengthDb.flatBench];
+                if (equip.adjBench && strengthDb.adjBench) strengthAlternatives = [...strengthAlternatives, ...strengthDb.adjBench];
+                if (equip.sled && strengthDb.sled) strengthAlternatives = [...strengthAlternatives, ...strengthDb.sled];
+            }
+
+            if (focus !== 'strength') {
+                const cardioDb = db.lowImpact.cardio;
+                cardioAlternatives = [
+                    ...cardioAlternatives,
+                    ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)
+                ];
+                if (equip.assaultBike && cardioDb.assaultBike) cardioAlternatives = [...cardioAlternatives, ...cardioDb.assaultBike];
+                if (equip.rower && cardioDb.rower) cardioAlternatives = [...cardioAlternatives, ...cardioDb.rower];
+                if ((equip.cycle || equip.bicycle) && cardioDb.cycle) cardioAlternatives = [...cardioAlternatives, ...cardioDb.cycle];
+                if (equip.bicycle && cardioDb.bicycle) cardioAlternatives = [...cardioAlternatives, ...cardioDb.bicycle];
+                if (equip.treadmill && cardioDb.treadmill) cardioAlternatives = [...cardioAlternatives, ...cardioDb.treadmill];
+            }
+
+            return { strengthAlternatives, cardioAlternatives };
+        }
+
+        function getInjurySelections() {
+            return {
+                upper: document.getElementById('injuryUpper')?.checked || false,
+                lower: document.getElementById('injuryLower')?.checked || false,
+                back: document.getElementById('injuryBack')?.checked || false
+            };
+        }
+
+        function getExerciseGroup(exerciseName, isCardio) {
+            const name = exerciseName.toLowerCase();
+            if (isCardio) {
+                return 'lower';
+            }
+            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest'];
+            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust'];
+            const backKeywords = ['row', 'pull', 'deadlift', 'hinge', 'back', 'y-t-w', 'good morning'];
+
+            if (backKeywords.some(keyword => name.includes(keyword))) {
+                return 'back';
+            }
+            if (lowerKeywords.some(keyword => name.includes(keyword))) {
+                return 'lower';
+            }
+            if (upperKeywords.some(keyword => name.includes(keyword))) {
+                return 'upper';
+            }
+            return 'full';
+        }
+
+        function filterAlternativesByInjury(alternatives, injuries) {
+            return alternatives.filter(ex => {
+                const group = getExerciseGroup(ex.name, isCardioExercise(ex));
+                if (injuries.back && group === 'back') return false;
+                if (injuries.upper && group === 'upper') return false;
+                if (injuries.lower && group === 'lower') return false;
+                return true;
+            });
+        }
+
+        function pickAlternativeFromPool(pool, targetGroup, isCardio) {
+            if (!pool.length) {
+                return null;
+            }
+            const matchIndex = pool.findIndex(item => getExerciseGroup(item.name, isCardio) === targetGroup);
+            if (matchIndex >= 0) {
+                return pool.splice(matchIndex, 1)[0];
+            }
+            return pool.pop() || null;
         }
 
         function renderCollapsibleHeader(title, contentId, expanded = true) {
@@ -1603,17 +1880,6 @@
                     const allSchemes = ['circuit', 'hiit', 'military', 'pyramid', 'reversePyramid'];
                     scheme = allSchemes[Math.floor(Math.random() * allSchemes.length)];
                 }
-            }
-
-            // Check if exercise is a plank-type exercise
-            function isPlankExercise(name) {
-                const plankKeywords = ['plank', 'pillar bridge'];
-                return plankKeywords.some(keyword => name.toLowerCase().includes(keyword));
-            }
-
-            // Check if exercise is cardio (has built-in reps)
-            function isCardioExercise(exercise) {
-                return exercise.reps !== undefined;
             }
 
             // Get exercise-specific rep scheme
@@ -1806,7 +2072,7 @@
                     ? `<br><strong>Cardio Tip:</strong> Prioritize stationary bike or an actual bike to keep up with the team, or choose rower/incline walk if available.`
                     : '';
                 html += `<p style="margin-bottom:15px; padding:10px; background:rgba(74,144,226,0.08); border-radius:6px; font-size:0.9em; color:#8fa3bf;">
-                            <strong>Low-Impact Mode:</strong> Use controlled tempo, reduce jumping, and choose joint-friendly options.${cardioNote}
+                            <strong>Low-Impact Mode:</strong> Use controlled tempo, reduce jumping, and choose joint-friendly options. Low-impact alternatives are shown to the right of each exercise.${cardioNote}
                          </p>`;
             }
             html += `<ul class="exercise-list">`;
@@ -1814,25 +2080,26 @@
             let mainPool = [];
 
             if (focus !== 'cardio') {
-                const strengthDb = lowImpact ? db.lowImpact.strength : db.strength;
+                const strengthDb = db.strength;
                 mainPool = [...mainPool, ...strengthDb.bodyweight];
                 if (equip.bands && strengthDb.bands) mainPool = [...mainPool, ...strengthDb.bands];
-                if (!lowImpact && equip.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
+                if (equip.pullup && strengthDb.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
                 if (equip.kettlebells && strengthDb.kettlebells) mainPool = [...mainPool, ...strengthDb.kettlebells];
                 if (equip.dumbbells && strengthDb.dumbbells) mainPool = [...mainPool, ...strengthDb.dumbbells];
-                if (!lowImpact && equip.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
+                if (equip.barbell && strengthDb.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
                 if (equip.flatBench && strengthDb.flatBench) mainPool = [...mainPool, ...strengthDb.flatBench];
                 if (equip.adjBench && strengthDb.adjBench) mainPool = [...mainPool, ...strengthDb.adjBench];
                 if (equip.sled && strengthDb.sled) mainPool = [...mainPool, ...strengthDb.sled];
             }
 
             if (focus !== 'strength') {
-                const cardioDb = lowImpact ? db.lowImpact.cardio : db.cardio;
+                const cardioDb = db.cardio;
                 mainPool = [...mainPool, ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)];
-                if (!lowImpact && equip.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
+                if (equip.jumprope && cardioDb.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
                 if (equip.assaultBike && cardioDb.assaultBike) mainPool = [...mainPool, ...cardioDb.assaultBike];
                 if (equip.rower && cardioDb.rower) mainPool = [...mainPool, ...cardioDb.rower];
                 if (equip.cycle && cardioDb.cycle) mainPool = [...mainPool, ...cardioDb.cycle];
+                if (equip.bicycle && cardioDb.bicycle) mainPool = [...mainPool, ...cardioDb.bicycle];
                 if (equip.treadmill && cardioDb.treadmill) mainPool = [...mainPool, ...cardioDb.treadmill];
             }
 
@@ -1869,9 +2136,29 @@
                 }
             }
 
+            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, focus, location) : {
+                strengthAlternatives: [],
+                cardioAlternatives: []
+            };
+            const injuries = getInjurySelections();
+            const shuffledStrengthAlternatives = filterAlternativesByInjury(lowImpactAlternatives.strengthAlternatives, injuries)
+                .sort(() => 0.5 - Math.random());
+            const shuffledCardioAlternatives = filterAlternativesByInjury(lowImpactAlternatives.cardioAlternatives, injuries)
+                .sort(() => 0.5 - Math.random());
+
             selected.forEach(ex => {
                 const reps = getExerciseReps(ex, scheme);
-                html += renderItem(ex.name, reps, ex.tip);
+                const isCardio = isCardioExercise(ex);
+                const targetGroup = getExerciseGroup(ex.name, isCardio);
+                let alternative = null;
+                if (lowImpact) {
+                    const pool = isCardio ? shuffledCardioAlternatives : shuffledStrengthAlternatives;
+                    alternative = pickAlternativeFromPool(pool, targetGroup, isCardio)?.name || null;
+                    if (!alternative) {
+                        alternative = 'Scale impact (slow tempo, reduced range)';
+                    }
+                }
+                html += renderItem(ex.name, reps, ex.tip, alternative);
             });
             html += `</ul>`;
 

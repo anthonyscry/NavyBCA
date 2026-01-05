@@ -199,6 +199,53 @@
             color: #8fa3bf;
         }
 
+        .toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #d9e5f6;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-pill-track {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            background: rgba(216, 222, 231, 0.7);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-pill-track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track {
+            background: #4a90e2;
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track::after {
+            transform: translateX(16px);
+        }
+
         .day-row {
             display: grid;
             grid-template-columns: 100px 1fr;
@@ -912,10 +959,11 @@
 
             <div class="form-group">
                 <label>Rotation Behavior</label>
-                <div class="toggle-row">
+                <label class="toggle-pill">
                     <input type="checkbox" id="holdRotationToggle" checked>
+                    <span class="toggle-pill-track"></span>
                     <span>Hold CFL/ACFL rotation on off days (default)</span>
-                </div>
+                </label>
                 <p class="hint">When enabled, off days keep the next session assigned to the same CFL/ACFL.</p>
             </div>
 
@@ -931,7 +979,6 @@
                 </select>
                 <p class="hint">This will be the default time selected for all PT sessions</p>
             </div>
-
             <div class="form-group">
                 <label>Location Options</label>
                 <div class="location-manager" id="locationManager">
@@ -959,6 +1006,15 @@
                 </div>
                 <button class="btn-add" onclick="addCFL()">+ Add CFL/ACFL</button>
                 <p class="hint">Add all CFLs and ACFLs who will lead PT (will rotate automatically)</p>
+            </div>
+
+            <div class="form-group">
+                <label>Remember Settings</label>
+                <label class="toggle-pill">
+                    <input type="checkbox" id="rememberWatchbillToggle">
+                    <span class="toggle-pill-track"></span>
+                    <span>Save inputs on this device</span>
+                </label>
             </div>
 
             <button class="action-btn" onclick="generateWatchbill()">Generate Watchbill</button>
@@ -1051,12 +1107,21 @@
         };
         let customLocations = [];
         const watchbillStorageKey = 'navyWatchbillData';
+        const rememberWatchbillStorageKey = 'navyWatchbillRemember';
         let isLoadingWatchbillData = false;
+
+        function shouldRememberWatchbill() {
+            return document.getElementById('rememberWatchbillToggle')?.checked || false;
+        }
 
         function saveWatchbillData() {
             if (isLoadingWatchbillData) {
                 return;
             }
+            if (!shouldRememberWatchbill()) {
+                return;
+            }
+            localStorage.setItem(rememberWatchbillStorageKey, 'true');
 
             const data = {
                 month: document.getElementById('monthSelect').value,
@@ -1102,6 +1167,9 @@
         }
 
         function loadWatchbillData() {
+            if (!shouldRememberWatchbill()) {
+                return;
+            }
             const savedData = localStorage.getItem(watchbillStorageKey);
             if (!savedData) {
                 return;
@@ -1159,7 +1227,26 @@
 
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
-        loadWatchbillData();
+        const rememberWatchbillToggle = document.getElementById('rememberWatchbillToggle');
+        const rememberStored = localStorage.getItem(rememberWatchbillStorageKey) === 'true';
+        if (rememberWatchbillToggle) {
+            rememberWatchbillToggle.checked = rememberStored;
+        }
+        if (rememberStored) {
+            loadWatchbillData();
+        } else {
+            localStorage.removeItem(watchbillStorageKey);
+        }
+        rememberWatchbillToggle.addEventListener('change', function() {
+            if (shouldRememberWatchbill()) {
+                localStorage.setItem(rememberWatchbillStorageKey, 'true');
+                loadWatchbillData();
+                saveWatchbillData();
+            } else {
+                localStorage.removeItem(rememberWatchbillStorageKey);
+                localStorage.removeItem(watchbillStorageKey);
+            }
+        });
 
         document.getElementById('monthSelect').addEventListener('change', saveWatchbillData);
         document.getElementById('yearSelect').addEventListener('change', saveWatchbillData);
