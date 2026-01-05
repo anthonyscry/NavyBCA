@@ -481,6 +481,155 @@
             line-height: 1.6;
         }
 
+        /* Goal Calculator / Path to Standards */
+        .goal-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+        }
+
+        .goal-section h3 {
+            color: #4a90e2;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .goal-intro {
+            color: #8fa3bf;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .goal-paths {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .goal-path-card {
+            background: rgba(30, 50, 80, 0.5);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 10px;
+            padding: 18px;
+            position: relative;
+        }
+
+        .goal-path-card.easiest {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .goal-path-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #22c55e;
+            color: #0a1628;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .goal-path-title {
+            color: #e8eef5;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .goal-path-card.easiest .goal-path-title {
+            color: #22c55e;
+        }
+
+        .goal-path-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .goal-detail {
+            background: rgba(10, 20, 40, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .goal-detail-label {
+            color: #6b7c94;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .goal-detail-value {
+            color: #e8eef5;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .goal-detail-value.highlight {
+            color: #22c55e;
+        }
+
+        .goal-path-note {
+            color: #8fa3bf;
+            font-size: 12px;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Export Buttons */
+        .export-section {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 20px;
+            background: rgba(74, 144, 226, 0.2);
+            border: 2px solid rgba(74, 144, 226, 0.4);
+            border-radius: 8px;
+            color: #4a90e2;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+        }
+
+        .export-btn.pdf {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+
+        .export-btn.pdf:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+
         /* Reset Button */
         .reset-btn {
             width: 100%;
@@ -556,13 +705,14 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
             border: 2px solid rgba(255, 215, 0, 0.4);
             border-radius: 12px;
-            padding: 15px 25px;
+            padding: 20px 25px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 15px;
             flex-wrap: wrap;
+            min-height: 90px;
         }
 
         .pt-banner.secondary {
@@ -578,7 +728,7 @@
         .pt-banner-text h3 {
             color: #ffd700;
             font-size: 16px;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
         .pt-banner.secondary .pt-banner-text h3 {
@@ -589,6 +739,7 @@
             color: #8fa3bf;
             font-size: 13px;
             margin: 0;
+            line-height: 1.4;
         }
 
         .pt-banner-btn {
@@ -606,6 +757,7 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            flex-shrink: 0;
         }
 
         .pt-banner-btn:hover {
@@ -643,6 +795,145 @@
             to {
                 transform: translateX(400px);
                 opacity: 0;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            /* Hide non-essential elements */
+            .ad-container,
+            .pt-banner,
+            .calculate-btn,
+            .export-btn,
+            .reset-btn,
+            .btn-back,
+            .search-link,
+            .info-section,
+            footer {
+                display: none !important;
+            }
+
+            /* Show only results section */
+            .input-section {
+                page-break-after: avoid;
+            }
+
+            .results-section {
+                display: block !important;
+            }
+
+            /* Header styling */
+            header {
+                padding: 10px 0;
+                page-break-after: avoid;
+            }
+
+            h1 {
+                -webkit-text-fill-color: black !important;
+                color: black !important;
+                font-size: 20px;
+            }
+
+            .subtitle {
+                color: #666 !important;
+                font-size: 12px;
+            }
+
+            /* Results styling */
+            .status-banner {
+                page-break-inside: avoid;
+                border: 2px solid #333 !important;
+            }
+
+            .status-banner.pass {
+                background: #f0f9ff !important;
+                border-color: #22c55e !important;
+            }
+
+            .status-banner.fail {
+                background: #fff5f5 !important;
+                border-color: #ef4444 !important;
+            }
+
+            .status-text {
+                color: #333 !important;
+            }
+
+            .metrics-grid,
+            .step-card,
+            .goal-section {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ccc !important;
+            }
+
+            .metric-card,
+            .goal-detail {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .metric-value,
+            .step-metric-value,
+            .goal-detail-value {
+                color: #333 !important;
+            }
+
+            .step-metric-value.pass,
+            .goal-detail-value.highlight {
+                color: #22c55e !important;
+            }
+
+            .step-metric-value.fail {
+                color: #ef4444 !important;
+            }
+
+            .warning-box {
+                background: #fff5f5 !important;
+                border: 2px solid #ef4444 !important;
+                page-break-inside: avoid;
+            }
+
+            .warning-title {
+                color: #ef4444 !important;
+            }
+
+            .goal-section h3 {
+                color: #333 !important;
+            }
+
+            .goal-path-card {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 2px solid #ddd !important;
+            }
+
+            .goal-path-card.easiest {
+                border-color: #22c55e !important;
+                background: #f0f9ff !important;
+            }
+
+            .goal-path-badge {
+                background: #22c55e !important;
+                color: white !important;
+            }
+
+            .goal-path-title {
+                color: #333 !important;
+            }
+
+            .goal-path-card.easiest .goal-path-title {
+                color: #22c55e !important;
             }
         }
 
@@ -877,6 +1168,27 @@
                             prior to participating in the PRT/CFT. Refer to Guide-1 for High-Performance BCA Exemption
                             details.
                         </div>
+                    </div>
+
+                    <!-- Goal Calculator / Path to Standards -->
+                    <div class="goal-section" id="goalSection" style="display: none;">
+                        <h3>🎯 Your Path to Standards</h3>
+                        <p class="goal-intro">
+                            Here are your options to pass BCA. The <strong style="color: #22c55e;">easiest path</strong> is highlighted based on the smallest changes needed.
+                        </p>
+                        <div class="goal-paths" id="goalPaths">
+                            <!-- Paths will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Export Buttons -->
+                    <div class="export-section">
+                        <button type="button" class="export-btn" onclick="exportToCSV()">
+                            📊 Export to CSV
+                        </button>
+                        <button type="button" class="export-btn pdf" onclick="exportToPDF()">
+                            📄 Print / Save PDF
+                        </button>
                     </div>
 
                     <button type="button" class="reset-btn" onclick="resetCalculator()">
@@ -1192,8 +1504,170 @@
             // Warning box
             document.getElementById('warningBox').style.display = overallPass ? 'none' : 'block';
 
+            // Goal Calculator - show only if failed
+            const goalSection = document.getElementById('goalSection');
+            if (!overallPass) {
+                calculateGoalPaths(roundedHeight, roundedWeight, roundedWaist, currentGender, maxBF, maxWaist);
+                goalSection.style.display = 'block';
+            } else {
+                goalSection.style.display = 'none';
+            }
+
             // Scroll to results
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function calculateGoalPaths(height, weight, waist, gender, maxBF, maxWaist) {
+            const paths = [];
+
+            // Path 1: Reduce waist only (keep current weight)
+            const targetWaist = maxWaist;
+            const waistChange = Math.abs(waist - targetWaist);
+            if (waist > targetWaist) {
+                const timelineWeeks = Math.ceil((waist - targetWaist) / 0.5); // Assume 0.5" waist loss per week
+                paths.push({
+                    title: "Reduce Waist Only",
+                    targetWaist: targetWaist,
+                    targetWeight: weight,
+                    waistChange: waistChange,
+                    weightChange: 0,
+                    totalChange: waistChange,
+                    timeline: timelineWeeks,
+                    note: `Focus on core work and nutrition. Typical waist reduction: 0.5"/week with consistent effort.`
+                });
+            }
+
+            // Path 2: Reduce weight only (keep current waist) - find weight that makes body fat pass
+            let targetWeight = weight;
+            let foundWeightPath = false;
+            for (let testWeight = weight - 1; testWeight >= Math.max(100, weight - 100); testWeight--) {
+                const heightWaistDiff = Math.round((height - waist) * 2) / 2;
+                const testBF = gender === 'male' ? getMaleBF(heightWaistDiff, testWeight) : getFemaleBF(heightWaistDiff, testWeight);
+                if (testBF <= maxBF) {
+                    targetWeight = testWeight;
+                    foundWeightPath = true;
+                    break;
+                }
+            }
+
+            if (foundWeightPath && targetWeight < weight) {
+                const weightChange = weight - targetWeight;
+                const timelineWeeks = Math.ceil(weightChange / 2); // Assume 2 lbs/week healthy weight loss
+                paths.push({
+                    title: "Reduce Weight Only",
+                    targetWaist: waist,
+                    targetWeight: targetWeight,
+                    waistChange: 0,
+                    weightChange: weightChange,
+                    totalChange: weightChange / 2, // Scale weight to inches equivalent for comparison
+                    timeline: timelineWeeks,
+                    note: `Healthy weight loss: 1-2 lbs/week through calorie deficit and exercise. (~${Math.round(weightChange * 3500 / timelineWeeks / 7)} cal/day deficit)`
+                });
+            }
+
+            // Path 3: Balanced approach - reduce both waist and weight proportionally
+            const waistToTarget = waist > maxWaist ? (waist - maxWaist) / 2 : 0;
+            const balancedWaist = waist - waistToTarget;
+
+            let balancedWeight = weight;
+            for (let testWeight = weight - 1; testWeight >= Math.max(100, weight - 50); testWeight--) {
+                const heightWaistDiff = Math.round((height - balancedWaist) * 2) / 2;
+                const testBF = gender === 'male' ? getMaleBF(heightWaistDiff, testWeight) : getFemaleBF(heightWaistDiff, testWeight);
+                const testWhtr = balancedWaist / height;
+                if (testBF <= maxBF && Math.floor(testWhtr * 10000) / 10000 <= 0.5499) {
+                    balancedWeight = testWeight;
+                    break;
+                }
+            }
+
+            if (balancedWeight < weight || waistToTarget > 0) {
+                const weightChange = weight - balancedWeight;
+                const waistChange = waist - balancedWaist;
+                const timelineWeeks = Math.max(
+                    Math.ceil(weightChange / 2),
+                    Math.ceil(waistChange / 0.5)
+                );
+                paths.push({
+                    title: "Balanced Approach",
+                    targetWaist: balancedWaist,
+                    targetWeight: balancedWeight,
+                    waistChange: waistChange,
+                    weightChange: weightChange,
+                    totalChange: waistChange + (weightChange / 2),
+                    timeline: timelineWeeks,
+                    note: `Combined cardio, strength training, and nutrition. Most sustainable long-term approach.`
+                });
+            }
+
+            // Determine easiest path (minimum total change)
+            if (paths.length > 0) {
+                paths.sort((a, b) => a.totalChange - b.totalChange);
+                paths[0].easiest = true;
+            }
+
+            // Render paths
+            renderGoalPaths(paths);
+        }
+
+        function renderGoalPaths(paths) {
+            const container = document.getElementById('goalPaths');
+
+            if (paths.length === 0) {
+                container.innerHTML = '<p style="color: #8fa3bf; text-align: center;">Unable to calculate achievable paths. Please consult with your CFL.</p>';
+                return;
+            }
+
+            let html = '';
+            paths.forEach(path => {
+                const easiestClass = path.easiest ? ' easiest' : '';
+                const badge = path.easiest ? '<div class="goal-path-badge">✓ Easiest Path</div>' : '';
+
+                html += `
+                    <div class="goal-path-card${easiestClass}">
+                        ${badge}
+                        <div class="goal-path-title">${path.title}</div>
+                        <div class="goal-path-details">
+                            ${path.waistChange > 0 ? `
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Target Waist</div>
+                                    <div class="goal-detail-value${path.easiest ? ' highlight' : ''}">${path.targetWaist.toFixed(1)}"</div>
+                                </div>
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Waist to Lose</div>
+                                    <div class="goal-detail-value${path.easiest ? ' highlight' : ''}">${path.waistChange.toFixed(1)}"</div>
+                                </div>
+                            ` : `
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Keep Waist</div>
+                                    <div class="goal-detail-value">${path.targetWaist.toFixed(1)}"</div>
+                                </div>
+                            `}
+                            ${path.weightChange > 0 ? `
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Target Weight</div>
+                                    <div class="goal-detail-value${path.easiest ? ' highlight' : ''}">${Math.round(path.targetWeight)} lbs</div>
+                                </div>
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Weight to Lose</div>
+                                    <div class="goal-detail-value${path.easiest ? ' highlight' : ''}">${Math.round(path.weightChange)} lbs</div>
+                                </div>
+                            ` : `
+                                <div class="goal-detail">
+                                    <div class="goal-detail-label">Keep Weight</div>
+                                    <div class="goal-detail-value">${Math.round(path.targetWeight)} lbs</div>
+                                </div>
+                            `}
+                            <div class="goal-detail">
+                                <div class="goal-detail-label">Est. Timeline</div>
+                                <div class="goal-detail-value${path.easiest ? ' highlight' : ''}">${path.timeline} weeks</div>
+                            </div>
+                        </div>
+                        <div class="goal-path-note">${path.note}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
         }
 
         function resetCalculator() {
@@ -1208,6 +1682,86 @@
             document.getElementById('weight').value = '180';
             document.getElementById('waist').value = '34';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Export Functions
+        function exportToCSV() {
+            // Check if results are visible
+            if (!document.getElementById('resultsSection').classList.contains('show')) {
+                alert('Please calculate BCA first before exporting.');
+                return;
+            }
+
+            // Gather data
+            const status = document.getElementById('statusText').textContent;
+            const height = document.getElementById('resultHeight').textContent;
+            const weight = document.getElementById('resultWeight').textContent;
+            const waist = document.getElementById('resultWaist').textContent;
+            const whtr = document.getElementById('whtrValue').textContent;
+            const bodyFat = document.getElementById('bfValue').textContent;
+            const maxBF = document.getElementById('maxBfValue').textContent;
+            const step1Status = document.getElementById('step1Status').textContent;
+            const step2Status = document.getElementById('step2Status').textContent;
+
+            // Create CSV content
+            const today = new Date().toISOString().split('T')[0];
+            let csv = 'Navy BCA Results\n';
+            csv += `Date,${today}\n`;
+            csv += `Gender,${currentGender}\n`;
+            csv += `\n`;
+            csv += 'Measurements\n';
+            csv += `Height,${height}\n`;
+            csv += `Weight,${weight}\n`;
+            csv += `Waist,${waist}\n`;
+            csv += `\n`;
+            csv += 'Results\n';
+            csv += `Overall Status,${status}\n`;
+            csv += `Step 1 (WHtR),${step1Status}\n`;
+            csv += `WHtR Value,${whtr}\n`;
+            csv += `Step 2 (Body Fat),${step2Status}\n`;
+            csv += `Body Fat %,${bodyFat}\n`;
+            csv += `Max Allowed BF%,${maxBF}\n`;
+
+            // Add goal paths if failed
+            const goalSection = document.getElementById('goalSection');
+            if (goalSection.style.display !== 'none') {
+                csv += `\n`;
+                csv += 'Path to Standards\n';
+                const paths = document.querySelectorAll('.goal-path-card');
+                paths.forEach((card, index) => {
+                    const title = card.querySelector('.goal-path-title').textContent;
+                    const details = card.querySelectorAll('.goal-detail-value');
+                    const note = card.querySelector('.goal-path-note').textContent;
+                    csv += `\nOption ${index + 1},${title}\n`;
+                    Array.from(details).forEach((detail, i) => {
+                        const label = card.querySelectorAll('.goal-detail-label')[i].textContent;
+                        csv += `${label},${detail.textContent}\n`;
+                    });
+                    csv += `Note,"${note}"\n`;
+                });
+            }
+
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Navy-BCA-Results-${today}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function exportToPDF() {
+            // Check if results are visible
+            if (!document.getElementById('resultsSection').classList.contains('show')) {
+                alert('Please calculate BCA first before printing.');
+                return;
+            }
+
+            // Use browser print dialog (which can save as PDF)
+            window.print();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
