@@ -1002,18 +1002,18 @@
 
         function getMaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified against User Images)
-            // BF = 39.0 - 0.76(Diff) + 0.04(Weight)
+            // BF = 39.0 - 0.76(Diff) + 0.04(Weight), table rounds down to whole percent.
             weight = Math.max(100, Math.round(weight));
             const baseBF = 39.0 - (0.76 * heightWaistDiff) + (0.04 * weight);
-            return Math.max(0, Math.round(baseBF));
+            return Math.max(0, Math.floor(baseBF));
         }
 
         function getFemaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified 100-300lbs)
-            // BF = 39.0 - 0.62(Diff) + 0.08(Weight)
+            // BF = 39.0 - 0.62(Diff) + 0.08(Weight), table rounds down to whole percent.
             weight = Math.max(90, Math.round(weight));
             const baseBF = 39.0 - (0.62 * heightWaistDiff) + (0.08 * weight);
-            return Math.max(0, Math.round(baseBF));
+            return Math.max(0, Math.floor(baseBF));
         }
 
         function getMaxWaist(height) {
