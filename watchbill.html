@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Watchbill Generator | Navy Command PT Schedule</title>
+    <meta name="description"
+        content="Generate Command PT and FEP watchbills with automatic CFL/ACFL rotation. Free tool for creating monthly PT schedules.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            min-height: 100vh;
+            color: #e8eef5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .calculator-card {
+            background: rgba(20, 35, 60, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        select, input[type="text"], input[type="time"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            background: #1e3250;
+            border: 1px solid #4a90e2;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+
+        select option {
+            background: #1a2a4a;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .day-selector {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .day-checkbox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            transition: all 0.2s;
+        }
+
+        .day-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .day-checkbox.selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .day-checkbox input {
+            accent-color: #ffd700;
+        }
+
+        .cfl-list {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .cfl-input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cfl-input-row input {
+            flex: 1;
+        }
+
+        .btn-remove {
+            padding: 12px 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-remove:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #22c55e;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-add:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #0a1628;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        #watchbillOutput {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .watchbill-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .watchbill-header h2 {
+            color: #ffd700;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .watchbill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .watchbill-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .watchbill-table td {
+            padding: 12px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            color: #e8eef5;
+        }
+
+        .watchbill-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .print-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(74, 144, 226, 0.2);
+            border: 1px solid #4a90e2;
+            color: #4a90e2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #6b7c94;
+            margin-top: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6b7c94;
+            font-size: 12px;
+            padding-bottom: 30px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #ffd700;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            .btn-back, .calculator-card, .action-btn, .print-btn, footer {
+                display: none !important;
+            }
+
+            #watchbillOutput {
+                display: block !important;
+            }
+
+            .watchbill-header h2 {
+                color: black !important;
+                -webkit-text-fill-color: black !important;
+            }
+
+            .watchbill-table {
+                border: 1px solid black;
+            }
+
+            .watchbill-table th {
+                background: #f0f0f0 !important;
+                color: black !important;
+                border: 1px solid black;
+            }
+
+            .watchbill-table td {
+                color: black !important;
+                border: 1px solid black;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .day-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="generator.html" class="btn-back">← Back to PT Generator</a>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">⚓</div>
+                <h1>PT Watchbill Generator</h1>
+            </div>
+            <p class="subtitle">Command PT & FEP Schedule Builder</p>
+        </header>
+
+        <main class="calculator-card">
+            <div class="form-group">
+                <label>Select Month and Year</label>
+                <div class="row">
+                    <select id="monthSelect">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <select id="yearSelect">
+                        <!-- Populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>PT Days of the Week</label>
+                <div class="day-selector">
+                    <label class="day-checkbox" id="day-mon">
+                        <input type="checkbox" value="1" onchange="toggleDay('mon')">
+                        <span>Mon</span>
+                    </label>
+                    <label class="day-checkbox" id="day-tue">
+                        <input type="checkbox" value="2" onchange="toggleDay('tue')">
+                        <span>Tue</span>
+                    </label>
+                    <label class="day-checkbox" id="day-wed">
+                        <input type="checkbox" value="3" onchange="toggleDay('wed')">
+                        <span>Wed</span>
+                    </label>
+                    <label class="day-checkbox" id="day-thu">
+                        <input type="checkbox" value="4" onchange="toggleDay('thu')">
+                        <span>Thu</span>
+                    </label>
+                    <label class="day-checkbox" id="day-fri">
+                        <input type="checkbox" value="5" onchange="toggleDay('fri')">
+                        <span>Fri</span>
+                    </label>
+                    <label class="day-checkbox" id="day-sat">
+                        <input type="checkbox" value="6" onchange="toggleDay('sat')">
+                        <span>Sat</span>
+                    </label>
+                    <label class="day-checkbox" id="day-sun">
+                        <input type="checkbox" value="0" onchange="toggleDay('sun')">
+                        <span>Sun</span>
+                    </label>
+                </div>
+                <p class="hint">Select which days of the week PT will be held</p>
+            </div>
+
+            <div class="form-group">
+                <label>PT Time</label>
+                <div class="row">
+                    <input type="time" id="ptTime" value="06:30">
+                </div>
+                <p class="hint">Standard PT time (e.g., 0630)</p>
+            </div>
+
+            <div class="form-group">
+                <label>Default Location</label>
+                <input type="text" id="defaultLocation" value="Gym" placeholder="e.g., Gym, Track, Field">
+                <p class="hint">Can be customized per session in the output</p>
+            </div>
+
+            <div class="form-group">
+                <label>CFL/ACFL Roster</label>
+                <div class="cfl-list" id="cflList">
+                    <div class="cfl-input-row">
+                        <input type="text" placeholder="e.g., IT2 Smith" value="IT2 Smith">
+                        <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
+                    </div>
+                </div>
+                <button class="btn-add" onclick="addCFL()">+ Add CFL/ACFL</button>
+                <p class="hint">Add all CFLs and ACFLs who will lead PT (will rotate automatically)</p>
+            </div>
+
+            <button class="action-btn" onclick="generateWatchbill()">Generate Watchbill</button>
+        </main>
+
+        <div id="watchbillOutput">
+            <!-- Generated watchbill will appear here -->
+        </div>
+
+        <footer>
+            <p>
+                <a href="references.html">References & Guides</a> |
+                <a href="index.html">BCA Calculator</a> |
+                <a href="generator.html">PT Generator</a> |
+                <a href="watchbill.html">Watchbill Generator</a> |
+                <a href="about.html">About</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Use</a> |
+                <a href="mailto:administrator@navybca.com">Contact</a>
+            </p>
+            <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Populate year selector
+        const yearSelect = document.getElementById('yearSelect');
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear - 1; i <= currentYear + 2; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            if (i === currentYear) option.selected = true;
+            yearSelect.appendChild(option);
+        }
+
+        // Set current month
+        document.getElementById('monthSelect').value = new Date().getMonth();
+
+        function toggleDay(day) {
+            const checkbox = document.getElementById(`day-${day}`);
+            if (checkbox.querySelector('input').checked) {
+                checkbox.classList.add('selected');
+            } else {
+                checkbox.classList.remove('selected');
+            }
+        }
+
+        function addCFL() {
+            const cflList = document.getElementById('cflList');
+            const newRow = document.createElement('div');
+            newRow.className = 'cfl-input-row';
+            newRow.innerHTML = `
+                <input type="text" placeholder="e.g., IT2 Smith">
+                <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
+            `;
+            cflList.appendChild(newRow);
+        }
+
+        function removeCFL(button) {
+            const cflList = document.getElementById('cflList');
+            if (cflList.children.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert('You must have at least one CFL/ACFL');
+            }
+        }
+
+        function generateWatchbill() {
+            // Get inputs
+            const month = parseInt(document.getElementById('monthSelect').value);
+            const year = parseInt(document.getElementById('yearSelect').value);
+            const ptTime = document.getElementById('ptTime').value;
+            const defaultLocation = document.getElementById('defaultLocation').value;
+
+            // Get selected days
+            const selectedDays = [];
+            ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].forEach((day, index) => {
+                const checkbox = document.getElementById(`day-${day}`).querySelector('input');
+                if (checkbox.checked) {
+                    selectedDays.push(index);
+                }
+            });
+
+            if (selectedDays.length === 0) {
+                alert('Please select at least one PT day');
+                return;
+            }
+
+            // Get CFL roster
+            const cflInputs = document.querySelectorAll('.cfl-input-row input');
+            const cflRoster = Array.from(cflInputs)
+                .map(input => input.value.trim())
+                .filter(name => name.length > 0);
+
+            if (cflRoster.length === 0) {
+                alert('Please add at least one CFL/ACFL');
+                return;
+            }
+
+            // Generate PT dates
+            const ptSessions = [];
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let cflIndex = 0;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+
+                if (selectedDays.includes(dayOfWeek)) {
+                    ptSessions.push({
+                        date: date,
+                        dateString: date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+                        cfl: cflRoster[cflIndex % cflRoster.length],
+                        time: ptTime,
+                        location: defaultLocation
+                    });
+                    cflIndex++;
+                }
+            }
+
+            // Render watchbill
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            let html = `
+                <div class="calculator-card">
+                    <div class="watchbill-header">
+                        <h2>Command PT Watchbill</h2>
+                        <p style="color: #8fa3bf; font-size: 16px;">${monthNames[month]} ${year}</p>
+                    </div>
+
+                    <table class="watchbill-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Date</th>
+                                <th style="width: 15%;">Time</th>
+                                <th style="width: 25%;">CFL/ACFL</th>
+                                <th style="width: 40%;">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            ptSessions.forEach(session => {
+                html += `
+                    <tr>
+                        <td>${session.dateString}</td>
+                        <td>${session.time}</td>
+                        <td>${session.cfl}</td>
+                        <td>${session.location}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+
+                    <p style="color: #6b7c94; font-size: 13px; margin-bottom: 15px;">
+                        Total PT Sessions: ${ptSessions.length} | CFLs/ACFLs: ${cflRoster.length}
+                    </p>
+
+                    <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill</button>
+                </div>
+            `;
+
+            const output = document.getElementById('watchbillOutput');
+            output.innerHTML = html;
+            output.style.display = 'block';
+            output.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

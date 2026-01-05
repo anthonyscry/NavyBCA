@@ -378,6 +378,51 @@
             color: #ffd700;
         }
 
+        /* PT Banner */
+        .pt-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .pt-banner-text {
+            flex: 1;
+        }
+
+        .pt-banner-text h3 {
+            color: #ffd700;
+            margin: 0 0 8px 0;
+            font-size: 20px;
+        }
+
+        .pt-banner-text p {
+            color: #e8eef5;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .pt-banner-btn {
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #0a1628;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .pt-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -393,7 +438,8 @@
             .btn-back,
             .action-btn,
             .search-link,
-            .ad-container {
+            .ad-container,
+            .pt-banner {
                 display: none !important;
             }
 
@@ -478,6 +524,17 @@
             </div>
             <p class="subtitle">Command Physical Training Session Builder</p>
         </header>
+
+        <!-- Watchbill Generator Banner -->
+        <div class="pt-banner">
+            <div class="pt-banner-text">
+                <h3>Need a Monthly PT Watchbill?</h3>
+                <p>Auto-generate PT schedules with CFL rotation. Select days, assign CFLs, print ready.</p>
+            </div>
+            <a href="watchbill.html" class="pt-banner-btn">
+                Watchbill Generator →
+            </a>
+        </div>
 
         <main class="calculator-card">
             <!-- PPAQ Section - Always Visible for CFLs -->
@@ -608,6 +665,8 @@
             <p>
                 <a href="references.html">References & Guides</a> |
                 <a href="index.html">BCA Calculator</a> |
+                <a href="generator.html">PT Generator</a> |
+                <a href="watchbill.html">Watchbill Generator</a> |
                 <a href="about.html">About</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
