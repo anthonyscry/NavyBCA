@@ -1137,6 +1137,9 @@
         function updateSession(index, field, value) {
             if (ptSchedule[index]) {
                 ptSchedule[index][field] = value;
+                if (field === 'cfl') {
+                    ptSchedule[index].assignedCfl = value;
+                }
             }
         }
 
@@ -1146,6 +1149,21 @@
             }
             ptSchedule[index].offDay = !ptSchedule[index].offDay;
             renderWatchbill();
+        }
+
+        function applyRotationAssignments() {
+            if (!currentRoster.length) {
+                return;
+            }
+
+            let rosterIndex = 0;
+
+            ptSchedule.forEach(session => {
+                session.assignedCfl = currentRoster[rosterIndex % currentRoster.length];
+                if (!session.offDay) {
+                    rosterIndex += 1;
+                }
+            });
         }
 
         function renderWatchbill(firstDayOverride, daysInMonthOverride) {
@@ -1164,6 +1182,8 @@
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            applyRotationAssignments();
 
             // Count PT vs FEP sessions (excluding off days)
             const activeSessions = ptSchedule.filter(session => !session.offDay);
@@ -1218,7 +1238,7 @@
                             <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
                             <div class="off-day-note">Off Day - Rotation Held</div>
                             <div class="pt-info">
-                                <div>Assigned CFL/ACFL: ${ptSession.cfl}</div>
+                                <div>Assigned CFL/ACFL: ${ptSession.assignedCfl}</div>
                                 <div class="off-day-hint">Click to restore this session.</div>
                             </div>
                         `;
@@ -1256,10 +1276,9 @@
                                 </div>
                                 <div>
                                     CFL/ACFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
-                                        ${currentRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.cfl ? 'selected' : ''}>${cfl}</option>`).join('')}
+                                        ${currentRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.assignedCfl ? 'selected' : ''}>${cfl}</option>`).join('')}
                                     </select>
                                 </div>
-                                <div class="off-day-hint">Click the day to mark an off day.</div>
                             </div>
                         `;
                     }
@@ -1278,10 +1297,10 @@
             // Generate metrics report
             const cflMetrics = {};
             activeSessions.forEach(session => {
-                if (!cflMetrics[session.cfl]) {
-                    cflMetrics[session.cfl] = 0;
+                if (!cflMetrics[session.assignedCfl]) {
+                    cflMetrics[session.assignedCfl] = 0;
                 }
-                cflMetrics[session.cfl]++;
+                cflMetrics[session.assignedCfl]++;
             });
 
             calendarHTML += `
