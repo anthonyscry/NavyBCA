@@ -556,13 +556,14 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
             border: 2px solid rgba(255, 215, 0, 0.4);
             border-radius: 12px;
-            padding: 15px 25px;
+            padding: 20px 25px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 15px;
             flex-wrap: wrap;
+            min-height: 90px;
         }
 
         .pt-banner.secondary {
@@ -578,7 +579,7 @@
         .pt-banner-text h3 {
             color: #ffd700;
             font-size: 16px;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
         .pt-banner.secondary .pt-banner-text h3 {
@@ -589,6 +590,7 @@
             color: #8fa3bf;
             font-size: 13px;
             margin: 0;
+            line-height: 1.4;
         }
 
         .pt-banner-btn {
@@ -606,6 +608,7 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            flex-shrink: 0;
         }
 
         .pt-banner-btn:hover {
