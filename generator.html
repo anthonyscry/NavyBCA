@@ -675,6 +675,16 @@
 
             <div id="workoutOutput"></div>
 
+            <!-- Export Buttons -->
+            <div id="exportSection" style="display: none; margin-top: 25px; gap: 10px; flex-wrap: wrap;">
+                <button type="button" style="flex: 1; min-width: 150px; padding: 12px 20px; background: rgba(74, 144, 226, 0.2); border: 2px solid rgba(74, 144, 226, 0.4); border-radius: 8px; color: #4a90e2; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px;" onclick="exportWorkoutToCSV()" onmouseover="this.style.background='rgba(74, 144, 226, 0.3)'; this.style.borderColor='#4a90e2'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(74, 144, 226, 0.2)'; this.style.borderColor='rgba(74, 144, 226, 0.4)'; this.style.transform='translateY(0)'">
+                    📊 Export to CSV
+                </button>
+                <button type="button" style="flex: 1; min-width: 150px; padding: 12px 20px; background: rgba(239, 68, 68, 0.2); border: 2px solid rgba(239, 68, 68, 0.4); border-radius: 8px; color: #ef4444; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px;" onclick="exportWorkoutToPDF()" onmouseover="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.borderColor='#ef4444'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.2)'; this.style.borderColor='rgba(239, 68, 68, 0.4)'; this.style.transform='translateY(0)'">
+                    📄 Print / Save PDF
+                </button>
+            </div>
+
             <p style="margin-top: 20px; font-size: 12px; color: #6b7c94; text-align: center;">
                 * All exercises filtered to remove contraindicated movements per NOFFS guidelines.
             </p>
@@ -1204,6 +1214,7 @@
 
                 out.innerHTML = html;
                 out.style.display = 'block';
+                document.getElementById('exportSection').style.display = 'flex';
                 out.scrollIntoView({ behavior: 'smooth' });
                 return; // Exit early for fun day
             }
@@ -1240,6 +1251,7 @@
 
                 out.innerHTML = html;
                 out.style.display = 'block';
+                document.getElementById('exportSection').style.display = 'flex';
                 out.scrollIntoView({ behavior: 'smooth' });
                 return; // Exit early for yoga day
             }
@@ -1322,7 +1334,71 @@
 
             out.innerHTML = html;
             out.style.display = 'block';
+            document.getElementById('exportSection').style.display = 'flex';
             out.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Export Functions for PT Generator
+        function exportWorkoutToCSV() {
+            const workoutOutput = document.getElementById('workoutOutput');
+            if (workoutOutput.style.display === 'none') {
+                alert('Please generate a workout first before exporting.');
+                return;
+            }
+
+            // Get workout details
+            const focus = document.getElementById('focusSelect').options[document.getElementById('focusSelect').selectedIndex].text;
+            const location = document.getElementById('locationSelect').options[document.getElementById('locationSelect').selectedIndex].text;
+            const scheme = document.getElementById('schemeSelect').options[document.getElementById('schemeSelect').selectedIndex].text;
+            const today = new Date().toISOString().split('T')[0];
+
+            // Parse workout content
+            let csv = 'Navy Command PT Session\n';
+            csv += `Date,${today}\n`;
+            csv += `Focus,${focus}\n`;
+            csv += `Location,${location}\n`;
+            csv += `Rep Scheme,${scheme}\n`;
+            csv += `\n`;
+
+            // Extract exercises from the workout output
+            const sections = workoutOutput.querySelectorAll('.section-header');
+            const exerciseLists = workoutOutput.querySelectorAll('.exercise-list');
+
+            sections.forEach((section, index) => {
+                const sectionTitle = section.textContent.replace('▼', '').replace('▶', '').trim();
+                csv += `\n${sectionTitle}\n`;
+                csv += 'Exercise,Reps/Duration\n';
+
+                if (exerciseLists[index]) {
+                    const exercises = exerciseLists[index].querySelectorAll('.exercise-item');
+                    exercises.forEach(exercise => {
+                        const name = exercise.querySelector('.exercise-name')?.textContent || '';
+                        const meta = exercise.querySelector('.exercise-meta')?.textContent || '';
+                        csv += `"${name}","${meta}"\n`;
+                    });
+                }
+            });
+
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Navy-PT-Session-${today}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function exportWorkoutToPDF() {
+            const workoutOutput = document.getElementById('workoutOutput');
+            if (workoutOutput.style.display === 'none') {
+                alert('Please generate a workout first before printing.');
+                return;
+            }
+
+            window.print();
         }
     </script>
 </body>

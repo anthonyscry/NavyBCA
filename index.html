@@ -587,6 +587,49 @@
             margin-top: 8px;
         }
 
+        /* Export Buttons */
+        .export-section {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 20px;
+            background: rgba(74, 144, 226, 0.2);
+            border: 2px solid rgba(74, 144, 226, 0.4);
+            border-radius: 8px;
+            color: #4a90e2;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+        }
+
+        .export-btn.pdf {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+
+        .export-btn.pdf:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+
         /* Reset Button */
         .reset-btn {
             width: 100%;
@@ -752,6 +795,145 @@
             to {
                 transform: translateX(400px);
                 opacity: 0;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            /* Hide non-essential elements */
+            .ad-container,
+            .pt-banner,
+            .calculate-btn,
+            .export-btn,
+            .reset-btn,
+            .btn-back,
+            .search-link,
+            .info-section,
+            footer {
+                display: none !important;
+            }
+
+            /* Show only results section */
+            .input-section {
+                page-break-after: avoid;
+            }
+
+            .results-section {
+                display: block !important;
+            }
+
+            /* Header styling */
+            header {
+                padding: 10px 0;
+                page-break-after: avoid;
+            }
+
+            h1 {
+                -webkit-text-fill-color: black !important;
+                color: black !important;
+                font-size: 20px;
+            }
+
+            .subtitle {
+                color: #666 !important;
+                font-size: 12px;
+            }
+
+            /* Results styling */
+            .status-banner {
+                page-break-inside: avoid;
+                border: 2px solid #333 !important;
+            }
+
+            .status-banner.pass {
+                background: #f0f9ff !important;
+                border-color: #22c55e !important;
+            }
+
+            .status-banner.fail {
+                background: #fff5f5 !important;
+                border-color: #ef4444 !important;
+            }
+
+            .status-text {
+                color: #333 !important;
+            }
+
+            .metrics-grid,
+            .step-card,
+            .goal-section {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ccc !important;
+            }
+
+            .metric-card,
+            .goal-detail {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .metric-value,
+            .step-metric-value,
+            .goal-detail-value {
+                color: #333 !important;
+            }
+
+            .step-metric-value.pass,
+            .goal-detail-value.highlight {
+                color: #22c55e !important;
+            }
+
+            .step-metric-value.fail {
+                color: #ef4444 !important;
+            }
+
+            .warning-box {
+                background: #fff5f5 !important;
+                border: 2px solid #ef4444 !important;
+                page-break-inside: avoid;
+            }
+
+            .warning-title {
+                color: #ef4444 !important;
+            }
+
+            .goal-section h3 {
+                color: #333 !important;
+            }
+
+            .goal-path-card {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 2px solid #ddd !important;
+            }
+
+            .goal-path-card.easiest {
+                border-color: #22c55e !important;
+                background: #f0f9ff !important;
+            }
+
+            .goal-path-badge {
+                background: #22c55e !important;
+                color: white !important;
+            }
+
+            .goal-path-title {
+                color: #333 !important;
+            }
+
+            .goal-path-card.easiest .goal-path-title {
+                color: #22c55e !important;
             }
         }
 
@@ -997,6 +1179,16 @@
                         <div class="goal-paths" id="goalPaths">
                             <!-- Paths will be generated by JavaScript -->
                         </div>
+                    </div>
+
+                    <!-- Export Buttons -->
+                    <div class="export-section">
+                        <button type="button" class="export-btn" onclick="exportToCSV()">
+                            📊 Export to CSV
+                        </button>
+                        <button type="button" class="export-btn pdf" onclick="exportToPDF()">
+                            📄 Print / Save PDF
+                        </button>
                     </div>
 
                     <button type="button" class="reset-btn" onclick="resetCalculator()">
@@ -1490,6 +1682,86 @@
             document.getElementById('weight').value = '180';
             document.getElementById('waist').value = '34';
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Export Functions
+        function exportToCSV() {
+            // Check if results are visible
+            if (!document.getElementById('resultsSection').classList.contains('show')) {
+                alert('Please calculate BCA first before exporting.');
+                return;
+            }
+
+            // Gather data
+            const status = document.getElementById('statusText').textContent;
+            const height = document.getElementById('resultHeight').textContent;
+            const weight = document.getElementById('resultWeight').textContent;
+            const waist = document.getElementById('resultWaist').textContent;
+            const whtr = document.getElementById('whtrValue').textContent;
+            const bodyFat = document.getElementById('bfValue').textContent;
+            const maxBF = document.getElementById('maxBfValue').textContent;
+            const step1Status = document.getElementById('step1Status').textContent;
+            const step2Status = document.getElementById('step2Status').textContent;
+
+            // Create CSV content
+            const today = new Date().toISOString().split('T')[0];
+            let csv = 'Navy BCA Results\n';
+            csv += `Date,${today}\n`;
+            csv += `Gender,${currentGender}\n`;
+            csv += `\n`;
+            csv += 'Measurements\n';
+            csv += `Height,${height}\n`;
+            csv += `Weight,${weight}\n`;
+            csv += `Waist,${waist}\n`;
+            csv += `\n`;
+            csv += 'Results\n';
+            csv += `Overall Status,${status}\n`;
+            csv += `Step 1 (WHtR),${step1Status}\n`;
+            csv += `WHtR Value,${whtr}\n`;
+            csv += `Step 2 (Body Fat),${step2Status}\n`;
+            csv += `Body Fat %,${bodyFat}\n`;
+            csv += `Max Allowed BF%,${maxBF}\n`;
+
+            // Add goal paths if failed
+            const goalSection = document.getElementById('goalSection');
+            if (goalSection.style.display !== 'none') {
+                csv += `\n`;
+                csv += 'Path to Standards\n';
+                const paths = document.querySelectorAll('.goal-path-card');
+                paths.forEach((card, index) => {
+                    const title = card.querySelector('.goal-path-title').textContent;
+                    const details = card.querySelectorAll('.goal-detail-value');
+                    const note = card.querySelector('.goal-path-note').textContent;
+                    csv += `\nOption ${index + 1},${title}\n`;
+                    Array.from(details).forEach((detail, i) => {
+                        const label = card.querySelectorAll('.goal-detail-label')[i].textContent;
+                        csv += `${label},${detail.textContent}\n`;
+                    });
+                    csv += `Note,"${note}"\n`;
+                });
+            }
+
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Navy-BCA-Results-${today}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function exportToPDF() {
+            // Check if results are visible
+            if (!document.getElementById('resultsSection').classList.contains('show')) {
+                alert('Please calculate BCA first before printing.');
+                return;
+            }
+
+            // Use browser print dialog (which can save as PDF)
+            window.print();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
