@@ -1666,32 +1666,33 @@
         }
 
         function getLowImpactAlternatives(equip, focus, location) {
-            let alternatives = [];
+            let strengthAlternatives = [];
+            let cardioAlternatives = [];
             if (focus !== 'cardio') {
                 const strengthDb = db.lowImpact.strength;
-                alternatives = [...alternatives, ...strengthDb.bodyweight];
-                if (equip.bands && strengthDb.bands) alternatives = [...alternatives, ...strengthDb.bands];
-                if (equip.kettlebells && strengthDb.kettlebells) alternatives = [...alternatives, ...strengthDb.kettlebells];
-                if (equip.dumbbells && strengthDb.dumbbells) alternatives = [...alternatives, ...strengthDb.dumbbells];
-                if (equip.flatBench && strengthDb.flatBench) alternatives = [...alternatives, ...strengthDb.flatBench];
-                if (equip.adjBench && strengthDb.adjBench) alternatives = [...alternatives, ...strengthDb.adjBench];
-                if (equip.sled && strengthDb.sled) alternatives = [...alternatives, ...strengthDb.sled];
+                strengthAlternatives = [...strengthAlternatives, ...strengthDb.bodyweight];
+                if (equip.bands && strengthDb.bands) strengthAlternatives = [...strengthAlternatives, ...strengthDb.bands];
+                if (equip.kettlebells && strengthDb.kettlebells) strengthAlternatives = [...strengthAlternatives, ...strengthDb.kettlebells];
+                if (equip.dumbbells && strengthDb.dumbbells) strengthAlternatives = [...strengthAlternatives, ...strengthDb.dumbbells];
+                if (equip.flatBench && strengthDb.flatBench) strengthAlternatives = [...strengthAlternatives, ...strengthDb.flatBench];
+                if (equip.adjBench && strengthDb.adjBench) strengthAlternatives = [...strengthAlternatives, ...strengthDb.adjBench];
+                if (equip.sled && strengthDb.sled) strengthAlternatives = [...strengthAlternatives, ...strengthDb.sled];
             }
 
             if (focus !== 'strength') {
                 const cardioDb = db.lowImpact.cardio;
-                alternatives = [
-                    ...alternatives,
+                cardioAlternatives = [
+                    ...cardioAlternatives,
                     ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)
                 ];
-                if (equip.assaultBike && cardioDb.assaultBike) alternatives = [...alternatives, ...cardioDb.assaultBike];
-                if (equip.rower && cardioDb.rower) alternatives = [...alternatives, ...cardioDb.rower];
-                if ((equip.cycle || equip.bicycle) && cardioDb.cycle) alternatives = [...alternatives, ...cardioDb.cycle];
-                if (equip.bicycle && cardioDb.bicycle) alternatives = [...alternatives, ...cardioDb.bicycle];
-                if (equip.treadmill && cardioDb.treadmill) alternatives = [...alternatives, ...cardioDb.treadmill];
+                if (equip.assaultBike && cardioDb.assaultBike) cardioAlternatives = [...cardioAlternatives, ...cardioDb.assaultBike];
+                if (equip.rower && cardioDb.rower) cardioAlternatives = [...cardioAlternatives, ...cardioDb.rower];
+                if ((equip.cycle || equip.bicycle) && cardioDb.cycle) cardioAlternatives = [...cardioAlternatives, ...cardioDb.cycle];
+                if (equip.bicycle && cardioDb.bicycle) cardioAlternatives = [...cardioAlternatives, ...cardioDb.bicycle];
+                if (equip.treadmill && cardioDb.treadmill) cardioAlternatives = [...cardioAlternatives, ...cardioDb.treadmill];
             }
 
-            return alternatives;
+            return { strengthAlternatives, cardioAlternatives };
         }
 
         function renderCollapsibleHeader(title, contentId, expanded = true) {
@@ -1998,13 +1999,19 @@
                 }
             }
 
-            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, focus, location) : [];
-            const shuffledAlternatives = lowImpactAlternatives.sort(() => 0.5 - Math.random());
+            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, focus, location) : {
+                strengthAlternatives: [],
+                cardioAlternatives: []
+            };
+            const shuffledStrengthAlternatives = lowImpactAlternatives.strengthAlternatives.sort(() => 0.5 - Math.random());
+            const shuffledCardioAlternatives = lowImpactAlternatives.cardioAlternatives.sort(() => 0.5 - Math.random());
 
             selected.forEach(ex => {
                 const reps = getExerciseReps(ex, scheme);
                 const alternative = lowImpact
-                    ? (shuffledAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)')
+                    ? (isCardioExercise(ex)
+                        ? (shuffledCardioAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)')
+                        : (shuffledStrengthAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)'))
                     : null;
                 html += renderItem(ex.name, reps, ex.tip, alternative);
             });
