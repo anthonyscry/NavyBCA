@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Security: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self'; frame-src https://www.google.com;">
+
     <!-- SEO Meta Tags -->
     <title>Navy BCA Calculator 2025 | Body Composition Assessment Tool | PRT Calculator</title>
     <meta name="description"
@@ -71,18 +74,88 @@
     </script>
 
     <style>
+        /* Design System Variables */
+        :root {
+            /* Colors */
+            --color-primary: #ffd700;
+            --color-primary-dark: #b8860b;
+            --color-background: #0a1628;
+            --color-background-alt: #1a2a4a;
+            --color-surface: rgba(20, 35, 60, 0.8);
+            --color-surface-light: rgba(30, 50, 80, 0.5);
+            --color-text-primary: #e8eef5;
+            --color-text-secondary: #a0b0cf;
+            --color-text-tertiary: #7a8ba5;
+            --color-text-hint: #94a3bf;
+
+            --color-success: #22c55e;
+            --color-error: #ef4444;
+            --color-warning: #f59e0b;
+            --color-info: #3b82f6;
+
+            /* Spacing */
+            --space-xs: 5px;
+            --space-sm: 10px;
+            --space-md: 15px;
+            --space-lg: 20px;
+            --space-xl: 30px;
+
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Typography */
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-padding-top: 20px;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-alt) 50%, var(--color-background) 100%);
             min-height: 100vh;
-            color: #e8eef5;
+            color: var(--color-text-primary);
             line-height: 1.6;
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         .container {
@@ -130,23 +203,43 @@
         .logo {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            box-shadow: var(--shadow-glow);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(255, 215, 0, 0.5);
+                transform: scale(1.02);
+            }
         }
 
         h1 {
-            font-size: 32px;
+            font-size: var(--font-size-3xl);
             font-weight: 700;
-            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+            color: var(--color-primary);
+            background: linear-gradient(90deg, var(--color-primary), #fff, var(--color-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 1px;
+        }
+
+        @supports not (-webkit-background-clip: text) {
+            h1 {
+                background: none;
+                color: var(--color-primary);
+            }
         }
 
         .subtitle {
@@ -185,9 +278,207 @@
         }
 
         .hint {
-            font-size: 12px;
-            color: #6b7c94;
-            margin-top: 8px;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-hint);
+            margin-top: var(--space-sm);
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-lg);
+            min-width: 300px;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            z-index: 9999;
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .notification.success {
+            border-color: var(--color-success);
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .notification.error {
+            border-color: var(--color-error);
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .notification.warning {
+            border-color: var(--color-warning);
+            background: rgba(245, 158, 11, 0.15);
+        }
+
+        .notification.info {
+            border-color: var(--color-info);
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text-primary);
+        }
+
+        .notification-message {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-primary);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 22, 40, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.2);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            position: absolute;
+            margin-top: 100px;
+            color: var(--color-text-primary);
+            font-size: var(--font-size-lg);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Form Validation Styles */
+        input:invalid:not(:placeholder-shown),
+        select:invalid:not(:placeholder-shown) {
+            border-color: var(--color-error);
+        }
+
+        input:valid:not(:placeholder-shown),
+        select:valid:not(:placeholder-shown) {
+            border-color: var(--color-success);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-xs);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .form-group.error input,
+        .form-group.error select {
+            border-color: var(--color-error);
+        }
+
+        /* Focus Indicators */
+        *:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        button:focus-visible,
+        .gender-btn:focus-visible,
+        .day-type-btn:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Skip to Content Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
+            color: var(--color-background);
+            padding: var(--space-sm) var(--space-lg);
+            text-decoration: none;
+            border-radius: 0 0 var(--radius-md) 0;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
 
         /* Gender Buttons */
@@ -252,26 +543,83 @@
             background: #1a2a4a;
         }
 
+        /* Button System - Standardized */
+        .btn {
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: var(--color-background);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-lg {
+            padding: 18px 24px;
+            font-size: var(--font-size-lg);
+        }
+
+        .btn-md {
+            padding: 12px 20px;
+            font-size: var(--font-size-base);
+        }
+
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: var(--font-size-sm);
+        }
+
         /* Calculate Button */
         .calculate-btn {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
             border: none;
-            border-radius: 10px;
-            color: #0a1628;
-            font-size: 18px;
+            border-radius: var(--radius-md);
+            color: var(--color-background);
+            font-size: var(--font-size-lg);
             font-weight: 700;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition-base);
         }
 
         .calculate-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .calculate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* Results Section */
@@ -305,7 +653,7 @@
         }
 
         .status-icon {
-            font-size: 48px;
+            font-size: clamp(32px, 5vw, 48px);
             margin-bottom: 10px;
         }
 
@@ -590,9 +938,28 @@
         /* Export Buttons */
         .export-section {
             margin-top: 25px;
-            display: flex;
+            display: none;
             gap: 10px;
             flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .export-section.show {
+            display: flex;
+            animation: fadeInUp 0.3s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .export-btn {
@@ -961,6 +1328,15 @@
 </head>
 
 <body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading BCA data...</div>
+    </div>
+
     <div class="container">
         <!-- Top Ad Banner -->
         <div class="ad-container">
@@ -1004,18 +1380,18 @@
             </a>
         </div>
 
-        <main>
+        <main id="main-content">
             <div class="calculator-card">
                 <div class="input-section">
                     <!-- Gender -->
                     <div class="form-group">
-                        <label>Gender</label>
-                        <div class="gender-buttons">
+                        <label for="gender-selection">Gender</label>
+                        <div class="gender-buttons" role="group" aria-labelledby="gender-selection" id="gender-selection">
                             <button type="button" class="gender-btn active" data-gender="male"
-                                onclick="setGender('male')">
+                                onclick="setGender('male')" aria-label="Select male gender" aria-pressed="true">
                                 ♂ Male
                             </button>
-                            <button type="button" class="gender-btn" data-gender="female" onclick="setGender('female')">
+                            <button type="button" class="gender-btn" data-gender="female" onclick="setGender('female')" aria-label="Select female gender" aria-pressed="false">
                                 ♀ Female
                             </button>
                         </div>
@@ -1056,18 +1432,20 @@
 
                     <!-- Weight -->
                     <div class="form-group">
-                        <label>Weight (lbs) - Rounded to nearest pound</label>
-                        <input type="number" id="weight" value="180" min="61" max="400">
+                        <label for="weight">Weight (lbs) - Rounded to nearest pound</label>
+                        <input type="number" id="weight" value="180" min="61" max="400"
+                               aria-label="Enter your weight in pounds" required>
                     </div>
 
                     <!-- Waist -->
                     <div class="form-group">
-                        <label>Waist at Umbilicus (inches) - Rounded down to nearest ½"</label>
-                        <input type="number" id="waist" value="34" min="20" max="60" step="0.5">
+                        <label for="waist">Waist at Umbilicus (inches) - Rounded down to nearest ½"</label>
+                        <input type="number" id="waist" value="34" min="20" max="60" step="0.5"
+                               aria-label="Enter your waist measurement in inches" required>
                         <p class="hint">Measured at bellybutton level, tape parallel to deck</p>
                     </div>
 
-                    <button type="button" class="calculate-btn" onclick="calculateBCA()">
+                    <button type="button" class="calculate-btn" onclick="calculateBCA()" aria-label="Calculate Body Composition Assessment">
                         Calculate BCA
                     </button>
                 </div>
@@ -1259,6 +1637,68 @@
     <script>
         let currentGender = 'male';
 
+        // Security: HTML Escaping Function
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Global Error Handlers
+        window.addEventListener('error', function(event) {
+            showNotification('An unexpected error occurred. Please refresh the page.', 'error', 'Error');
+            console.error('Global error:', event.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(event) {
+            showNotification('An unexpected error occurred. Please try again.', 'error', 'Error');
+            console.error('Unhandled promise rejection:', event.reason);
+        });
+
+        // Notification System
+        function showNotification(message, type = 'info', title = '') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            const icons = {
+                success: '✓',
+                error: '✗',
+                warning: '⚠',
+                info: 'ℹ'
+            };
+
+            notification.innerHTML = `
+                <div class="notification-icon">${icons[type] || 'ℹ'}</div>
+                <div class="notification-content">
+                    ${title ? `<div class="notification-title">${title}</div>` : ''}
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()" aria-label="Close notification">×</button>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Loading State Functions
+        function showLoading(message = 'Loading...') {
+            const overlay = document.getElementById('loadingOverlay');
+            const text = overlay.querySelector('.loading-text');
+            if (text) text.textContent = message;
+            overlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.remove('active');
+        }
+
         // Load saved data on page load
         window.addEventListener('DOMContentLoaded', function() {
             loadSavedData();
@@ -1282,43 +1722,39 @@
                 try {
                     const data = JSON.parse(savedData);
 
-                    // Restore inputs
-                    setGender(data.gender);
-                    document.getElementById('heightFeet').value = data.heightFeet || '5';
-                    document.getElementById('heightInches').value = data.heightInches || '10';
-                    document.getElementById('weight').value = data.weight || '180';
-                    document.getElementById('waist').value = data.waist || '34';
+                    // Security: Validate data before using
+                    if (data.gender && ['male', 'female'].includes(data.gender)) {
+                        setGender(data.gender);
+                    }
+
+                    if (data.heightFeet && ['4', '5', '6', '7'].includes(String(data.heightFeet))) {
+                        document.getElementById('heightFeet').value = data.heightFeet;
+                    }
+
+                    if (data.heightInches && !isNaN(data.heightInches) && data.heightInches >= 0 && data.heightInches <= 11) {
+                        document.getElementById('heightInches').value = data.heightInches;
+                    }
+
+                    if (data.weight && !isNaN(data.weight) && data.weight >= 61 && data.weight <= 400) {
+                        document.getElementById('weight').value = data.weight;
+                    }
+
+                    if (data.waist && !isNaN(data.waist) && data.waist >= 20 && data.waist <= 60) {
+                        document.getElementById('waist').value = data.waist;
+                    }
 
                     // Show a subtle notification
                     showRestoreNotification();
                 } catch (e) {
                     console.error('Error loading saved data:', e);
+                    localStorage.removeItem('navyBcaData'); // Clear corrupted data
+                    showNotification('Saved data was corrupted and has been cleared', 'warning');
                 }
             }
         }
 
         function showRestoreNotification() {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: rgba(34, 197, 94, 0.2);
-                border: 1px solid rgba(34, 197, 94, 0.5);
-                color: #22c55e;
-                padding: 12px 20px;
-                border-radius: 8px;
-                font-size: 13px;
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-            `;
-            notification.textContent = '✓ Previous inputs restored';
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            showNotification('Previous inputs restored', 'success');
         }
 
         function clearSavedData() {
@@ -1328,12 +1764,11 @@
         function setGender(gender) {
             currentGender = gender;
 
-            // Update button states
+            // Update button states and ARIA attributes
             document.querySelectorAll('.gender-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.gender === gender) {
-                    btn.classList.add('active');
-                }
+                const isActive = btn.dataset.gender === gender;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive);
             });
 
             // Update display
@@ -1368,6 +1803,7 @@
         }
 
         async function loadBcaTables() {
+            showLoading('Loading BCA data...');
             try {
                 const [maleResp, femaleResp] = await Promise.all([
                     fetch('male_bca_table_FULL_NORMALIZED.csv'),
@@ -1380,8 +1816,12 @@
                 bcaTables.male = parseBcaTable(maleCsv);
                 bcaTables.female = parseBcaTable(femaleCsv);
                 bcaTablesLoaded = true;
+                hideLoading();
+                showNotification('BCA data loaded successfully', 'success');
             } catch (error) {
                 console.error('Failed to load BCA tables:', error);
+                hideLoading();
+                showNotification('Failed to load BCA data. Please refresh the page.', 'error', 'Error');
             }
         }
 
@@ -1424,7 +1864,7 @@
 
         function calculateBCA() {
             if (!bcaTablesLoaded) {
-                alert('BCA tables are still loading. Please try again in a moment.');
+                showNotification('BCA tables are still loading. Please try again in a moment.', 'warning', 'Please Wait');
                 return;
             }
             // Save current inputs
@@ -1688,7 +2128,7 @@
         function exportToCSV() {
             // Check if results are visible
             if (!document.getElementById('resultsSection').classList.contains('show')) {
-                alert('Please calculate BCA first before exporting.');
+                showNotification('Please calculate BCA first before exporting.', 'warning', 'No Results');
                 return;
             }
 
@@ -1756,7 +2196,7 @@
         function exportToPDF() {
             // Check if results are visible
             if (!document.getElementById('resultsSection').classList.contains('show')) {
-                alert('Please calculate BCA first before printing.');
+                showNotification('Please calculate BCA first before printing.', 'warning', 'No Results');
                 return;
             }
 
