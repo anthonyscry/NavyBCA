@@ -184,6 +184,53 @@
             pointer-events: none;
         }
 
+        .toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #dfe7f3;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-pill-track {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            background: rgba(216, 222, 231, 0.7);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-pill-track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track {
+            background: #4a90e2;
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track::after {
+            transform: translateX(16px);
+        }
+
         .equip-grid.disabled {
             opacity: 0.5;
         }
@@ -334,6 +381,36 @@
             flex-direction: column;
             gap: 5px;
             border-left: 3px solid #4a90e2;
+        }
+
+        .exercise-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-main {
+            min-width: 200px;
+        }
+
+        .exercise-alt {
+            min-width: 200px;
+            text-align: right;
+            color: #d1e6ff;
+        }
+
+        .exercise-alt-label {
+            display: block;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #8fa3bf;
+        }
+
+        .exercise-alt-name {
+            font-size: 0.95em;
+            font-weight: 600;
         }
 
         .exercise-name {
@@ -594,12 +671,6 @@
                         <option value="indoor">Indoor</option>
                     </select>
                 </div>
-                <div class="form-group" id="lowImpactGroup">
-                    <label>Low Impact / Injured Mode</label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" id="lowImpactToggle"> Enable low-impact alternatives
-                    </label>
-                </div>
                 <div class="form-group">
                     <label>Rep Scheme</label>
                     <select id="schemeSelect">
@@ -610,6 +681,14 @@
                         <option value="pyramid">Pyramid (2-4-6-8-10)</option>
                         <option value="reversePyramid">Reverse Pyramid (10-8-6-4-2)</option>
                     </select>
+                </div>
+                <div class="form-group" id="lowImpactGroup">
+                    <label>Low Impact / Injured Mode</label>
+                    <label class="toggle-pill">
+                        <input type="checkbox" id="lowImpactToggle">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">Low-impact alternatives</span>
+                    </label>
                 </div>
             </div>
 
@@ -723,6 +802,9 @@
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipCycle" onchange="equipChanged()"> Stationary Cycle
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipBicycle" onchange="equipChanged()"> Bicycles
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()"> Treadmill
@@ -965,7 +1047,6 @@
                     ],
                     outdoor: [
                         { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
-                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
                         { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true }
                     ],
                     assaultBike: [
@@ -977,8 +1058,13 @@
                         { name: "Rowing Intervals (500m)", tip: "Moderate effort, focus on form.", reps: "500m x 4-5 intervals" }
                     ],
                     cycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
                         { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace.", reps: "5-10 min", isFinisher: true },
                         { name: "Cycling Intervals", tip: "1 min moderate, 1 min easy. Keep cadence smooth.", reps: "6-8 rounds" }
+                    ],
+                    bicycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
+                        { name: "Bike Ride Intervals", tip: "2 min steady, 1 min easy spin. Stay smooth.", reps: "6-8 rounds" }
                     ],
                     treadmill: [
                         { name: "Incline Walk", tip: "10-15% incline, moderate pace.", reps: "5-10 min", isFinisher: true },
@@ -1032,6 +1118,11 @@
                     { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace. Good recovery.", reps: "5-10 min", isFinisher: true },
                     { name: "Cycling Hills", tip: "Increase resistance, stand and climb. 1 min on, 1 min off.", reps: "5-6 hills" },
                     { name: "Cycling Tabata", tip: "20s sprint, 10s rest x 8. High cadence.", reps: "4 min" }
+                ],
+                bicycle: [
+                    { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
+                    { name: "Bike Ride Intervals", tip: "2 min steady, 1 min easy spin. Stay smooth.", reps: "6-8 rounds" },
+                    { name: "Bike Hill Climbs", tip: "Find a short hill, climb strong, easy coast down.", reps: "4-6 climbs" }
                 ],
                 treadmill: [
                     { name: "Treadmill Intervals", tip: "1 min sprint, 1 min walk. Adjust speed for ability.", reps: "6-8 rounds" },
@@ -1258,6 +1349,7 @@
                 assaultBike: document.getElementById('equipAssaultBike').checked,
                 rower: document.getElementById('equipRower').checked,
                 cycle: document.getElementById('equipCycle').checked,
+                bicycle: document.getElementById('equipBicycle').checked,
                 treadmill: document.getElementById('equipTreadmill').checked
             };
         }
@@ -1289,6 +1381,7 @@
                     bands: document.getElementById('equipBands').checked,
                     rower: document.getElementById('equipRower').checked,
                     cycle: document.getElementById('equipCycle').checked,
+                    bicycle: document.getElementById('equipBicycle').checked,
                     treadmill: document.getElementById('equipTreadmill').checked,
                     sled: document.getElementById('equipSled').checked
                 },
@@ -1550,15 +1643,55 @@
             return `https://www.google.com/search?q=${encodeURIComponent(term + " exercise technique")}+site:youtube.com`;
         }
 
-        function renderItem(name, meta, tip = null) {
+        function renderItem(name, meta, tip = null, alternative = null) {
             const tipHtml = tip ? `<div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${tip}</div>` : '';
+            const altHtml = alternative
+                ? `<div class="exercise-alt">
+                        <span class="exercise-alt-label">Low-impact option</span>
+                        <span class="exercise-alt-name">${alternative}</span>
+                   </div>`
+                : '';
             return `
                 <li class="exercise-item">
-                    <span class="exercise-name">${name}</span>
-                    <div class="exercise-meta">${meta}</div>${tipHtml}
+                    <div class="exercise-row">
+                        <div class="exercise-main">
+                            <span class="exercise-name">${name}</span>
+                            <div class="exercise-meta">${meta}</div>
+                        </div>
+                        ${altHtml}
+                    </div>${tipHtml}
                     <a href="${getSearchLink(name)}" target="_blank" class="search-link">▶ Watch Demo</a>
                 </li>
             `;
+        }
+
+        function getLowImpactAlternatives(equip, focus, location) {
+            let alternatives = [];
+            if (focus !== 'cardio') {
+                const strengthDb = db.lowImpact.strength;
+                alternatives = [...alternatives, ...strengthDb.bodyweight];
+                if (equip.bands && strengthDb.bands) alternatives = [...alternatives, ...strengthDb.bands];
+                if (equip.kettlebells && strengthDb.kettlebells) alternatives = [...alternatives, ...strengthDb.kettlebells];
+                if (equip.dumbbells && strengthDb.dumbbells) alternatives = [...alternatives, ...strengthDb.dumbbells];
+                if (equip.flatBench && strengthDb.flatBench) alternatives = [...alternatives, ...strengthDb.flatBench];
+                if (equip.adjBench && strengthDb.adjBench) alternatives = [...alternatives, ...strengthDb.adjBench];
+                if (equip.sled && strengthDb.sled) alternatives = [...alternatives, ...strengthDb.sled];
+            }
+
+            if (focus !== 'strength') {
+                const cardioDb = db.lowImpact.cardio;
+                alternatives = [
+                    ...alternatives,
+                    ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)
+                ];
+                if (equip.assaultBike && cardioDb.assaultBike) alternatives = [...alternatives, ...cardioDb.assaultBike];
+                if (equip.rower && cardioDb.rower) alternatives = [...alternatives, ...cardioDb.rower];
+                if ((equip.cycle || equip.bicycle) && cardioDb.cycle) alternatives = [...alternatives, ...cardioDb.cycle];
+                if (equip.bicycle && cardioDb.bicycle) alternatives = [...alternatives, ...cardioDb.bicycle];
+                if (equip.treadmill && cardioDb.treadmill) alternatives = [...alternatives, ...cardioDb.treadmill];
+            }
+
+            return alternatives;
         }
 
         function renderCollapsibleHeader(title, contentId, expanded = true) {
@@ -1801,7 +1934,7 @@
                     ? `<br><strong>Cardio Tip:</strong> Prioritize stationary bike or an actual bike to keep up with the team, or choose rower/incline walk if available.`
                     : '';
                 html += `<p style="margin-bottom:15px; padding:10px; background:rgba(74,144,226,0.08); border-radius:6px; font-size:0.9em; color:#8fa3bf;">
-                            <strong>Low-Impact Mode:</strong> Use controlled tempo, reduce jumping, and choose joint-friendly options.${cardioNote}
+                            <strong>Low-Impact Mode:</strong> Use controlled tempo, reduce jumping, and choose joint-friendly options. Low-impact alternatives are shown to the right of each exercise.${cardioNote}
                          </p>`;
             }
             html += `<ul class="exercise-list">`;
@@ -1809,25 +1942,26 @@
             let mainPool = [];
 
             if (focus !== 'cardio') {
-                const strengthDb = lowImpact ? db.lowImpact.strength : db.strength;
+                const strengthDb = db.strength;
                 mainPool = [...mainPool, ...strengthDb.bodyweight];
                 if (equip.bands && strengthDb.bands) mainPool = [...mainPool, ...strengthDb.bands];
-                if (!lowImpact && equip.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
+                if (equip.pullup && strengthDb.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
                 if (equip.kettlebells && strengthDb.kettlebells) mainPool = [...mainPool, ...strengthDb.kettlebells];
                 if (equip.dumbbells && strengthDb.dumbbells) mainPool = [...mainPool, ...strengthDb.dumbbells];
-                if (!lowImpact && equip.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
+                if (equip.barbell && strengthDb.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
                 if (equip.flatBench && strengthDb.flatBench) mainPool = [...mainPool, ...strengthDb.flatBench];
                 if (equip.adjBench && strengthDb.adjBench) mainPool = [...mainPool, ...strengthDb.adjBench];
                 if (equip.sled && strengthDb.sled) mainPool = [...mainPool, ...strengthDb.sled];
             }
 
             if (focus !== 'strength') {
-                const cardioDb = lowImpact ? db.lowImpact.cardio : db.cardio;
+                const cardioDb = db.cardio;
                 mainPool = [...mainPool, ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)];
-                if (!lowImpact && equip.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
+                if (equip.jumprope && cardioDb.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
                 if (equip.assaultBike && cardioDb.assaultBike) mainPool = [...mainPool, ...cardioDb.assaultBike];
                 if (equip.rower && cardioDb.rower) mainPool = [...mainPool, ...cardioDb.rower];
                 if (equip.cycle && cardioDb.cycle) mainPool = [...mainPool, ...cardioDb.cycle];
+                if (equip.bicycle && cardioDb.bicycle) mainPool = [...mainPool, ...cardioDb.bicycle];
                 if (equip.treadmill && cardioDb.treadmill) mainPool = [...mainPool, ...cardioDb.treadmill];
             }
 
@@ -1864,9 +1998,15 @@
                 }
             }
 
+            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, focus, location) : [];
+            const shuffledAlternatives = lowImpactAlternatives.sort(() => 0.5 - Math.random());
+
             selected.forEach(ex => {
                 const reps = getExerciseReps(ex, scheme);
-                html += renderItem(ex.name, reps, ex.tip);
+                const alternative = lowImpact
+                    ? (shuffledAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)')
+                    : null;
+                html += renderItem(ex.name, reps, ex.tip, alternative);
             });
             html += `</ul>`;
 
