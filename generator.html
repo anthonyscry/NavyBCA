@@ -616,6 +616,12 @@
                         <option value="indoor">Indoor</option>
                     </select>
                 </div>
+                <div class="form-group" id="lowImpactGroup">
+                    <label>Low Impact / Injured Mode</label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" id="lowImpactToggle"> Enable low-impact alternatives
+                    </label>
+                </div>
                 <div class="form-group">
                     <label>Rep Scheme</label>
                     <select id="schemeSelect">
@@ -643,19 +649,19 @@
                 <div id="fundayFacilitiesSection">
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">PLAYING AREAS / FACILITIES</label>
                     <div class="equip-grid" style="margin-bottom: 20px;">
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayOpenFieldLabel">
                             <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()"> Open Field
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayBasketballCourtLabel">
                             <input type="checkbox" class="funday-facility" id="fundayBasketballCourt" onchange="fundayEquipChanged()"> Basketball Court
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayVolleyballCourtLabel">
                             <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()"> Volleyball Court
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayBaseballFieldLabel">
                             <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()"> Baseball/Softball Field
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayTrackLabel">
                             <input type="checkbox" class="funday-facility" id="fundayTrack" onchange="fundayEquipChanged()"> Track/Running Path
                         </label>
                     </div>
@@ -663,37 +669,37 @@
                     <!-- Equipment -->
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">AVAILABLE EQUIPMENT</label>
                     <div class="equip-grid">
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayFootballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()"> Football
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayBasketballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="fundayEquipChanged()"> Basketball
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayVolleyballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()"> Volleyball
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundaySoccerLabel">
                             <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()"> Soccer Ball
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayFrisbeeLabel">
                             <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()"> Frisbee
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayDodgeballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="fundayEquipChanged()"> Dodgeballs
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayKickballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()"> Kickball
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayBaseballLabel">
                             <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()"> Softballs/Bats
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayFlagSetLabel">
                             <input type="checkbox" class="funday-equip" id="fundayFlagSet" onchange="fundayEquipChanged()"> Flag Set
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayConesLabel">
                             <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()"> Cones/Markers
                         </label>
-                        <label class="equip-checkbox">
+                        <label class="equip-checkbox" id="fundayTugRopeLabel">
                             <input type="checkbox" class="funday-equip" id="fundayTugRope" onchange="fundayEquipChanged()"> Tug-of-War Rope
                         </label>
                     </div>
@@ -919,6 +925,89 @@
                     { name: "Sled Sprint", tip: "Explosive push for 20-40 yards. Max effort." }
                 ]
             },
+            lowImpact: {
+                strength: {
+                    bodyweight: [
+                        { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Modify on knees if needed." },
+                        { name: "Incline Push-ups", tip: "Hands on bench or wall. Easier angle for shoulder comfort." },
+                        { name: "Standard Plank", tip: "Straight line ear to ankle. Breathe steady." },
+                        { name: "Side Plank (L/R)", tip: "Stack feet or stagger. Keep hips high." },
+                        { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat." },
+                        { name: "Dead Bug", tip: "Press low back into deck. Slow, controlled reps." },
+                        { name: "Air Squats", tip: "Controlled depth. Sit back into heels." },
+                        { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Hold steady." },
+                        { name: "Glute Bridges", tip: "Squeeze glutes at top. No hyperextension." },
+                        { name: "Calf Raises", tip: "Slow up/down. Use support if needed." }
+                    ],
+                    bands: [
+                        { name: "Band Pull-Aparts", tip: "Arms straight, squeeze shoulder blades together." },
+                        { name: "Band Bicep Curls", tip: "Elbows pinned to sides. Control the negative." },
+                        { name: "Band Overhead Press", tip: "Press straight up, ribs down." },
+                        { name: "Band Rows", tip: "Pull to ribcage, squeeze upper back." },
+                        { name: "Band Tricep Extensions", tip: "Keep elbows high and steady." },
+                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." }
+                    ],
+                    kettlebells: [
+                        { name: "Goblet Squats", tip: "Hold KB at chest. Stay controlled." },
+                        { name: "KB Deadlifts", tip: "Hinge at hips, flat back." },
+                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." }
+                    ],
+                    dumbbells: [
+                        { name: "Dumbbell Rows", tip: "Support on bench. Pull to hip, squeeze back." },
+                        { name: "DB Overhead Press", tip: "Press straight up. Keep core engaged." },
+                        { name: "DB Curls", tip: "No swinging. Full range of motion." },
+                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." }
+                    ],
+                    flatBench: [
+                        { name: "Dumbbell Bench Press", tip: "Control the negative. Keep shoulders packed." },
+                        { name: "Bench Hip Thrusts", tip: "Drive through heels, squeeze glutes." },
+                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." }
+                    ],
+                    adjBench: [
+                        { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Smooth tempo." },
+                        { name: "Incline Dumbbell Rows", tip: "Chest on bench, pull DBs up." },
+                        { name: "Seated Shoulder Press", tip: "Upright bench, steady reps." },
+                        { name: "Seated Incline Curls", tip: "Slow reps, full extension." },
+                        { name: "Prone Y-T-W Raises", tip: "Light weight. Focus on control." }
+                    ],
+                    sled: [
+                        { name: "Sled Push (High Handles)", tip: "Smooth drive, steady pace." },
+                        { name: "Sled Pull (Backward)", tip: "Short steps, stay tall." },
+                        { name: "Sled Drag (Forward)", tip: "Walk forward, keep pace even." }
+                    ]
+                },
+                cardio: {
+                    indoor: [
+                        { name: "March in Place", tip: "Tall posture, drive arms. Light impact.", reps: "60-90 seconds" },
+                        { name: "Step Touches", tip: "Side steps, keep rhythm. Add arm swings.", reps: "60 seconds" },
+                        { name: "Low-Impact Jacks", tip: "Step out instead of jump. Keep heart rate up.", reps: "30-45 seconds" },
+                        { name: "Shadow Boxing", tip: "Light footwork, punch combos. Keep knees soft.", reps: "45-60 seconds" },
+                        { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement.", reps: "30-45 seconds" },
+                        { name: "Jog (Gym Laps)", tip: "Easy pace. Stay light on feet.", reps: "2-4 laps", isFinisher: true }
+                    ],
+                    outdoor: [
+                        { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min", isFinisher: true },
+                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true }
+                    ],
+                    assaultBike: [
+                        { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min", isFinisher: true },
+                        { name: "Assault Bike Intervals", tip: "15-30s on, 45-60s easy. Stay smooth.", reps: "6-8 rounds" }
+                    ],
+                    rower: [
+                        { name: "Rowing Steady State (2000m)", tip: "Moderate pace 18-22 strokes/min.", reps: "2000m", isFinisher: true },
+                        { name: "Rowing Intervals (500m)", tip: "Moderate effort, focus on form.", reps: "500m x 4-5 intervals" }
+                    ],
+                    cycle: [
+                        { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace.", reps: "5-10 min", isFinisher: true },
+                        { name: "Cycling Intervals", tip: "1 min moderate, 1 min easy. Keep cadence smooth.", reps: "6-8 rounds" }
+                    ],
+                    treadmill: [
+                        { name: "Incline Walk", tip: "10-15% incline, moderate pace.", reps: "5-10 min", isFinisher: true },
+                        { name: "Treadmill Intervals", tip: "1 min jog, 1 min walk. Adjust speed to comfort.", reps: "6-8 rounds" }
+                    ]
+                }
+            },
             cardio: {
                 indoor: [
                     { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged.", reps: "30-45 seconds" },
@@ -1004,7 +1093,7 @@
                     // Equipment-based games (with fitness penalties)
                     { name: "Kickball with PT", tip: "Standard baseball rules. FITNESS: Outs do 5 4-count pushups. Scored-on team does 10 4-count exercise chosen by scoring team.", requires: "kickball" },
                     { name: "Ultimate Frisbee", tip: "Score by catching in end zone. FITNESS: Scored-on team does 10 4-count burpees. Turnover = 5 4-count mountain climbers.", requires: "frisbee", link: "https://www.youtube.com/watch?v=LPd-XdI5tuk" },
-                    { name: "Flag Football", tip: "Flag pull or two-hand touch. FITNESS: Scored-on team does 10 4-count exercise picked by scoring team. Turnover = 5 4-count pushups.", requires: "football" },
+                    { name: "Flag Football", tip: "Flag pull or two-hand touch only (no tackling). FITNESS: Scored-on team does 10 4-count exercise picked by scoring team. Turnover = 5 4-count pushups.", requires: "football" },
                     { name: "Soccer", tip: "Full field or small-sided. FITNESS: Scored-on team does 10 4-count squats. Penalty for offsides = 5 4-count situps.", requires: "soccer" },
                     { name: "Softball with Fitness", tip: "Slow pitch. FITNESS: Outs do 5 4-count pushups before returning to dugout. Scored-on team does 10 4-count exercise.", requires: "baseball" },
                     { name: "Capture the Flag", tip: "Two teams, two territories. FITNESS: Captured players do 10 4-count burpees in 'jail', freed by teammates. Great cardio!", requires: "flagSet" },
@@ -1014,7 +1103,7 @@
                     { name: "Spikeball (Roundnet)", tip: "2v2 teams, 3 touches to return. FITNESS: Losing team each game does 10 4-count pushups. Play best of 5 to 21 points.", requires: "spikeball", link: "https://www.youtube.com/watch?v=FRmjRZpHQH8" },
                     { name: "Kan Jam", tip: "Frisbee to can, partner deflects. FITNESS: Losing team does 10 4-count exercise. First to 21 wins!", requires: "frisbee" },
                     // No-equipment games (with facility preferences and fitness penalties)
-                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tackle and hold for 3 sec. FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField", link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
+                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tag with two-hand touch (no tackling). FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField", link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
                     { name: "Manhunt", tip: "Hide and seek meets tag. FITNESS: Tagged players do 10 4-count burpees before becoming hunters. Keeps fitness high!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. FITNESS: Tagged players do 10 4-count mountain climbers to unfreeze OR wait for teammate crawl-through.", noEquipment: true },
                     { name: "Red Light Green Light", tip: "Leader calls movements. FITNESS: Caught moving = 5 4-count pushups at start line, then rejoin.", noEquipment: true },
@@ -1208,6 +1297,7 @@
                 focus: document.getElementById('focusSelect').value,
                 location: document.getElementById('locationSelect').value,
                 scheme: document.getElementById('schemeSelect').value,
+                lowImpact: document.getElementById('lowImpactToggle').checked,
                 equipment: {
                     none: document.getElementById('equipNone').checked,
                     adjBench: document.getElementById('equipAdjBench').checked,
@@ -1268,6 +1358,9 @@
                 if (preferences.scheme) {
                     document.getElementById('schemeSelect').value = preferences.scheme;
                 }
+                if (preferences.lowImpact !== undefined) {
+                    document.getElementById('lowImpactToggle').checked = preferences.lowImpact;
+                }
                 if (preferences.equipment) {
                     Object.entries(preferences.equipment).forEach(([key, value]) => {
                         const element = document.getElementById(`equip${key.charAt(0).toUpperCase() + key.slice(1)}`);
@@ -1301,6 +1394,7 @@
                 // Update scheme options based on loaded focus
                 updateSchemeOptions();
                 updateEquipmentOptions();
+                updateFundayFacilitiesForLocation();
             } catch (error) {
                 console.error('Failed to load PT Generator preferences:', error);
             } finally {
@@ -1373,6 +1467,7 @@
             const fundayEquipmentGroup = document.getElementById('fundayEquipmentGroup');
             const equipmentGrid = document.getElementById('equipmentGrid');
             const equipmentCheckboxes = equipmentGrid.querySelectorAll('.equip-checkbox');
+            const lowImpactGroup = document.getElementById('lowImpactGroup');
 
             // Show/hide fun day equipment section
             if (focus === 'funday') {
@@ -1389,11 +1484,45 @@
                 equipmentCheckboxes.forEach(checkbox => {
                     checkbox.classList.add('disabled');
                 });
+                lowImpactGroup.style.display = 'none';
             } else {
                 equipmentGrid.classList.remove('disabled');
                 equipmentCheckboxes.forEach(checkbox => {
                     checkbox.classList.remove('disabled');
                 });
+                lowImpactGroup.style.display = (focus === 'funday') ? 'none' : 'block';
+            }
+        }
+
+        function updateFundayFacilitiesForLocation() {
+            const location = document.getElementById('locationSelect').value;
+            const hideOutdoor = location === 'indoor';
+
+            const facilityIds = ['fundayOpenField', 'fundayBaseballField', 'fundayTrack'];
+            const equipmentIds = ['fundayBaseball'];
+
+            facilityIds.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+                const label = input.closest('.equip-checkbox');
+                label.style.display = hideOutdoor ? 'none' : 'flex';
+                if (hideOutdoor) {
+                    input.checked = false;
+                }
+            });
+
+            equipmentIds.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+                const label = input.closest('.equip-checkbox');
+                label.style.display = hideOutdoor ? 'none' : 'flex';
+                if (hideOutdoor) {
+                    input.checked = false;
+                }
+            });
+
+            if (hideOutdoor) {
+                fundayEquipChanged();
             }
         }
 
@@ -1401,11 +1530,16 @@
         document.getElementById('focusSelect').addEventListener('change', function() {
             updateSchemeOptions();
             updateEquipmentOptions();
+            updateFundayFacilitiesForLocation();
             savePTGeneratorPreferences();
         });
 
-        document.getElementById('locationSelect').addEventListener('change', savePTGeneratorPreferences);
+        document.getElementById('locationSelect').addEventListener('change', function() {
+            updateFundayFacilitiesForLocation();
+            savePTGeneratorPreferences();
+        });
         document.getElementById('schemeSelect').addEventListener('change', savePTGeneratorPreferences);
+        document.getElementById('lowImpactToggle').addEventListener('change', savePTGeneratorPreferences);
 
         // Add change listeners to all equipment checkboxes
         document.querySelectorAll('.equip-checkbox input[type="checkbox"]').forEach(checkbox => {
@@ -1413,7 +1547,10 @@
         });
 
         // Load preferences on page load
-        window.addEventListener('DOMContentLoaded', loadPTGeneratorPreferences);
+        window.addEventListener('DOMContentLoaded', function() {
+            loadPTGeneratorPreferences();
+            updateFundayFacilitiesForLocation();
+        });
 
         // --- Collapsible Section Toggle ---
 
@@ -1459,6 +1596,7 @@
             const focus = document.getElementById('focusSelect').value;
             const location = document.getElementById('locationSelect').value;
             let scheme = document.getElementById('schemeSelect').value;
+            const lowImpact = document.getElementById('lowImpactToggle')?.checked || false;
             const equip = getSelectedEquipment();
             const out = document.getElementById('workoutOutput');
 
@@ -1620,8 +1758,8 @@
                 html += `</ul>`;
 
                 html += `<p style="margin-top:15px; padding:12px; background:rgba(74,144,226,0.1); border-radius:6px; font-size:0.85em; color:#8fa3bf;">
-                            <strong>CFL Tips:</strong> Ensure equal teams, establish clear rules before starting, rotate positions/teams regularly,
-                            and keep water breaks every 15-20 min. Focus on participation over competition.
+                            <strong>CFL Tips:</strong> Emphasize safety and no tackling. Use two-hand touch/tag rules, ensure equal teams, establish clear rules before starting,
+                            rotate positions/teams regularly, and keep water breaks every 15-20 min. Focus on participation over competition.
                          </p>`;
 
                 // Skip to cool-down for fun day (collapsed by default)
@@ -1680,29 +1818,39 @@
                         <strong>Format:</strong> ${schemeDesc[scheme].meta}<br>
                         <em>${schemeDesc[scheme].note}</em>
                      </p>`;
+            if (lowImpact) {
+                const cardioNote = (focus === 'cardio' || focus === 'mixed')
+                    ? `<br><strong>Cardio Tip:</strong> Prioritize stationary bike or an actual bike to keep up with the team, or choose rower/incline walk if available.`
+                    : '';
+                html += `<p style="margin-bottom:15px; padding:10px; background:rgba(74,144,226,0.08); border-radius:6px; font-size:0.9em; color:#8fa3bf;">
+                            <strong>Low-Impact Mode:</strong> Use controlled tempo, reduce jumping, and choose joint-friendly options.${cardioNote}
+                         </p>`;
+            }
             html += `<ul class="exercise-list">`;
 
             let mainPool = [];
 
             if (focus !== 'cardio') {
-                mainPool = [...mainPool, ...db.strength.bodyweight];
-                if (equip.bands) mainPool = [...mainPool, ...db.strength.bands];
-                if (equip.pullup) mainPool = [...mainPool, ...db.strength.pullup];
-                if (equip.kettlebells) mainPool = [...mainPool, ...db.strength.kettlebells];
-                if (equip.dumbbells) mainPool = [...mainPool, ...db.strength.dumbbells];
-                if (equip.barbell) mainPool = [...mainPool, ...db.strength.barbell];
-                if (equip.flatBench) mainPool = [...mainPool, ...db.strength.flatBench];
-                if (equip.adjBench) mainPool = [...mainPool, ...db.strength.adjBench];
-                if (equip.sled) mainPool = [...mainPool, ...db.strength.sled];
+                const strengthDb = lowImpact ? db.lowImpact.strength : db.strength;
+                mainPool = [...mainPool, ...strengthDb.bodyweight];
+                if (equip.bands && strengthDb.bands) mainPool = [...mainPool, ...strengthDb.bands];
+                if (!lowImpact && equip.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
+                if (equip.kettlebells && strengthDb.kettlebells) mainPool = [...mainPool, ...strengthDb.kettlebells];
+                if (equip.dumbbells && strengthDb.dumbbells) mainPool = [...mainPool, ...strengthDb.dumbbells];
+                if (!lowImpact && equip.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
+                if (equip.flatBench && strengthDb.flatBench) mainPool = [...mainPool, ...strengthDb.flatBench];
+                if (equip.adjBench && strengthDb.adjBench) mainPool = [...mainPool, ...strengthDb.adjBench];
+                if (equip.sled && strengthDb.sled) mainPool = [...mainPool, ...strengthDb.sled];
             }
 
             if (focus !== 'strength') {
-                mainPool = [...mainPool, ...(location === 'indoor' ? db.cardio.indoor : db.cardio.outdoor)];
-                if (equip.jumprope) mainPool = [...mainPool, ...db.cardio.jumprope];
-                if (equip.assaultBike) mainPool = [...mainPool, ...db.cardio.assaultBike];
-                if (equip.rower) mainPool = [...mainPool, ...db.cardio.rower];
-                if (equip.cycle) mainPool = [...mainPool, ...db.cardio.cycle];
-                if (equip.treadmill) mainPool = [...mainPool, ...db.cardio.treadmill];
+                const cardioDb = lowImpact ? db.lowImpact.cardio : db.cardio;
+                mainPool = [...mainPool, ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)];
+                if (!lowImpact && equip.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
+                if (equip.assaultBike && cardioDb.assaultBike) mainPool = [...mainPool, ...cardioDb.assaultBike];
+                if (equip.rower && cardioDb.rower) mainPool = [...mainPool, ...cardioDb.rower];
+                if (equip.cycle && cardioDb.cycle) mainPool = [...mainPool, ...cardioDb.cycle];
+                if (equip.treadmill && cardioDb.treadmill) mainPool = [...mainPool, ...cardioDb.treadmill];
             }
 
             // Separate finishers from regular exercises
