@@ -1,0 +1,207 @@
+/*
+ * Navy BCA Calculator - Base Styles
+ * Standard typography and layout styles for consistent design across all pages
+ */
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body & Container */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+    min-height: 100vh;
+    color: #e8eef5;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Typography - Standard Font Sizes */
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #ffd700;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #8fa3bf;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #e8eef5;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+ul {
+    color: #e8eef5;
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+li {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+a {
+    color: #ffd700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #fff;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.subtitle {
+    color: #8fa3bf;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+/* Back Button */
+.btn-back {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Content Card */
+.content-card {
+    background: rgba(20, 35, 60, 0.8);
+    border-radius: 16px;
+    border: 1px solid rgba(100, 130, 180, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+/* Ad Container Styles */
+.ad-container {
+    background: rgba(30, 50, 80, 0.3);
+    border: 1px dashed rgba(100, 130, 180, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    min-height: 90px;
+}
+
+.ad-container.large {
+    min-height: 250px;
+}
+
+.ad-label {
+    color: #6b7c94;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Highlight Boxes */
+.highlight-box {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #ffd700;
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 8px;
+}
+
+.highlight-box p {
+    margin-bottom: 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #6b7c94;
+    font-size: 12px;
+}
+
+footer a {
+    color: #8fa3bf;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ffd700;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .content-card {
+        padding: 25px;
+    }
+}
