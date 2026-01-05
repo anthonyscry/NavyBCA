@@ -178,6 +178,16 @@
             accent-color: #ffd700;
         }
 
+        .equip-checkbox.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .equip-grid.disabled {
+            opacity: 0.5;
+        }
+
         select {
             width: 100%;
             padding: 12px;
@@ -527,46 +537,38 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="equipmentGroup">
                 <label>Equipment Available</label>
-                <div class="equip-grid">
+                <div class="equip-grid" id="equipmentGrid">
                     <label class="equip-checkbox none-selected">
                         <input type="checkbox" id="equipNone" checked onchange="toggleNone()"> None (Bodyweight Only)
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipBands" onchange="equipChanged()"> Resistance
-                        Bands
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipPullup" onchange="equipChanged()"> Pull-up
-                        Bar
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipKettlebells" onchange="equipChanged()">
-                        Kettlebells
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()">
-                        Dumbbells
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()"> Jump
-                        Rope
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()"> Barbell
-                    </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipFlatBench" onchange="equipChanged()"> Flat Bench
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipAdjBench" onchange="equipChanged()"> Adjustable Bench
                     </label>
                     <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
+                        <input type="checkbox" class="equip-item" id="equipAssaultBike" onchange="equipChanged()"> Assault Bike
                     </label>
                     <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipAssaultBike" onchange="equipChanged()"> Assault Bike
+                        <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()"> Barbell
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()"> Dumbbells
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipFlatBench" onchange="equipChanged()"> Flat Bench
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()"> Jump Rope
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipKettlebells" onchange="equipChanged()"> Kettlebells
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipPullup" onchange="equipChanged()"> Pull-up Bar
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipBands" onchange="equipChanged()"> Resistance Bands
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipRower" onchange="equipChanged()"> Rowing Machine
@@ -576,6 +578,9 @@
                     </label>
                     <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()"> Treadmill
+                    </label>
+                    <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
                     </label>
                 </div>
             </div>
@@ -950,8 +955,30 @@
             }
         }
 
+        function updateEquipmentOptions() {
+            const focus = document.getElementById('focusSelect').value;
+            const equipmentGrid = document.getElementById('equipmentGrid');
+            const equipmentCheckboxes = document.querySelectorAll('.equip-checkbox');
+
+            // Disable equipment for Fun Day and Chill Day (Yoga)
+            if (focus === 'funday' || focus === 'yoga') {
+                equipmentGrid.classList.add('disabled');
+                equipmentCheckboxes.forEach(checkbox => {
+                    checkbox.classList.add('disabled');
+                });
+            } else {
+                equipmentGrid.classList.remove('disabled');
+                equipmentCheckboxes.forEach(checkbox => {
+                    checkbox.classList.remove('disabled');
+                });
+            }
+        }
+
         // Initialize on page load and on focus change
-        document.getElementById('focusSelect').addEventListener('change', updateSchemeOptions);
+        document.getElementById('focusSelect').addEventListener('change', function() {
+            updateSchemeOptions();
+            updateEquipmentOptions();
+        });
 
         // --- Collapsible Section Toggle ---
 
