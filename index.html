@@ -565,6 +565,11 @@
             flex-wrap: wrap;
         }
 
+        .pt-banner.secondary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-color: rgba(59, 130, 246, 0.45);
+        }
+
         .pt-banner-text {
             flex: 1;
             min-width: 200px;
@@ -574,6 +579,10 @@
             color: #ffd700;
             font-size: 16px;
             margin-bottom: 3px;
+        }
+
+        .pt-banner.secondary .pt-banner-text h3 {
+            color: #93c5fd;
         }
 
         .pt-banner-text p {
@@ -602,6 +611,16 @@
         .pt-banner-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .pt-banner-btn.secondary {
+            background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+            color: #eaf2ff;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+        }
+
+        .pt-banner-btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
         }
 
         /* Animations */
@@ -681,6 +700,16 @@
             </div>
             <a href="generator.html" class="pt-banner-btn">
                 PT Generator →
+            </a>
+        </div>
+
+        <div class="pt-banner secondary">
+            <div class="pt-banner-text">
+                <h3>Need a Monthly PT Watchbill?</h3>
+                <p>Auto-generate PT schedules with CFL rotation. Select days, assign CFLs, print ready.</p>
+            </div>
+            <a href="watchbill.html" class="pt-banner-btn secondary">
+                Command PT Watchbill Generator →
             </a>
         </div>
 

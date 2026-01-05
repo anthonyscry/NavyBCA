@@ -44,6 +44,28 @@
             padding: 20px;
         }
 
+        /* Ad Container Styles */
+        .ad-container {
+            background: rgba(30, 50, 80, 0.3);
+            border: 1px dashed rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+        }
+
+        .ad-container.large {
+            min-height: 250px;
+        }
+
+        .ad-label {
+            color: #6b7c94;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         header {
             text-align: center;
             padding: 30px 0;
@@ -215,6 +237,10 @@
 
 <body>
     <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <a href="index.html" class="btn-back">← Back to Calculator</a>
 
         <header>
@@ -251,6 +277,7 @@
                 <li>Uses current Guide-4 (December 2025) standards</li>
                 <li>Two-step process: Waist-to-Height Ratio, then body fat percentage if needed</li>
                 <li>Shows clear pass/fail status</li>
+                <li>Uses official table lookups for exact body fat percentages</li>
                 <li>Saves your inputs for tracking progress</li>
                 <li>Mobile-friendly</li>
             </ul>
@@ -272,15 +299,24 @@
                 <li>Customize PT days (default M/W/F) and FEP days (default T/Th)</li>
                 <li>Set default PT time and add custom locations (Base Gym, Track, Pool, etc.)</li>
                 <li>Per-session customization: override time, location, or assigned CFL</li>
+                <li>Remembers your roster, locations, and schedule defaults on this device</li>
                 <li>Performance metrics report showing total sessions and breakdown by CFL/ACFL</li>
                 <li>Print-ready format with full calendar and metrics for Navy evaluations</li>
+            </ul>
+
+            <h3>What I'm Working On Next</h3>
+            <ul>
+                <li>Shareable watchbill links and CSV/PDF exports for easier command distribution</li>
+                <li>Saved PT Generator preferences (equipment, location, focus areas) between visits</li>
+                <li>Command-specific holiday imports to avoid scheduling conflicts</li>
+                <li>Quick templates for common PT/FEP schedules</li>
             </ul>
 
             <h3>Why It's Free</h3>
 
             <p>
-                I spent 20+ years in the Navy. I know what it's like balancing your actual job with CFL duties. I'm not
-                going to charge Sailors for tools that help them meet mandatory requirements.
+                I spent plenty of time in the Navy. I know what it's like balancing your actual job with CFL duties.
+                I'm not going to charge Sailors for tools that help them meet mandatory requirements.
             </p>
 
             <p>
@@ -309,6 +345,7 @@
         </main>
 
         <footer>
+            <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
             <p>
                 <a href="references.html">References & Guides</a> |
                 <a href="index.html">BCA Calculator</a> |

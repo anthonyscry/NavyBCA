@@ -44,6 +44,28 @@
             padding: 20px;
         }
 
+        /* Ad Container Styles */
+        .ad-container {
+            background: rgba(30, 50, 80, 0.3);
+            border: 1px dashed rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 90px;
+        }
+
+        .ad-container.large {
+            min-height: 250px;
+        }
+
+        .ad-label {
+            color: #6b7c94;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         header {
             text-align: center;
             padding: 30px 0;
@@ -100,7 +122,7 @@
         }
 
         .btn-back:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .calculator-card {
@@ -573,16 +595,14 @@
 
         footer {
             text-align: center;
-            margin-top: 40px;
             color: #6b7c94;
             font-size: 12px;
-            padding-bottom: 30px;
+            padding: 30px;
         }
 
         footer a {
             color: #8fa3bf;
             text-decoration: none;
-            margin: 0 10px;
         }
 
         footer a:hover {
@@ -601,6 +621,7 @@
             }
 
             .btn-back,
+            .ad-container,
             .calculator-card,
             .action-btn,
             .print-btn,
@@ -742,12 +763,20 @@
         }
 
         @media (max-width: 600px) {
-            .day-selector {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
             .row {
                 grid-template-columns: 1fr;
+            }
+
+            .day-row {
+                grid-template-columns: 1fr;
+            }
+
+            .day-type-selector {
+                flex-wrap: wrap;
+            }
+
+            .day-type-btn {
+                flex: 1 1 30%;
             }
         }
     </style>
@@ -755,6 +784,10 @@
 
 <body>
     <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <a href="generator.html" class="btn-back">← Back to PT Generator</a>
 
         <header>
@@ -901,7 +934,12 @@
             <!-- Generated watchbill will appear here -->
         </div>
 
+        <div class="ad-container large">
+            <span class="ad-label">Advertisement</span>
+        </div>
+
         <footer>
+            <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
             <p>
                 <a href="references.html">References & Guides</a> |
                 <a href="index.html">BCA Calculator</a> |
@@ -975,6 +1013,94 @@
             sat: 'none'
         };
         let customLocations = [];
+        const watchbillStorageKey = 'navyWatchbillData';
+        let isLoadingWatchbillData = false;
+
+        function saveWatchbillData() {
+            if (isLoadingWatchbillData) {
+                return;
+            }
+
+            const data = {
+                month: document.getElementById('monthSelect').value,
+                year: document.getElementById('yearSelect').value,
+                defaultTime: document.getElementById('defaultTime').value,
+                dayTypes,
+                customLocations,
+                roster: Array.from(document.querySelectorAll('.cfl-input-row input'))
+                    .map(input => input.value.trim())
+                    .filter(Boolean)
+            };
+            localStorage.setItem(watchbillStorageKey, JSON.stringify(data));
+        }
+
+        function renderCustomLocations() {
+            const locationManager = document.getElementById('locationManager');
+            locationManager.querySelectorAll('.custom-location').forEach(row => row.remove());
+            customLocations.forEach(location => {
+                const newRow = document.createElement('div');
+                newRow.className = 'location-input-row custom-location';
+                newRow.innerHTML = `
+                    <input type="text" value="${location}" readonly style="background: rgba(10, 22, 40, 0.5);">
+                    <button class="btn-remove" onclick="removeLocation('${location}', this)">Remove</button>
+                `;
+                locationManager.appendChild(newRow);
+            });
+        }
+
+        function setCflRoster(roster) {
+            const cflList = document.getElementById('cflList');
+            const values = roster.length ? roster : [''];
+            cflList.innerHTML = '';
+            values.forEach(name => {
+                const newRow = document.createElement('div');
+                newRow.className = 'cfl-input-row';
+                newRow.innerHTML = `
+                    <input type="text" placeholder="e.g., IT2 Smith" value="${name}">
+                    <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
+                `;
+                cflList.appendChild(newRow);
+            });
+        }
+
+        function loadWatchbillData() {
+            const savedData = localStorage.getItem(watchbillStorageKey);
+            if (!savedData) {
+                return;
+            }
+
+            isLoadingWatchbillData = true;
+            try {
+                const data = JSON.parse(savedData);
+                if (data.month !== undefined) {
+                    document.getElementById('monthSelect').value = data.month;
+                }
+                if (data.year !== undefined) {
+                    document.getElementById('yearSelect').value = data.year;
+                }
+                if (data.defaultTime) {
+                    document.getElementById('defaultTime').value = data.defaultTime;
+                }
+                if (data.dayTypes) {
+                    Object.entries(data.dayTypes).forEach(([day, type]) => {
+                        if (dayTypes[day]) {
+                            setDayType(day, type);
+                        }
+                    });
+                }
+                if (Array.isArray(data.customLocations)) {
+                    customLocations = data.customLocations;
+                    renderCustomLocations();
+                }
+                if (Array.isArray(data.roster)) {
+                    setCflRoster(data.roster);
+                }
+            } catch (error) {
+                console.error('Failed to load watchbill data:', error);
+            } finally {
+                isLoadingWatchbillData = false;
+            }
+        }
 
         // Populate year selector (2026-2027 only)
         const yearSelect = document.getElementById('yearSelect');
@@ -991,6 +1117,12 @@
 
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
+        loadWatchbillData();
+
+        document.getElementById('monthSelect').addEventListener('change', saveWatchbillData);
+        document.getElementById('yearSelect').addEventListener('change', saveWatchbillData);
+        document.getElementById('defaultTime').addEventListener('change', saveWatchbillData);
+        document.getElementById('cflList').addEventListener('input', saveWatchbillData);
 
         function setDayType(day, type) {
             // Update the dayTypes object
@@ -1006,6 +1138,8 @@
                     }
                 });
             }
+
+            saveWatchbillData();
         }
 
         function addLocation() {
@@ -1028,7 +1162,7 @@
             // Add to location manager display
             const locationManager = document.getElementById('locationManager');
             const newRow = document.createElement('div');
-            newRow.className = 'location-input-row';
+            newRow.className = 'location-input-row custom-location';
             newRow.innerHTML = `
                 <input type="text" value="${location}" readonly style="background: rgba(10, 22, 40, 0.5);">
                 <button class="btn-remove" onclick="removeLocation('${location}', this)">Remove</button>
@@ -1036,11 +1170,13 @@
             locationManager.appendChild(newRow);
 
             newLocationInput.value = '';
+            saveWatchbillData();
         }
 
         function removeLocation(location, button) {
             customLocations = customLocations.filter(loc => loc !== location);
             button.parentElement.remove();
+            saveWatchbillData();
         }
 
         function addCFL() {
@@ -1052,12 +1188,14 @@
                 <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
             `;
             cflList.appendChild(newRow);
+            saveWatchbillData();
         }
 
         function removeCFL(button) {
             const cflList = document.getElementById('cflList');
             if (cflList.children.length > 1) {
                 button.parentElement.remove();
+                saveWatchbillData();
             } else {
                 alert('You must have at least one CFL/ACFL');
             }
