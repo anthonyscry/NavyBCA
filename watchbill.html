@@ -432,6 +432,11 @@
             border: 2px solid rgba(59, 130, 246, 0.5);
         }
 
+        .calendar-day.off-day {
+            background: rgba(100, 116, 139, 0.2);
+            border: 2px dashed rgba(148, 163, 184, 0.7);
+        }
+
         .day-number {
             font-weight: 700;
             color: #ffd700;
@@ -461,6 +466,24 @@
 
         .pt-info div {
             margin-bottom: 3px;
+        }
+
+        .off-day-note {
+            font-size: 11px;
+            color: #cbd5f5;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .off-day-hint {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .calendar-day.clickable {
+            cursor: pointer;
         }
 
         .editable-field {
@@ -627,6 +650,11 @@
             .calendar-day.fep-day {
                 background: #e0e0ff !important;
                 border: 2px solid #0000aa !important;
+            }
+
+            .calendar-day.off-day {
+                background: #f1f5f9 !important;
+                border: 2px dashed #64748b !important;
             }
 
             .day-number {
@@ -933,6 +961,10 @@
         };
 
         let ptSchedule = [];
+        let currentRoster = [];
+        let currentLocations = [];
+        let currentWatchbillMonth = null;
+        let currentWatchbillYear = null;
         let dayTypes = {
             sun: 'none',
             mon: 'pt',      // Default M/W/F for PT
@@ -1068,7 +1100,6 @@
             ptSchedule = [];
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const firstDay = new Date(year, month, 1).getDay();
-            const defaultLocation = customLocations.length > 0 ? customLocations[0] : 'Base Gym';
             let cflIndex = 0;
 
             for (let day = 1; day <= daysInMonth; day++) {
@@ -1087,28 +1118,83 @@
                         type: dayType,  // 'pt' or 'fep'
                         cfl: cflRoster[cflIndex % cflRoster.length],
                         time: defaultTime,
-                        location: 'Base Gym'
+                        location: 'Base Gym',
+                        offDay: false
                     });
                     cflIndex++;
                 }
             }
 
             // Build location options
-            const allLocations = ['Base Gym', 'Track', ...customLocations];
+            currentLocations = ['Base Gym', 'Track', ...customLocations];
+            currentRoster = cflRoster;
+            currentWatchbillMonth = month;
+            currentWatchbillYear = year;
+
+            renderWatchbill(firstDay, daysInMonth);
+        }
+
+        function updateSession(index, field, value) {
+            if (ptSchedule[index]) {
+                ptSchedule[index][field] = value;
+                if (field === 'cfl') {
+                    ptSchedule[index].assignedCfl = value;
+                }
+            }
+        }
+
+        function toggleOffDay(index) {
+            if (!ptSchedule[index]) {
+                return;
+            }
+            ptSchedule[index].offDay = !ptSchedule[index].offDay;
+            renderWatchbill();
+        }
+
+        function applyRotationAssignments() {
+            if (!currentRoster.length) {
+                return;
+            }
+
+            let rosterIndex = 0;
+
+            ptSchedule.forEach(session => {
+                session.assignedCfl = currentRoster[rosterIndex % currentRoster.length];
+                if (!session.offDay) {
+                    rosterIndex += 1;
+                }
+            });
+        }
+
+        function renderWatchbill(firstDayOverride, daysInMonthOverride) {
+            if (currentWatchbillMonth === null || currentWatchbillYear === null) {
+                return;
+            }
+
+            const firstDay = typeof firstDayOverride === 'number'
+                ? firstDayOverride
+                : new Date(currentWatchbillYear, currentWatchbillMonth, 1).getDay();
+            const daysInMonth = typeof daysInMonthOverride === 'number'
+                ? daysInMonthOverride
+                : new Date(currentWatchbillYear, currentWatchbillMonth + 1, 0).getDate();
 
             // Build calendar
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-            // Count PT vs FEP sessions
-            const ptCount = ptSchedule.filter(s => s.type === 'pt').length;
-            const fepCount = ptSchedule.filter(s => s.type === 'fep').length;
+            applyRotationAssignments();
+
+            // Count PT vs FEP sessions (excluding off days)
+            const activeSessions = ptSchedule.filter(session => !session.offDay);
+            const ptCount = activeSessions.filter(s => s.type === 'pt').length;
+            const fepCount = activeSessions.filter(s => s.type === 'fep').length;
 
             let calendarHTML = `
                 <div class="watchbill-header">
-                    <h2>${monthNames[month]} ${year} - PT/FEP Watchbill</h2>
-                    <p>Total Sessions: ${ptSchedule.length} (PT: ${ptCount}, FEP: ${fepCount})</p>
+                    <h2>${monthNames[currentWatchbillMonth]} ${currentWatchbillYear} - PT/FEP Watchbill</h2>
+                    <p>Total Sessions: ${activeSessions.length} (PT: ${ptCount}, FEP: ${fepCount})</p>
+                    <p class="hint" style="margin-top: 8px;">Tip: Click a PT/FEP day to toggle it as an off day without changing the rotation.</p>
                 </div>
 
                 <div class="calendar-grid">
@@ -1126,13 +1212,14 @@
 
             // Days of month
             for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(year, month, day);
+                const date = new Date(currentWatchbillYear, currentWatchbillMonth, day);
                 const dayOfWeek = date.getDay();
                 const holiday = isHoliday(date);
                 const ptSession = ptSchedule.find(pt => pt.day === day);
 
                 let dayClass = 'calendar-day';
                 let dayContent = '';
+                let sessionIndex = null;
 
                 if (holiday) {
                     dayClass += ' holiday';
@@ -1142,51 +1229,65 @@
                         <div class="pt-info" style="color: #ef4444;">No PT - Federal Holiday</div>
                     `;
                 } else if (ptSession) {
-                    // Add appropriate class based on session type
+                    sessionIndex = ptSchedule.indexOf(ptSession);
                     dayClass += ptSession.type === 'pt' ? ' pt-day' : ' fep-day';
-                    const sessionIndex = ptSchedule.indexOf(ptSession);
-                    const sessionLabel = ptSession.type === 'pt' ? 'Command PT' : 'FEP';
-                    const sessionColor = ptSession.type === 'pt' ? '#22c55e' : '#3b82f6';
 
-                    // Build time options with default selected
-                    const timeOptions = ['05:30', '06:00', '06:30', '07:00', '11:30', '15:00'].map(time => {
-                        const selected = time === ptSession.time ? 'selected' : '';
-                        const display = time.replace(':', '');
-                        return `<option value="${time}" ${selected}>${display}</option>`;
-                    }).join('');
+                    if (ptSession.offDay) {
+                        dayClass += ' off-day clickable';
+                        dayContent = `
+                            <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                            <div class="off-day-note">Off Day - Rotation Held</div>
+                            <div class="pt-info">
+                                <div>Assigned CFL/ACFL: ${ptSession.assignedCfl}</div>
+                                <div class="off-day-hint">Click to restore this session.</div>
+                            </div>
+                        `;
+                    } else {
+                        dayClass += ' clickable';
+                        const sessionLabel = ptSession.type === 'pt' ? 'Command PT' : 'FEP';
+                        const sessionColor = ptSession.type === 'pt' ? '#22c55e' : '#3b82f6';
 
-                    // Build location options with default selected
-                    const locationOptions = allLocations.map(loc => {
-                        const selected = loc === ptSession.location ? 'selected' : '';
-                        return `<option value="${loc}" ${selected}>${loc}</option>`;
-                    }).join('');
+                        // Build time options with default selected
+                        const timeOptions = ['05:30', '06:00', '06:30', '07:00', '11:30', '15:00'].map(time => {
+                            const selected = time === ptSession.time ? 'selected' : '';
+                            const display = time.replace(':', '');
+                            return `<option value="${time}" ${selected}>${display}</option>`;
+                        }).join('');
 
-                    dayContent = `
-                        <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
-                        <div class="pt-info">
-                            <strong style="color: ${sessionColor};">${sessionLabel}</strong>
-                            <div>
-                                Time: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'time', this.value)">
-                                    ${timeOptions}
-                                </select>
+                        // Build location options with default selected
+                        const locationOptions = currentLocations.map(loc => {
+                            const selected = loc === ptSession.location ? 'selected' : '';
+                            return `<option value="${loc}" ${selected}>${loc}</option>`;
+                        }).join('');
+
+                        dayContent = `
+                            <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                            <div class="pt-info">
+                                <strong style="color: ${sessionColor};">${sessionLabel}</strong>
+                                <div>
+                                    Time: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'time', this.value)">
+                                        ${timeOptions}
+                                    </select>
+                                </div>
+                                <div>
+                                    Location: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'location', this.value)">
+                                        ${locationOptions}
+                                    </select>
+                                </div>
+                                <div>
+                                    CFL/ACFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
+                                        ${currentRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.assignedCfl ? 'selected' : ''}>${cfl}</option>`).join('')}
+                                    </select>
+                                </div>
                             </div>
-                            <div>
-                                Location: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'location', this.value)">
-                                    ${locationOptions}
-                                </select>
-                            </div>
-                            <div>
-                                CFL/ACFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
-                                    ${cflRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.cfl ? 'selected' : ''}>${cfl}</option>`).join('')}
-                                </select>
-                            </div>
-                        </div>
-                    `;
+                        `;
+                    }
                 } else {
                     dayContent = `<div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>`;
                 }
 
-                calendarHTML += `<div class="${dayClass}">${dayContent}</div>`;
+                const sessionAttr = sessionIndex !== null ? ` data-session-index="${sessionIndex}"` : '';
+                calendarHTML += `<div class="${dayClass}"${sessionAttr}>${dayContent}</div>`;
             }
 
             calendarHTML += `
@@ -1195,11 +1296,11 @@
 
             // Generate metrics report
             const cflMetrics = {};
-            ptSchedule.forEach(session => {
-                if (!cflMetrics[session.cfl]) {
-                    cflMetrics[session.cfl] = 0;
+            activeSessions.forEach(session => {
+                if (!cflMetrics[session.assignedCfl]) {
+                    cflMetrics[session.assignedCfl] = 0;
                 }
-                cflMetrics[session.cfl]++;
+                cflMetrics[session.assignedCfl]++;
             });
 
             calendarHTML += `
@@ -1209,7 +1310,7 @@
                     <div class="metrics-grid">
                         <div class="metric-card total">
                             <div class="metric-label">Total PT Sessions</div>
-                            <div class="metric-value">${ptSchedule.length}</div>
+                            <div class="metric-value">${activeSessions.length}</div>
                         </div>
             `;
 
@@ -1233,14 +1334,25 @@
             document.getElementById('watchbillOutput').innerHTML = calendarHTML;
             document.getElementById('watchbillOutput').style.display = 'block';
 
-            // Scroll to output
-            document.getElementById('watchbillOutput').scrollIntoView({ behavior: 'smooth' });
+            bindOffDayToggles();
+
+            if (firstDayOverride !== undefined || daysInMonthOverride !== undefined) {
+                document.getElementById('watchbillOutput').scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
-        function updateSession(index, field, value) {
-            if (ptSchedule[index]) {
-                ptSchedule[index][field] = value;
-            }
+        function bindOffDayToggles() {
+            document.querySelectorAll('.calendar-day[data-session-index]').forEach(day => {
+                day.addEventListener('click', event => {
+                    if (event.target.closest('select')) {
+                        return;
+                    }
+                    const sessionIndex = parseInt(day.dataset.sessionIndex, 10);
+                    if (!Number.isNaN(sessionIndex)) {
+                        toggleOffDay(sessionIndex);
+                    }
+                });
+            });
         }
     </script>
 </body>

@@ -737,7 +737,7 @@
                     <!-- Weight -->
                     <div class="form-group">
                         <label>Weight (lbs) - Rounded to nearest pound</label>
-                        <input type="number" id="weight" value="180" min="100" max="400">
+                        <input type="number" id="weight" value="180" min="61" max="400">
                     </div>
 
                     <!-- Waist -->
@@ -1002,18 +1002,18 @@
 
         function getMaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified against User Images)
-            // BF = 39.0 - 0.76(Diff) + 0.04(Weight)
-            weight = Math.max(100, Math.round(weight));
+            // BF = 39.0 - 0.76(Diff) + 0.04(Weight), table rounds down to whole percent.
+            weight = Math.min(400, Math.max(100, Math.round(weight)));
             const baseBF = 39.0 - (0.76 * heightWaistDiff) + (0.04 * weight);
-            return Math.max(0, Math.round(baseBF));
+            return Math.max(0, Math.floor(baseBF + 1e-6));
         }
 
         function getFemaleBF(heightWaistDiff, weight) {
             // Updated to match Guide-4 2025 Tables (Linear fit verified 100-300lbs)
-            // BF = 39.0 - 0.62(Diff) + 0.08(Weight)
-            weight = Math.max(90, Math.round(weight));
+            // BF = 39.0 - 0.62(Diff) + 0.08(Weight), table rounds down to whole percent.
+            weight = Math.min(400, Math.max(61, Math.round(weight)));
             const baseBF = 39.0 - (0.62 * heightWaistDiff) + (0.08 * weight);
-            return Math.max(0, Math.round(baseBF));
+            return Math.max(0, Math.floor(baseBF + 1e-6));
         }
 
         function getMaxWaist(height) {
@@ -1042,7 +1042,7 @@
             const step1Pass = whtrRounded <= 0.5499;
 
             // Step 2: Body Fat
-            const heightWaistDiff = roundedHeight - roundedWaist;
+            const heightWaistDiff = Math.round((roundedHeight - roundedWaist) * 2) / 2;
             const bodyFatPercent = currentGender === 'male'
                 ? getMaleBF(heightWaistDiff, roundedWeight)
                 : getFemaleBF(heightWaistDiff, roundedWeight);
