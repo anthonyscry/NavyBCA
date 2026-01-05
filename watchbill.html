@@ -178,6 +178,27 @@
             margin-bottom: 10px;
         }
 
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: rgba(10, 22, 40, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .toggle-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ffd700;
+        }
+
+        .toggle-row span {
+            font-size: 13px;
+            color: #8fa3bf;
+        }
+
         .day-row {
             display: grid;
             grid-template-columns: 100px 1fr;
@@ -886,6 +907,15 @@
             </div>
 
             <div class="form-group">
+                <label>Rotation Behavior</label>
+                <div class="toggle-row">
+                    <input type="checkbox" id="holdRotationToggle" checked>
+                    <span>Hold CFL/ACFL rotation on off days (default)</span>
+                </div>
+                <p class="hint">When enabled, off days keep the next session assigned to the same CFL/ACFL.</p>
+            </div>
+
+            <div class="form-group">
                 <label>Default PT Time</label>
                 <select id="defaultTime">
                     <option value="05:30">0530</option>
@@ -1003,6 +1033,7 @@
         let currentLocations = [];
         let currentWatchbillMonth = null;
         let currentWatchbillYear = null;
+        let holdRotationOnOffDays = true;
         let dayTypes = {
             sun: 'none',
             mon: 'pt',      // Default M/W/F for PT
@@ -1026,6 +1057,7 @@
                 year: document.getElementById('yearSelect').value,
                 defaultTime: document.getElementById('defaultTime').value,
                 dayTypes,
+                holdRotationOnOffDays,
                 customLocations,
                 roster: Array.from(document.querySelectorAll('.cfl-input-row input'))
                     .map(input => input.value.trim())
@@ -1088,6 +1120,10 @@
                         }
                     });
                 }
+                if (typeof data.holdRotationOnOffDays === 'boolean') {
+                    holdRotationOnOffDays = data.holdRotationOnOffDays;
+                    document.getElementById('holdRotationToggle').checked = holdRotationOnOffDays;
+                }
                 if (Array.isArray(data.customLocations)) {
                     customLocations = data.customLocations;
                     renderCustomLocations();
@@ -1123,6 +1159,11 @@
         document.getElementById('yearSelect').addEventListener('change', saveWatchbillData);
         document.getElementById('defaultTime').addEventListener('change', saveWatchbillData);
         document.getElementById('cflList').addEventListener('input', saveWatchbillData);
+        document.getElementById('holdRotationToggle').addEventListener('change', event => {
+            holdRotationOnOffDays = event.target.checked;
+            saveWatchbillData();
+            renderWatchbill();
+        });
 
         function setDayType(day, type) {
             // Update the dayTypes object
@@ -1298,7 +1339,7 @@
 
             ptSchedule.forEach(session => {
                 session.assignedCfl = currentRoster[rosterIndex % currentRoster.length];
-                if (!session.offDay) {
+                if (!session.offDay || !holdRotationOnOffDays) {
                     rosterIndex += 1;
                 }
             });
@@ -1327,12 +1368,15 @@
             const activeSessions = ptSchedule.filter(session => !session.offDay);
             const ptCount = activeSessions.filter(s => s.type === 'pt').length;
             const fepCount = activeSessions.filter(s => s.type === 'fep').length;
+            const rotationHint = holdRotationOnOffDays
+                ? 'Tip: Click a PT/FEP day to toggle it as an off day without changing the rotation.'
+                : 'Tip: Click a PT/FEP day to toggle it as an off day (rotation continues).';
 
             let calendarHTML = `
                 <div class="watchbill-header">
                     <h2>${monthNames[currentWatchbillMonth]} ${currentWatchbillYear} - PT/FEP Watchbill</h2>
                     <p>Total Sessions: ${activeSessions.length} (PT: ${ptCount}, FEP: ${fepCount})</p>
-                    <p class="hint" style="margin-top: 8px;">Tip: Click a PT/FEP day to toggle it as an off day without changing the rotation.</p>
+                    <p class="hint" style="margin-top: 8px;">${rotationHint}</p>
                 </div>
 
                 <div class="calendar-grid">
@@ -1372,9 +1416,12 @@
 
                     if (ptSession.offDay) {
                         dayClass += ' off-day clickable';
+                        const offDayTitle = holdRotationOnOffDays
+                            ? 'Off Day - Rotation Held'
+                            : 'Off Day - Rotation Continues';
                         dayContent = `
                             <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
-                            <div class="off-day-note">Off Day - Rotation Held</div>
+                            <div class="off-day-note">${offDayTitle}</div>
                             <div class="pt-info">
                                 <div>Assigned CFL/ACFL: ${ptSession.assignedCfl}</div>
                                 <div class="off-day-hint">Click to restore this session.</div>
