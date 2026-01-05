@@ -213,6 +213,21 @@
             color: #64748b;
         }
 
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: none;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
         .location-manager {
             display: flex;
             flex-direction: column;
@@ -853,6 +868,17 @@
             </div>
 
             <div class="form-group">
+                <label>Rotation Behavior</label>
+                <div class="checkbox-row">
+                    <label class="checkbox-label" for="holdRotationToggle">
+                        <input type="checkbox" id="holdRotationToggle" checked onchange="renderWatchbill()">
+                        Hold rotation on off days
+                    </label>
+                </div>
+                <p class="hint">When enabled, off days do not advance the CFL/ACFL rotation</p>
+            </div>
+
+            <div class="form-group">
                 <label>Default PT Time</label>
                 <select id="defaultTime">
                     <option value="05:30">0530</option>
@@ -1156,11 +1182,12 @@
                 return;
             }
 
+            const holdRotation = document.getElementById('holdRotationToggle')?.checked ?? true;
             let rosterIndex = 0;
 
             ptSchedule.forEach(session => {
                 session.assignedCfl = currentRoster[rosterIndex % currentRoster.length];
-                if (!session.offDay) {
+                if (!holdRotation || !session.offDay) {
                     rosterIndex += 1;
                 }
             });
@@ -1234,9 +1261,12 @@
 
                     if (ptSession.offDay) {
                         dayClass += ' off-day clickable';
+                        const offDayNote = document.getElementById('holdRotationToggle')?.checked
+                            ? 'Off Day - Rotation Held'
+                            : 'Off Day - Rotation Continues';
                         dayContent = `
                             <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
-                            <div class="off-day-note">Off Day - Rotation Held</div>
+                            <div class="off-day-note">${offDayNote}</div>
                             <div class="pt-info">
                                 <div>Assigned CFL/ACFL: ${ptSession.assignedCfl}</div>
                                 <div class="off-day-hint">Click to restore this session.</div>
