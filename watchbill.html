@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command PT Watchbill Generator | Navy Command PT Schedule</title>
+    <meta name="description"
+        content="Generate Command PT and FEP watchbills with automatic CFL/ACFL rotation. Free tool for creating monthly PT schedules.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            min-height: 100vh;
+            color: #e8eef5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .calculator-card {
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #8fa3bf;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            color: #e8eef5;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .day-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .day-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+            align-items: center;
+            padding: 10px;
+            background: rgba(10, 22, 40, 0.5);
+            border-radius: 8px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: #e8eef5;
+            font-size: 14px;
+        }
+
+        .day-type-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .day-type-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 6px;
+            color: #8fa3bf;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .day-type-btn.active {
+            border-width: 2px;
+        }
+
+        .day-type-btn.pt.active {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .day-type-btn.fep.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .day-type-btn.none.active {
+            background: rgba(100, 116, 139, 0.2);
+            border-color: #64748b;
+            color: #64748b;
+        }
+
+        .location-manager {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .location-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .location-input-row input {
+            flex: 1;
+        }
+
+        .day-checkbox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .day-checkbox input {
+            display: none;
+        }
+
+        .day-checkbox span {
+            color: #8fa3bf;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .day-checkbox.selected {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+        }
+
+        .day-checkbox.selected span {
+            color: #ffd700;
+        }
+
+        .cfl-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cfl-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cfl-input-row input {
+            flex: 1;
+        }
+
+        .btn-remove {
+            padding: 12px 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-remove:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #22c55e;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-add:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #0a1628;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #6b7c94;
+            margin-top: 8px;
+        }
+
+        .type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            color: #8fa3bf;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .type-btn.active {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .type-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Calendar Styles */
+        #watchbillOutput {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .watchbill-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .watchbill-header h2 {
+            color: #ffd700;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-day-header {
+            background: rgba(255, 215, 0, 0.15);
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #ffd700;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .calendar-day {
+            background: rgba(18, 32, 56, 0.9);
+            border: 1px solid rgba(100, 130, 180, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            min-height: 120px;
+            position: relative;
+        }
+
+        .calendar-day.empty {
+            background: rgba(10, 22, 40, 0.3);
+            border-color: rgba(100, 130, 180, 0.1);
+        }
+
+        .calendar-day.holiday {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .calendar-day.pt-day {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid rgba(34, 197, 94, 0.5);
+        }
+
+        .calendar-day.fep-day {
+            background: rgba(59, 130, 246, 0.15);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .holiday-name {
+            color: #ef4444;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .pt-info {
+            font-size: 11px;
+            color: #e8eef5;
+            line-height: 1.5;
+        }
+
+        .pt-info strong {
+            color: #22c55e;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .pt-info div {
+            margin-bottom: 3px;
+        }
+
+        .editable-field {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 11px;
+            color: #e8eef5;
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .editable-field:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .print-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(74, 144, 226, 0.2);
+            border: 1px solid #4a90e2;
+            color: #4a90e2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+        }
+
+        .metrics-section {
+            margin-top: 30px;
+            background: rgba(18, 32, 56, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .metrics-section h3 {
+            color: #ffd700;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metric-card {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .metric-card.total {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .metric-label {
+            color: #8fa3bf;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            color: #ffd700;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .metric-card.total .metric-value {
+            font-size: 32px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6b7c94;
+            font-size: 12px;
+            padding-bottom: 30px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #ffd700;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .btn-back,
+            .calculator-card,
+            .action-btn,
+            .print-btn,
+            footer {
+                display: none !important;
+            }
+
+            #watchbillOutput {
+                display: block !important;
+            }
+
+            .watchbill-header {
+                background: white !important;
+                border: 2px solid black;
+            }
+
+            .watchbill-header h2 {
+                color: black !important;
+            }
+
+            .calendar-grid {
+                gap: 5px;
+            }
+
+            .calendar-day-header {
+                background: #f0f0f0 !important;
+                color: black !important;
+                border: 1px solid black;
+            }
+
+            .calendar-day {
+                background: white !important;
+                border: 1px solid black !important;
+                page-break-inside: avoid;
+            }
+
+            .calendar-day.holiday {
+                background: #ffe0e0 !important;
+                border: 2px solid #cc0000 !important;
+            }
+
+            .calendar-day.pt-day {
+                background: #e0ffe0 !important;
+                border: 2px solid #00aa00 !important;
+            }
+
+            .calendar-day.fep-day {
+                background: #e0e0ff !important;
+                border: 2px solid #0000aa !important;
+            }
+
+            .day-number {
+                color: black !important;
+            }
+
+            .holiday-name {
+                color: #cc0000 !important;
+            }
+
+            .pt-info {
+                color: black !important;
+            }
+
+            .pt-info strong {
+                color: #006600 !important;
+            }
+
+            .editable-field {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            .metrics-section {
+                background: white !important;
+                border: 2px solid black;
+                page-break-before: always;
+            }
+
+            .metrics-section h3 {
+                color: black !important;
+            }
+
+            .metric-card {
+                background: #f5f5f5 !important;
+                border: 1px solid black !important;
+            }
+
+            .metric-card.total {
+                background: #ffffcc !important;
+                border: 2px solid black !important;
+            }
+
+            .metric-label {
+                color: #333 !important;
+            }
+
+            .metric-value {
+                color: black !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .calendar-day-header {
+                display: none;
+            }
+
+            .calendar-day {
+                border-left: 4px solid rgba(100, 130, 180, 0.5);
+            }
+
+            .calendar-day.pt-day {
+                border-left: 4px solid rgba(34, 197, 94, 0.8);
+            }
+
+            .calendar-day.fep-day {
+                border-left: 4px solid rgba(59, 130, 246, 0.8);
+            }
+
+            .calendar-day.holiday {
+                border-left: 4px solid rgba(239, 68, 68, 0.8);
+            }
+
+            .day-number::after {
+                content: ' - ' attr(data-day-name);
+                color: #8fa3bf;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .day-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="generator.html" class="btn-back">← Back to PT Generator</a>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">⚓</div>
+                <h1>Command PT Watchbill Generator</h1>
+            </div>
+            <p class="subtitle">Command PT & FEP Schedule Builder</p>
+        </header>
+
+        <main class="calculator-card">
+            <div class="form-group">
+                <label>Select Month and Year</label>
+                <div class="row">
+                    <select id="monthSelect">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <select id="yearSelect">
+                        <!-- Populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Schedule Days of the Week</label>
+                <div class="day-selector">
+                    <div class="day-row" data-day="mon">
+                        <div class="day-name">Monday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt active" onclick="setDayType('mon', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('mon', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('mon', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="tue">
+                        <div class="day-name">Tuesday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('tue', 'pt')">PT</button>
+                            <button class="day-type-btn fep active" onclick="setDayType('tue', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('tue', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="wed">
+                        <div class="day-name">Wednesday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt active" onclick="setDayType('wed', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('wed', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('wed', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="thu">
+                        <div class="day-name">Thursday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('thu', 'pt')">PT</button>
+                            <button class="day-type-btn fep active" onclick="setDayType('thu', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('thu', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="fri">
+                        <div class="day-name">Friday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt active" onclick="setDayType('fri', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('fri', 'fep')">FEP</button>
+                            <button class="day-type-btn none" onclick="setDayType('fri', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="sat">
+                        <div class="day-name">Saturday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('sat', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('sat', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('sat', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row" data-day="sun">
+                        <div class="day-name">Sunday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('sun', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('sun', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('sun', 'none')">None</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="hint">Set PT for M/W/F and FEP for T/Th, or customize as needed</p>
+            </div>
+
+            <div class="form-group">
+                <label>Default PT Time</label>
+                <select id="defaultTime">
+                    <option value="05:30">0530</option>
+                    <option value="06:00" selected>0600</option>
+                    <option value="06:30">0630</option>
+                    <option value="07:00">0700</option>
+                    <option value="11:30">1130</option>
+                    <option value="15:00">1500</option>
+                </select>
+                <p class="hint">This will be the default time selected for all PT sessions</p>
+            </div>
+
+            <div class="form-group">
+                <label>Location Options</label>
+                <div class="location-manager" id="locationManager">
+                    <div class="location-input-row">
+                        <input type="text" value="Base Gym" readonly style="background: rgba(10, 22, 40, 0.5);">
+                    </div>
+                    <div class="location-input-row">
+                        <input type="text" value="Track" readonly style="background: rgba(10, 22, 40, 0.5);">
+                    </div>
+                </div>
+                <div class="location-input-row">
+                    <input type="text" id="newLocation" placeholder="Add custom location (e.g., Pool, Field)">
+                    <button class="btn-add" onclick="addLocation()" style="width: auto; padding: 12px 24px;">+ Add</button>
+                </div>
+                <p class="hint">Add custom locations to appear in dropdown menus</p>
+            </div>
+
+            <div class="form-group">
+                <label>CFL/ACFL Roster</label>
+                <div class="cfl-list" id="cflList">
+                    <div class="cfl-input-row">
+                        <input type="text" placeholder="e.g., IT2 Smith" value="IT2 Smith">
+                        <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
+                    </div>
+                </div>
+                <button class="btn-add" onclick="addCFL()">+ Add CFL/ACFL</button>
+                <p class="hint">Add all CFLs and ACFLs who will lead PT (will rotate automatically)</p>
+            </div>
+
+            <button class="action-btn" onclick="generateWatchbill()">Generate Watchbill</button>
+        </main>
+
+        <div id="watchbillOutput">
+            <!-- Generated watchbill will appear here -->
+        </div>
+
+        <footer>
+            <p>
+                <a href="references.html">References & Guides</a> |
+                <a href="index.html">BCA Calculator</a> |
+                <a href="generator.html">PT Generator</a> |
+                <a href="watchbill.html">Watchbill Generator</a> |
+                <a href="about.html">About</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Use</a> |
+                <a href="mailto:administrator@navybca.com">Contact</a>
+            </p>
+            <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Federal Holidays for 2025-2027
+        const federalHolidays = {
+            2025: [
+                { date: '2025-01-01', name: 'New Year\'s Day' },
+                { date: '2025-01-20', name: 'Martin Luther King Jr. Day' },
+                { date: '2025-02-17', name: 'Presidents Day' },
+                { date: '2025-05-26', name: 'Memorial Day' },
+                { date: '2025-06-19', name: 'Juneteenth' },
+                { date: '2025-07-04', name: 'Independence Day' },
+                { date: '2025-09-01', name: 'Labor Day' },
+                { date: '2025-10-13', name: 'Columbus Day' },
+                { date: '2025-11-11', name: 'Veterans Day' },
+                { date: '2025-11-27', name: 'Thanksgiving' },
+                { date: '2025-12-25', name: 'Christmas' }
+            ],
+            2026: [
+                { date: '2026-01-01', name: 'New Year\'s Day' },
+                { date: '2026-01-19', name: 'Martin Luther King Jr. Day' },
+                { date: '2026-02-16', name: 'Presidents Day' },
+                { date: '2026-05-25', name: 'Memorial Day' },
+                { date: '2026-06-19', name: 'Juneteenth' },
+                { date: '2026-07-03', name: 'Independence Day (Observed)' },
+                { date: '2026-09-07', name: 'Labor Day' },
+                { date: '2026-10-12', name: 'Columbus Day' },
+                { date: '2026-11-11', name: 'Veterans Day' },
+                { date: '2026-11-26', name: 'Thanksgiving' },
+                { date: '2026-12-25', name: 'Christmas' }
+            ],
+            2027: [
+                { date: '2027-01-01', name: 'New Year\'s Day' },
+                { date: '2027-01-18', name: 'Martin Luther King Jr. Day' },
+                { date: '2027-02-15', name: 'Presidents Day' },
+                { date: '2027-05-31', name: 'Memorial Day' },
+                { date: '2027-06-18', name: 'Juneteenth (Observed)' },
+                { date: '2027-07-05', name: 'Independence Day (Observed)' },
+                { date: '2027-09-06', name: 'Labor Day' },
+                { date: '2027-10-11', name: 'Columbus Day' },
+                { date: '2027-11-11', name: 'Veterans Day' },
+                { date: '2027-11-25', name: 'Thanksgiving' },
+                { date: '2027-12-24', name: 'Christmas (Observed)' }
+            ]
+        };
+
+        let ptSchedule = [];
+        let dayTypes = {
+            sun: 'none',
+            mon: 'pt',      // Default M/W/F for PT
+            tue: 'fep',     // Default T/Th for FEP
+            wed: 'pt',
+            thu: 'fep',
+            fri: 'pt',
+            sat: 'none'
+        };
+        let customLocations = [];
+
+        // Populate year selector (2026-2027 only)
+        const yearSelect = document.getElementById('yearSelect');
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+
+        for (let i = 2026; i <= 2027; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            if (i === currentYear) option.selected = true;
+            yearSelect.appendChild(option);
+        }
+
+        // Set current month as default
+        document.getElementById('monthSelect').value = currentMonth;
+
+        function setDayType(day, type) {
+            // Update the dayTypes object
+            dayTypes[day] = type;
+
+            // Find the day row and update button states
+            const dayRow = document.querySelector(`.day-row[data-day="${day}"]`);
+            if (dayRow) {
+                dayRow.querySelectorAll('.day-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.classList.contains(type)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function addLocation() {
+            const newLocationInput = document.getElementById('newLocation');
+            const location = newLocationInput.value.trim();
+
+            if (!location) {
+                alert('Please enter a location name');
+                return;
+            }
+
+            // Check if already exists
+            if (customLocations.includes(location) || location === 'Base Gym' || location === 'Track') {
+                alert('This location already exists');
+                return;
+            }
+
+            customLocations.push(location);
+
+            // Add to location manager display
+            const locationManager = document.getElementById('locationManager');
+            const newRow = document.createElement('div');
+            newRow.className = 'location-input-row';
+            newRow.innerHTML = `
+                <input type="text" value="${location}" readonly style="background: rgba(10, 22, 40, 0.5);">
+                <button class="btn-remove" onclick="removeLocation('${location}', this)">Remove</button>
+            `;
+            locationManager.appendChild(newRow);
+
+            newLocationInput.value = '';
+        }
+
+        function removeLocation(location, button) {
+            customLocations = customLocations.filter(loc => loc !== location);
+            button.parentElement.remove();
+        }
+
+        function addCFL() {
+            const cflList = document.getElementById('cflList');
+            const newRow = document.createElement('div');
+            newRow.className = 'cfl-input-row';
+            newRow.innerHTML = `
+                <input type="text" placeholder="e.g., IT2 Smith">
+                <button class="btn-remove" onclick="removeCFL(this)">Remove</button>
+            `;
+            cflList.appendChild(newRow);
+        }
+
+        function removeCFL(button) {
+            const cflList = document.getElementById('cflList');
+            if (cflList.children.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert('You must have at least one CFL/ACFL');
+            }
+        }
+
+        function isHoliday(date) {
+            const year = date.getFullYear();
+            const dateStr = date.toISOString().split('T')[0];
+            const holidays = federalHolidays[year] || [];
+            return holidays.find(h => h.date === dateStr);
+        }
+
+        function generateWatchbill() {
+            // Get inputs
+            const month = parseInt(document.getElementById('monthSelect').value);
+            const year = parseInt(document.getElementById('yearSelect').value);
+            const defaultTime = document.getElementById('defaultTime').value;
+
+            // Get days with PT or FEP
+            const dayTypeMap = {0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu', 5: 'fri', 6: 'sat'};
+            const activeDays = Object.entries(dayTypes).filter(([day, type]) => type !== 'none');
+
+            if (activeDays.length === 0) {
+                alert('Please select at least one PT or FEP day');
+                return;
+            }
+
+            // Get CFL roster
+            const cflInputs = document.querySelectorAll('.cfl-input-row input');
+            const cflRoster = Array.from(cflInputs)
+                .map(input => input.value.trim())
+                .filter(name => name.length > 0);
+
+            if (cflRoster.length === 0) {
+                alert('Please add at least one CFL/ACFL');
+                return;
+            }
+
+            // Generate PT/FEP schedule
+            ptSchedule = [];
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            const defaultLocation = customLocations.length > 0 ? customLocations[0] : 'Base Gym';
+            let cflIndex = 0;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+                const dayName = dayTypeMap[dayOfWeek];
+                const dayType = dayTypes[dayName];
+                const holiday = isHoliday(date);
+
+                // Only add session if it's a PT/FEP day and NOT a holiday
+                if (dayType !== 'none' && !holiday) {
+                    ptSchedule.push({
+                        date: date,
+                        day: day,
+                        dayOfWeek: dayOfWeek,
+                        type: dayType,  // 'pt' or 'fep'
+                        cfl: cflRoster[cflIndex % cflRoster.length],
+                        time: defaultTime,
+                        location: 'Base Gym'
+                    });
+                    cflIndex++;
+                }
+            }
+
+            // Build location options
+            const allLocations = ['Base Gym', 'Track', ...customLocations];
+
+            // Build calendar
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            // Count PT vs FEP sessions
+            const ptCount = ptSchedule.filter(s => s.type === 'pt').length;
+            const fepCount = ptSchedule.filter(s => s.type === 'fep').length;
+
+            let calendarHTML = `
+                <div class="watchbill-header">
+                    <h2>${monthNames[month]} ${year} - PT/FEP Watchbill</h2>
+                    <p>Total Sessions: ${ptSchedule.length} (PT: ${ptCount}, FEP: ${fepCount})</p>
+                </div>
+
+                <div class="calendar-grid">
+            `;
+
+            // Day headers
+            for (let i = 0; i < 7; i++) {
+                calendarHTML += `<div class="calendar-day-header">${dayNames[i]}</div>`;
+            }
+
+            // Empty cells before first day
+            for (let i = 0; i < firstDay; i++) {
+                calendarHTML += `<div class="calendar-day empty"></div>`;
+            }
+
+            // Days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+                const holiday = isHoliday(date);
+                const ptSession = ptSchedule.find(pt => pt.day === day);
+
+                let dayClass = 'calendar-day';
+                let dayContent = '';
+
+                if (holiday) {
+                    dayClass += ' holiday';
+                    dayContent = `
+                        <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                        <div class="holiday-name">${holiday.name}</div>
+                        <div class="pt-info" style="color: #ef4444;">No PT - Federal Holiday</div>
+                    `;
+                } else if (ptSession) {
+                    // Add appropriate class based on session type
+                    dayClass += ptSession.type === 'pt' ? ' pt-day' : ' fep-day';
+                    const sessionIndex = ptSchedule.indexOf(ptSession);
+                    const sessionLabel = ptSession.type === 'pt' ? 'Command PT' : 'FEP';
+                    const sessionColor = ptSession.type === 'pt' ? '#22c55e' : '#3b82f6';
+
+                    // Build time options with default selected
+                    const timeOptions = ['05:30', '06:00', '06:30', '07:00', '11:30', '15:00'].map(time => {
+                        const selected = time === ptSession.time ? 'selected' : '';
+                        const display = time.replace(':', '');
+                        return `<option value="${time}" ${selected}>${display}</option>`;
+                    }).join('');
+
+                    // Build location options with default selected
+                    const locationOptions = allLocations.map(loc => {
+                        const selected = loc === ptSession.location ? 'selected' : '';
+                        return `<option value="${loc}" ${selected}>${loc}</option>`;
+                    }).join('');
+
+                    dayContent = `
+                        <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
+                        <div class="pt-info">
+                            <strong style="color: ${sessionColor};">${sessionLabel}</strong>
+                            <div>
+                                Time: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'time', this.value)">
+                                    ${timeOptions}
+                                </select>
+                            </div>
+                            <div>
+                                Location: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'location', this.value)">
+                                    ${locationOptions}
+                                </select>
+                            </div>
+                            <div>
+                                CFL/ACFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
+                                    ${cflRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.cfl ? 'selected' : ''}>${cfl}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    dayContent = `<div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>`;
+                }
+
+                calendarHTML += `<div class="${dayClass}">${dayContent}</div>`;
+            }
+
+            calendarHTML += `
+                </div>
+            `;
+
+            // Generate metrics report
+            const cflMetrics = {};
+            ptSchedule.forEach(session => {
+                if (!cflMetrics[session.cfl]) {
+                    cflMetrics[session.cfl] = 0;
+                }
+                cflMetrics[session.cfl]++;
+            });
+
+            calendarHTML += `
+                <div class="metrics-section">
+                    <h3>📊 CFL/ACFL Performance Metrics</h3>
+                    <p style="text-align: center; color: #8fa3bf; margin-bottom: 20px; font-size: 12px;">For Navy Evaluation Purposes</p>
+                    <div class="metrics-grid">
+                        <div class="metric-card total">
+                            <div class="metric-label">Total PT Sessions</div>
+                            <div class="metric-value">${ptSchedule.length}</div>
+                        </div>
+            `;
+
+            // Add individual CFL metrics
+            Object.entries(cflMetrics).sort((a, b) => b[1] - a[1]).forEach(([cfl, count]) => {
+                calendarHTML += `
+                    <div class="metric-card">
+                        <div class="metric-label">${cfl}</div>
+                        <div class="metric-value">${count}</div>
+                        <div style="color: #6b7c94; font-size: 11px; margin-top: 5px;">${count === 1 ? 'session' : 'sessions'} led</div>
+                    </div>
+                `;
+            });
+
+            calendarHTML += `
+                    </div>
+                </div>
+                <button class="print-btn" onclick="window.print()">🖨️ Print Watchbill & Metrics</button>
+            `;
+
+            document.getElementById('watchbillOutput').innerHTML = calendarHTML;
+            document.getElementById('watchbillOutput').style.display = 'block';
+
+            // Scroll to output
+            document.getElementById('watchbillOutput').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateSession(index, field, value) {
+            if (ptSchedule[index]) {
+                ptSchedule[index][field] = value;
+            }
+        }
+    </script>
+</body>
+
+</html>
