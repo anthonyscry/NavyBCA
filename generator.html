@@ -414,11 +414,37 @@
             font-weight: 600;
             white-space: nowrap;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .pt-banner-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Mobile responsive PT banner */
+        @media (max-width: 768px) {
+            .pt-banner {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .pt-banner-text h3 {
+                font-size: 18px;
+            }
+
+            .pt-banner-text p {
+                font-size: 13px;
+            }
+
+            .pt-banner-btn {
+                width: 100%;
+                text-align: center;
+                white-space: normal;
+                padding: 14px 20px;
+            }
         }
 
         /* Print Styles */
