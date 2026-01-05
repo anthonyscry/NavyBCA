@@ -1102,6 +1102,7 @@
         };
         let customLocations = [];
         const watchbillStorageKey = 'navyWatchbillData';
+        const rememberWatchbillStorageKey = 'navyWatchbillRemember';
         let isLoadingWatchbillData = false;
 
         function shouldRememberWatchbill() {
@@ -1115,6 +1116,7 @@
             if (!shouldRememberWatchbill()) {
                 return;
             }
+            localStorage.setItem(rememberWatchbillStorageKey, 'true');
 
             const data = {
                 month: document.getElementById('monthSelect').value,
@@ -1221,14 +1223,22 @@
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
         const rememberWatchbillToggle = document.getElementById('rememberWatchbillToggle');
-        if (!shouldRememberWatchbill()) {
+        const rememberStored = localStorage.getItem(rememberWatchbillStorageKey) === 'true';
+        if (rememberWatchbillToggle) {
+            rememberWatchbillToggle.checked = rememberStored;
+        }
+        if (rememberStored) {
+            loadWatchbillData();
+        } else {
             localStorage.removeItem(watchbillStorageKey);
         }
         rememberWatchbillToggle.addEventListener('change', function() {
             if (shouldRememberWatchbill()) {
+                localStorage.setItem(rememberWatchbillStorageKey, 'true');
                 loadWatchbillData();
                 saveWatchbillData();
             } else {
+                localStorage.removeItem(rememberWatchbillStorageKey);
                 localStorage.removeItem(watchbillStorageKey);
             }
         });

@@ -1777,6 +1777,8 @@
         }
 
         // Load saved data on page load
+        const rememberBcaStorageKey = 'navyBcaRemember';
+
         window.addEventListener('DOMContentLoaded', function() {
             updateRememberToggleState();
         });
@@ -1790,14 +1792,20 @@
             if (!rememberToggle) {
                 return;
             }
-            if (!shouldRememberBca()) {
+            const rememberStored = localStorage.getItem(rememberBcaStorageKey) === 'true';
+            rememberToggle.checked = rememberStored;
+            if (rememberStored) {
+                loadSavedData();
+            } else {
                 clearSavedData();
             }
             rememberToggle.addEventListener('change', function() {
                 if (shouldRememberBca()) {
+                    localStorage.setItem(rememberBcaStorageKey, 'true');
                     loadSavedData();
                     saveData();
                 } else {
+                    localStorage.removeItem(rememberBcaStorageKey);
                     clearSavedData();
                 }
             });
@@ -1807,6 +1815,7 @@
             if (!shouldRememberBca()) {
                 return;
             }
+            localStorage.setItem(rememberBcaStorageKey, 'true');
             const data = {
                 gender: currentGender,
                 heightFeet: document.getElementById('heightFeet').value,
@@ -1848,18 +1857,12 @@
                         document.getElementById('waist').value = data.waist;
                     }
 
-                    // Show a subtle notification
-                    showRestoreNotification();
                 } catch (e) {
                     console.error('Error loading saved data:', e);
                     localStorage.removeItem('navyBcaData'); // Clear corrupted data
                     showNotification('Saved data was corrupted and has been cleared', 'warning');
                 }
             }
-        }
-
-        function showRestoreNotification() {
-            showNotification('Previous inputs restored', 'success');
         }
 
         function clearSavedData() {

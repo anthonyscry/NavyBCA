@@ -1388,6 +1388,7 @@
 
         // --- LocalStorage for PT Generator Preferences ---
         const ptGeneratorStorageKey = 'navyPTGeneratorPreferences';
+        const rememberPtStorageKey = 'navyPTGeneratorRemember';
         let isLoadingPreferences = false;
 
         function shouldRememberPTPreferences() {
@@ -1401,6 +1402,7 @@
             if (!shouldRememberPTPreferences()) {
                 return;
             }
+            localStorage.setItem(rememberPtStorageKey, 'true');
 
             const preferences = {
                 focus: document.getElementById('focusSelect').value,
@@ -1680,9 +1682,11 @@
         });
         document.getElementById('rememberPtToggle').addEventListener('change', function() {
             if (shouldRememberPTPreferences()) {
+                localStorage.setItem(rememberPtStorageKey, 'true');
                 loadPTGeneratorPreferences();
                 savePTGeneratorPreferences();
             } else {
+                localStorage.removeItem(rememberPtStorageKey);
                 localStorage.removeItem(ptGeneratorStorageKey);
             }
         });
@@ -1694,12 +1698,18 @@
 
         // Load preferences on page load
         window.addEventListener('DOMContentLoaded', function() {
-            loadPTGeneratorPreferences();
-            updateFundayFacilitiesForLocation();
-            updateInjuryOptionsVisibility();
-            if (!shouldRememberPTPreferences()) {
+            const rememberToggle = document.getElementById('rememberPtToggle');
+            const rememberStored = localStorage.getItem(rememberPtStorageKey) === 'true';
+            if (rememberToggle) {
+                rememberToggle.checked = rememberStored;
+            }
+            if (rememberStored) {
+                loadPTGeneratorPreferences();
+            } else {
                 localStorage.removeItem(ptGeneratorStorageKey);
             }
+            updateFundayFacilitiesForLocation();
+            updateInjuryOptionsVisibility();
         });
 
         // --- Collapsible Section Toggle ---
