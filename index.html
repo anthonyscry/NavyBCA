@@ -1116,6 +1116,10 @@
         footer a {
             color: #8fa3bf;
             text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            line-height: 1.4;
+            padding: 2px 4px;
         }
 
         footer a:hover {
@@ -1124,22 +1128,25 @@
 
         /* PT Generator Banner */
         .pt-banner {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
-            border: 2px solid rgba(255, 215, 0, 0.4);
             border-radius: 12px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
-            min-height: 90px;
+            min-height: 70px;
         }
 
-        .pt-banner.secondary {
+        .pt-banner.banner-gold {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+        }
+
+        .pt-banner.banner-blue {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.05) 100%);
-            border-color: rgba(59, 130, 246, 0.45);
+            border: 2px solid rgba(59, 130, 246, 0.45);
         }
 
         .pt-banner-text {
@@ -1148,18 +1155,21 @@
         }
 
         .pt-banner-text h3 {
-            color: #ffd700;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 5px;
         }
 
-        .pt-banner.secondary .pt-banner-text h3 {
+        .pt-banner.banner-gold .pt-banner-text h3 {
+            color: #ffd700;
+        }
+
+        .pt-banner.banner-blue .pt-banner-text h3 {
             color: #93c5fd;
         }
 
         .pt-banner-text p {
             color: #8fa3bf;
-            font-size: 13px;
+            font-size: 12px;
             margin: 0;
             line-height: 1.4;
         }
@@ -1168,33 +1178,37 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-            color: #0a1628;
+            padding: 10px 18px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 12px;
             text-decoration: none;
             border-radius: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            letter-spacing: 0.8px;
             transition: transform 0.2s, box-shadow 0.2s;
             flex-shrink: 0;
         }
 
-        .pt-banner-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        .pt-banner.banner-gold .pt-banner-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #0a1628;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
         }
 
-        .pt-banner-btn.secondary {
+        .pt-banner.banner-gold .pt-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+        }
+
+        .pt-banner.banner-blue .pt-banner-btn {
             background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
             color: #eaf2ff;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
         }
 
-        .pt-banner-btn.secondary:hover {
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
+        .pt-banner.banner-blue .pt-banner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.45);
         }
 
         /* Animations */
@@ -1415,7 +1429,7 @@
         </header>
 
         <!-- PT Generator Banner -->
-        <div class="pt-banner">
+        <div class="pt-banner banner-gold">
             <div class="pt-banner-text">
                 <h3>Need a Command PT Session?</h3>
                 <p>Generate 60-minute workouts with warm-up, exercises, and cool-down. Print-ready for CFLs.</p>
@@ -1425,24 +1439,22 @@
             </a>
         </div>
 
-        <div class="pt-banner secondary">
+        <div class="pt-banner banner-blue">
             <div class="pt-banner-text">
                 <h3>Need a Monthly PT Watchbill?</h3>
                 <p>Auto-generate PT schedules with CFL rotation. Select days, assign CFLs, print ready.</p>
             </div>
-            <a href="watchbill.html" class="pt-banner-btn secondary">
+            <a href="watchbill.html" class="pt-banner-btn">
                 Command PT Watchbill Generator →
             </a>
         </div>
 
-        <div class="pt-banner"
-            style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05)); border-color: rgba(59, 130, 246, 0.3);">
+        <div class="pt-banner banner-gold">
             <div class="pt-banner-text">
                 <h3>8-Week PRT Prep Program</h3>
                 <p>Structured training plan focusing on pushups, planks, and 1.5mi run endurance. Build strength and speed for test day.</p>
             </div>
-            <a href="prt-prep.html" class="pt-banner-btn"
-                style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+            <a href="prt-prep.html" class="pt-banner-btn">
                 Start Training →
             </a>
         </div>
@@ -1702,6 +1714,7 @@
                 <a href="generator.html">PT Generator</a> |
                 <a href="watchbill.html">Watchbill Generator</a> |
                 <a href="prt-prep.html">8-Week PRT Prep</a> |
+                <br>
                 <a href="about.html">About</a> |
                 <a href="privacy.html">Privacy Policy</a> |
                 <a href="terms.html">Terms of Use</a> |
