@@ -713,6 +713,14 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Remember Settings</label>
+                    <label class="toggle-pill">
+                        <input type="checkbox" id="rememberPtToggle">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">Save selections on this device</span>
+                    </label>
+                </div>
             </div>
 
             <div class="form-group" id="fundayEquipmentGroup" style="display: none;">
@@ -1381,8 +1389,15 @@
         const ptGeneratorStorageKey = 'navyPTGeneratorPreferences';
         let isLoadingPreferences = false;
 
+        function shouldRememberPTPreferences() {
+            return document.getElementById('rememberPtToggle')?.checked || false;
+        }
+
         function savePTGeneratorPreferences() {
             if (isLoadingPreferences) {
+                return;
+            }
+            if (!shouldRememberPTPreferences()) {
                 return;
             }
 
@@ -1439,6 +1454,9 @@
         }
 
         function loadPTGeneratorPreferences() {
+            if (!shouldRememberPTPreferences()) {
+                return;
+            }
             const savedPreferences = localStorage.getItem(ptGeneratorStorageKey);
             if (!savedPreferences) {
                 return;
@@ -1659,6 +1677,14 @@
             updateInjuryOptionsVisibility();
             savePTGeneratorPreferences();
         });
+        document.getElementById('rememberPtToggle').addEventListener('change', function() {
+            if (shouldRememberPTPreferences()) {
+                loadPTGeneratorPreferences();
+                savePTGeneratorPreferences();
+            } else {
+                localStorage.removeItem(ptGeneratorStorageKey);
+            }
+        });
 
         // Add change listeners to all equipment checkboxes
         document.querySelectorAll('.equip-checkbox input[type="checkbox"]').forEach(checkbox => {
@@ -1670,6 +1696,9 @@
             loadPTGeneratorPreferences();
             updateFundayFacilitiesForLocation();
             updateInjuryOptionsVisibility();
+            if (!shouldRememberPTPreferences()) {
+                localStorage.removeItem(ptGeneratorStorageKey);
+            }
         });
 
         // --- Collapsible Section Toggle ---

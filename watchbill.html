@@ -929,6 +929,14 @@
             </div>
 
             <div class="form-group">
+                <label>Remember Settings</label>
+                <div class="toggle-row">
+                    <input type="checkbox" id="rememberWatchbillToggle">
+                    <span>Save inputs on this device</span>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label>Location Options</label>
                 <div class="location-manager" id="locationManager">
                     <div class="location-input-row">
@@ -1048,8 +1056,15 @@
         const watchbillStorageKey = 'navyWatchbillData';
         let isLoadingWatchbillData = false;
 
+        function shouldRememberWatchbill() {
+            return document.getElementById('rememberWatchbillToggle')?.checked || false;
+        }
+
         function saveWatchbillData() {
             if (isLoadingWatchbillData) {
+                return;
+            }
+            if (!shouldRememberWatchbill()) {
                 return;
             }
 
@@ -1097,6 +1112,9 @@
         }
 
         function loadWatchbillData() {
+            if (!shouldRememberWatchbill()) {
+                return;
+            }
             const savedData = localStorage.getItem(watchbillStorageKey);
             if (!savedData) {
                 return;
@@ -1154,7 +1172,18 @@
 
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
-        loadWatchbillData();
+        const rememberWatchbillToggle = document.getElementById('rememberWatchbillToggle');
+        if (!shouldRememberWatchbill()) {
+            localStorage.removeItem(watchbillStorageKey);
+        }
+        rememberWatchbillToggle.addEventListener('change', function() {
+            if (shouldRememberWatchbill()) {
+                loadWatchbillData();
+                saveWatchbillData();
+            } else {
+                localStorage.removeItem(watchbillStorageKey);
+            }
+        });
 
         document.getElementById('monthSelect').addEventListener('change', saveWatchbillData);
         document.getElementById('yearSelect').addEventListener('change', saveWatchbillData);

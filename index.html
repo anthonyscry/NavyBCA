@@ -267,6 +267,14 @@
             margin-bottom: 25px;
         }
 
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+            color: #d9e5f6;
+        }
+
         label {
             display: block;
             font-size: 12px;
@@ -1457,6 +1465,14 @@
                         <p class="hint">Measured at bellybutton level, tape parallel to deck</p>
                     </div>
 
+                    <div class="form-group">
+                        <label for="rememberBcaToggle">Remember Inputs</label>
+                        <div class="toggle-row">
+                            <input type="checkbox" id="rememberBcaToggle">
+                            <span>Save inputs on this device</span>
+                        </div>
+                    </div>
+
                     <button type="button" class="calculate-btn" onclick="calculateBCA()" aria-label="Calculate Body Composition Assessment">
                         Calculate BCA
                     </button>
@@ -1714,10 +1730,35 @@
 
         // Load saved data on page load
         window.addEventListener('DOMContentLoaded', function() {
-            loadSavedData();
+            updateRememberToggleState();
         });
 
+        function shouldRememberBca() {
+            return document.getElementById('rememberBcaToggle')?.checked || false;
+        }
+
+        function updateRememberToggleState() {
+            const rememberToggle = document.getElementById('rememberBcaToggle');
+            if (!rememberToggle) {
+                return;
+            }
+            if (!shouldRememberBca()) {
+                clearSavedData();
+            }
+            rememberToggle.addEventListener('change', function() {
+                if (shouldRememberBca()) {
+                    loadSavedData();
+                    saveData();
+                } else {
+                    clearSavedData();
+                }
+            });
+        }
+
         function saveData() {
+            if (!shouldRememberBca()) {
+                return;
+            }
             const data = {
                 gender: currentGender,
                 heightFeet: document.getElementById('heightFeet').value,
@@ -1730,6 +1771,9 @@
         }
 
         function loadSavedData() {
+            if (!shouldRememberBca()) {
+                return;
+            }
             const savedData = localStorage.getItem('navyBcaData');
             if (savedData) {
                 try {
