@@ -612,8 +612,8 @@
                 <div class="form-group">
                     <label>Location</label>
                     <select id="locationSelect">
-                        <option value="outdoor">Outdoor (Track/Field)</option>
-                        <option value="indoor">Indoor (Gym/Home)</option>
+                        <option value="outdoor">Outdoor</option>
+                        <option value="indoor">Indoor</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -698,7 +698,7 @@
                         </label>
                     </div>
                 </div>
-                <p class="hint" style="margin-top: 10px; color: #8fa3bf;">Select "No Equipment" for games like tag, or choose available facilities/equipment for more options</p>
+                <p class="hint" style="margin-top: 10px; color: #8fa3bf;">💡 "No Equipment" mode: Select facilities to get location-specific no-equipment games (e.g., Track = relay races, Field = capture the flag). Or choose equipment for traditional sports.</p>
             </div>
 
             <div class="form-group" id="equipmentGroup">
@@ -1013,14 +1013,21 @@
                     { name: "Speedball", tip: "Hybrid of soccer, basketball, and football. Kick or throw ball to score. Very dynamic!", requires: "soccer", link: "https://www.youtube.com/watch?v=yP3VvqYYlGI" },
                     { name: "Spikeball (Roundnet)", tip: "4 players, 2 teams. Bounce ball off net, opponents have 3 touches to return. High energy!", requires: "spikeball", link: "https://www.youtube.com/watch?v=FRmjRZpHQH8" },
                     { name: "Kan Jam", tip: "Frisbee game. Throw disc at can, partner deflects it in. First to 21 wins.", requires: "frisbee" },
-                    // No-equipment games
-                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tackle and hold for 3 sec. Tackled become bulldogs. Last one wins.", noEquipment: true, link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
-                    { name: "Manhunt", tip: "Hide and seek meets tag. Hunters find and tag hiders who become hunters. Great for large areas.", noEquipment: true },
+                    // No-equipment games (with facility preferences)
+                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tackle and hold for 3 sec. Tackled become bulldogs. Last one wins.", noEquipment: true, preferredFacility: "openField", link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
+                    { name: "Manhunt", tip: "Hide and seek meets tag. Hunters find and tag hiders who become hunters. Great for large areas.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. Frozen players spread legs, teammates crawl through to unfreeze.", noEquipment: true },
                     { name: "Red Light Green Light", tip: "Leader calls 'green light' to advance, 'red light' to freeze. Caught moving = restart.", noEquipment: true },
-                    { name: "Blob Tag", tip: "Tagged players join hands with tagger forming a 'blob'. Only end players can tag. Blob grows!", noEquipment: true },
-                    { name: "Relay Races", tip: "Sprint relays, wheelbarrow races, three-legged races, crab walks, bear crawls.", noEquipment: true },
-                    { name: "Sharks and Minnows", tip: "Minnows run across field while sharks try to tag. Tagged minnows become sharks.", noEquipment: true },
+                    { name: "Blob Tag", tip: "Tagged players join hands with tagger forming a 'blob'. Only end players can tag. Blob grows!", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Relay Races", tip: "Sprint relays, wheelbarrow races, three-legged races, crab walks, bear crawls.", noEquipment: true, preferredFacility: "track" },
+                    { name: "Track Sprints Competition", tip: "400m relay, 800m team time trials, or ladder sprints (100-200-300-200-100m).", noEquipment: true, preferredFacility: "track" },
+                    { name: "Mile Challenge", tip: "Individual or team 1-mile runs. Track times and improve each session.", noEquipment: true, preferredFacility: "track" },
+                    { name: "Fartlek Training Game", tip: "Swedish speed play. Teams alternate calling out sprint intervals (30sec-2min). Mix hard and easy.", noEquipment: true, preferredFacility: "track" },
+                    { name: "Sharks and Minnows", tip: "Minnows run across field while sharks try to tag. Tagged minnows become sharks.", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Capture the Territory", tip: "No flags needed. Mark zones with shoes/cones. Tag opponents in their zone to score.", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Ultimate (No Disc)", tip: "Pass invisible 'disc' with hand touches. Same rules as Ultimate Frisbee. Creative and fun!", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Baseball Diamond Sprints", tip: "Race around bases. First team to have everyone complete circuit wins.", noEquipment: true, preferredFacility: "baseballField" },
+                    { name: "Pickle (No Ball)", tip: "Classic rundown drill. Runners try to avoid being tagged between bases.", noEquipment: true, preferredFacility: "baseballField" },
                     { name: "Simon Says (PT Edition)", tip: "Leader calls exercises. Only do them if preceded by 'Simon Says'. Great warm-up game.", noEquipment: true },
                     { name: "Duck Duck Goose", tip: "Circle game. 'Goose' chases tagger around circle. Light cardio and fun.", noEquipment: true },
                     { name: "Partner Wheelbarrow Races", tip: "One holds ankles, partner walks on hands. Race to finish line. Great upper body.", noEquipment: true },
@@ -1041,13 +1048,16 @@
                     { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline.", requires: "dodgeball" },
                     { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball", link: "https://www.youtube.com/watch?v=JQbqfK5Z8_A" },
                     { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies.", requires: "hockey" },
-                    // No-equipment games
+                    // No-equipment games (with facility preferences)
                     { name: "Octopus Tag", tip: "Tagger in middle can only pivot on one foot. Others run past. Tagged join as octopi.", noEquipment: true },
                     { name: "Fitness Tag", tip: "Tagged players do 10 pushups to get back in. Constant movement and exercise.", noEquipment: true },
                     { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable.", noEquipment: true },
                     { name: "Partner Exercises Circuit", tip: "Partner-based exercises: wheelbarrow, partner sit-ups, plank high-fives.", noEquipment: true },
                     { name: "Mirror Drill", tip: "Partners face each other. One leads movements, other mirrors. Switch every 2 min.", noEquipment: true },
-                    { name: "Line Drills", tip: "Use court lines for sprints, shuffles, carioca, high knees between lines.", noEquipment: true },
+                    { name: "Line Drills", tip: "Use court lines for sprints, shuffles, carioca, high knees between lines.", noEquipment: true, preferredFacility: "basketballCourt" },
+                    { name: "Basketball Court Suicides", tip: "Sprint to each line and back. Baseline to free throw, half court, far free throw, baseline.", noEquipment: true, preferredFacility: "basketballCourt" },
+                    { name: "Full Court Tag", tip: "Use basketball court boundaries. Can't cross out of bounds. Constant direction changes!", noEquipment: true, preferredFacility: "basketballCourt" },
+                    { name: "Volleyball Court Relay", tip: "Teams line up on each side. Sprint under net, tag teammate. Fast rotation relay.", noEquipment: true, preferredFacility: "volleyballCourt" },
                     { name: "Ship Captain Crew", tip: "Leader calls commands (Port/Starboard/Captain's Coming). Last to respond is out.", noEquipment: true },
                     { name: "Stuck in the Mud", tip: "Tagged players spread legs (stuck in mud). Freed when teammate crawls through. Fast-paced!", noEquipment: true },
                     { name: "Chain Tag", tip: "Tagged players join hands with tagger. Chain grows. Only end players can tag.", noEquipment: true },
@@ -1094,25 +1104,41 @@
 
         function toggleFundayNone() {
             const noneBox = document.getElementById('fundayNoEquip');
-            const fundayEquipItems = document.querySelectorAll('.funday-equip, .funday-facility');
+            const fundayEquipItems = document.querySelectorAll('.funday-equip');
             const noneLabel = document.getElementById('fundayNoneLabel');
             const facilitiesSection = document.getElementById('fundayFacilitiesSection');
 
             if (noneBox.checked) {
+                // Uncheck only equipment items, not facilities
                 fundayEquipItems.forEach(item => {
                     item.checked = false;
                     item.closest('.equip-checkbox').classList.add('disabled');
                 });
                 noneLabel.classList.add('none-selected');
-                facilitiesSection.style.opacity = '0.4';
-                facilitiesSection.style.pointerEvents = 'none';
+
+                // Keep facilities section enabled - they can influence no-equipment game selection
+                const facilityCheckboxes = document.querySelectorAll('.funday-facility');
+                facilityCheckboxes.forEach(item => {
+                    item.closest('.equip-checkbox').classList.remove('disabled');
+                });
+
+                // Only dim the equipment section
+                const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
+                if (equipmentGrids.length > 1) {
+                    equipmentGrids[1].style.opacity = '0.4';
+                    equipmentGrids[1].style.pointerEvents = 'none';
+                }
             } else {
                 fundayEquipItems.forEach(item => {
                     item.closest('.equip-checkbox').classList.remove('disabled');
                 });
                 noneLabel.classList.remove('none-selected');
-                facilitiesSection.style.opacity = '1';
-                facilitiesSection.style.pointerEvents = 'auto';
+
+                const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
+                if (equipmentGrids.length > 1) {
+                    equipmentGrids[1].style.opacity = '1';
+                    equipmentGrids[1].style.pointerEvents = 'auto';
+                }
             }
             savePTGeneratorPreferences();
         }
@@ -1120,20 +1146,36 @@
         function fundayEquipChanged() {
             const noneBox = document.getElementById('fundayNoEquip');
             const noneLabel = document.getElementById('fundayNoneLabel');
-            const fundayEquipItems = document.querySelectorAll('.funday-equip, .funday-facility');
+            const fundayEquipItems = document.querySelectorAll('.funday-equip');
             const facilitiesSection = document.getElementById('fundayFacilitiesSection');
-            const anyChecked = Array.from(fundayEquipItems).some(item => item.checked);
+            const anyEquipmentChecked = Array.from(fundayEquipItems).some(item => item.checked);
 
-            if (anyChecked) {
+            if (anyEquipmentChecked) {
+                // Equipment selected, disable "No Equipment" mode
                 noneBox.checked = false;
                 noneLabel.classList.remove('none-selected');
-                facilitiesSection.style.opacity = '1';
-                facilitiesSection.style.pointerEvents = 'auto';
+
+                const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
+                if (equipmentGrids.length > 1) {
+                    equipmentGrids[1].style.opacity = '1';
+                    equipmentGrids[1].style.pointerEvents = 'auto';
+                }
             } else {
-                noneBox.checked = true;
-                noneLabel.classList.add('none-selected');
-                facilitiesSection.style.opacity = '0.4';
-                facilitiesSection.style.pointerEvents = 'none';
+                // No equipment selected - check if we should enable "No Equipment" mode
+                const facilityItems = document.querySelectorAll('.funday-facility');
+                const anyFacilityChecked = Array.from(facilityItems).some(item => item.checked);
+
+                // Only enable "No Equipment" mode if no facilities are selected either
+                if (!anyFacilityChecked) {
+                    noneBox.checked = true;
+                    noneLabel.classList.add('none-selected');
+
+                    const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
+                    if (equipmentGrids.length > 1) {
+                        equipmentGrids[1].style.opacity = '0.4';
+                        equipmentGrids[1].style.pointerEvents = 'none';
+                    }
+                }
             }
             savePTGeneratorPreferences();
         }
@@ -1515,7 +1557,27 @@
 
                 if (noEquipment) {
                     // Only show no-equipment games
-                    filteredActivities = fundayActivities.filter(activity => activity.noEquipment === true);
+                    const allNoEquipGames = fundayActivities.filter(activity => activity.noEquipment === true);
+
+                    // Check if any facilities are selected
+                    const selectedFacilities = Object.keys(selectedFundayEquip).filter(key =>
+                        ['openField', 'basketballCourt', 'volleyballCourt', 'baseballField', 'track'].includes(key) &&
+                        selectedFundayEquip[key]
+                    );
+
+                    if (selectedFacilities.length > 0) {
+                        // Prioritize games that match selected facilities
+                        const facilityMatchGames = allNoEquipGames.filter(activity =>
+                            activity.preferredFacility && selectedFacilities.includes(activity.preferredFacility)
+                        );
+                        const genericGames = allNoEquipGames.filter(activity => !activity.preferredFacility);
+
+                        // Combine: facility-specific games first, then generic games
+                        filteredActivities = [...facilityMatchGames, ...genericGames];
+                    } else {
+                        // No facilities selected, show all no-equipment games
+                        filteredActivities = allNoEquipGames;
+                    }
                 } else {
                     // Show games based on selected equipment
                     filteredActivities = fundayActivities.filter(activity => {
