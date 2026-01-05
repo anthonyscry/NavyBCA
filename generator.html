@@ -231,6 +231,18 @@
             transform: translateX(16px);
         }
 
+        .injury-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .injury-options .equip-checkbox {
+            font-size: 0.8em;
+            padding: 6px 10px;
+        }
+
         .equip-grid.disabled {
             opacity: 0.5;
         }
@@ -689,6 +701,17 @@
                         <span class="toggle-pill-track"></span>
                         <span class="toggle-pill-text">Low-impact alternatives</span>
                     </label>
+                    <div class="injury-options" id="injuryOptions" style="display:none;">
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryUpper"> Upper Body
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryLower"> Lower Body
+                        </label>
+                        <label class="equip-checkbox">
+                            <input type="checkbox" id="injuryBack"> Back
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -1368,6 +1391,11 @@
                 location: document.getElementById('locationSelect').value,
                 scheme: document.getElementById('schemeSelect').value,
                 lowImpact: document.getElementById('lowImpactToggle').checked,
+                injuries: {
+                    upper: document.getElementById('injuryUpper')?.checked || false,
+                    lower: document.getElementById('injuryLower')?.checked || false,
+                    back: document.getElementById('injuryBack')?.checked || false
+                },
                 equipment: {
                     none: document.getElementById('equipNone').checked,
                     adjBench: document.getElementById('equipAdjBench').checked,
@@ -1431,6 +1459,14 @@
                 }
                 if (preferences.lowImpact !== undefined) {
                     document.getElementById('lowImpactToggle').checked = preferences.lowImpact;
+                }
+                if (preferences.injuries) {
+                    const injuryUpper = document.getElementById('injuryUpper');
+                    const injuryLower = document.getElementById('injuryLower');
+                    const injuryBack = document.getElementById('injuryBack');
+                    if (injuryUpper) injuryUpper.checked = preferences.injuries.upper;
+                    if (injuryLower) injuryLower.checked = preferences.injuries.lower;
+                    if (injuryBack) injuryBack.checked = preferences.injuries.back;
                 }
                 if (preferences.equipment) {
                     Object.entries(preferences.equipment).forEach(([key, value]) => {
@@ -1565,6 +1601,15 @@
             }
         }
 
+        function updateInjuryOptionsVisibility() {
+            const injuryOptions = document.getElementById('injuryOptions');
+            const lowImpactToggle = document.getElementById('lowImpactToggle');
+            if (!injuryOptions || !lowImpactToggle) {
+                return;
+            }
+            injuryOptions.style.display = lowImpactToggle.checked ? 'flex' : 'none';
+        }
+
         function updateFundayFacilitiesForLocation() {
             const location = document.getElementById('locationSelect').value;
             const hideOutdoor = location === 'indoor';
@@ -1610,7 +1655,10 @@
             savePTGeneratorPreferences();
         });
         document.getElementById('schemeSelect').addEventListener('change', savePTGeneratorPreferences);
-        document.getElementById('lowImpactToggle').addEventListener('change', savePTGeneratorPreferences);
+        document.getElementById('lowImpactToggle').addEventListener('change', function() {
+            updateInjuryOptionsVisibility();
+            savePTGeneratorPreferences();
+        });
 
         // Add change listeners to all equipment checkboxes
         document.querySelectorAll('.equip-checkbox input[type="checkbox"]').forEach(checkbox => {
@@ -1621,6 +1669,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             loadPTGeneratorPreferences();
             updateFundayFacilitiesForLocation();
+            updateInjuryOptionsVisibility();
         });
 
         // --- Collapsible Section Toggle ---
@@ -1693,6 +1742,56 @@
             }
 
             return { strengthAlternatives, cardioAlternatives };
+        }
+
+        function getInjurySelections() {
+            return {
+                upper: document.getElementById('injuryUpper')?.checked || false,
+                lower: document.getElementById('injuryLower')?.checked || false,
+                back: document.getElementById('injuryBack')?.checked || false
+            };
+        }
+
+        function getExerciseGroup(exerciseName, isCardio) {
+            const name = exerciseName.toLowerCase();
+            if (isCardio) {
+                return 'lower';
+            }
+            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest'];
+            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust'];
+            const backKeywords = ['row', 'pull', 'deadlift', 'hinge', 'back', 'y-t-w', 'good morning'];
+
+            if (backKeywords.some(keyword => name.includes(keyword))) {
+                return 'back';
+            }
+            if (lowerKeywords.some(keyword => name.includes(keyword))) {
+                return 'lower';
+            }
+            if (upperKeywords.some(keyword => name.includes(keyword))) {
+                return 'upper';
+            }
+            return 'full';
+        }
+
+        function filterAlternativesByInjury(alternatives, injuries) {
+            return alternatives.filter(ex => {
+                const group = getExerciseGroup(ex.name, isCardioExercise(ex));
+                if (injuries.back && group === 'back') return false;
+                if (injuries.upper && group === 'upper') return false;
+                if (injuries.lower && group === 'lower') return false;
+                return true;
+            });
+        }
+
+        function pickAlternativeFromPool(pool, targetGroup, isCardio) {
+            if (!pool.length) {
+                return null;
+            }
+            const matchIndex = pool.findIndex(item => getExerciseGroup(item.name, isCardio) === targetGroup);
+            if (matchIndex >= 0) {
+                return pool.splice(matchIndex, 1)[0];
+            }
+            return pool.pop() || null;
         }
 
         function renderCollapsibleHeader(title, contentId, expanded = true) {
@@ -2003,16 +2102,24 @@
                 strengthAlternatives: [],
                 cardioAlternatives: []
             };
-            const shuffledStrengthAlternatives = lowImpactAlternatives.strengthAlternatives.sort(() => 0.5 - Math.random());
-            const shuffledCardioAlternatives = lowImpactAlternatives.cardioAlternatives.sort(() => 0.5 - Math.random());
+            const injuries = getInjurySelections();
+            const shuffledStrengthAlternatives = filterAlternativesByInjury(lowImpactAlternatives.strengthAlternatives, injuries)
+                .sort(() => 0.5 - Math.random());
+            const shuffledCardioAlternatives = filterAlternativesByInjury(lowImpactAlternatives.cardioAlternatives, injuries)
+                .sort(() => 0.5 - Math.random());
 
             selected.forEach(ex => {
                 const reps = getExerciseReps(ex, scheme);
-                const alternative = lowImpact
-                    ? (isCardioExercise(ex)
-                        ? (shuffledCardioAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)')
-                        : (shuffledStrengthAlternatives.pop()?.name || 'Scale impact (slow tempo, reduced range)'))
-                    : null;
+                const isCardio = isCardioExercise(ex);
+                const targetGroup = getExerciseGroup(ex.name, isCardio);
+                let alternative = null;
+                if (lowImpact) {
+                    const pool = isCardio ? shuffledCardioAlternatives : shuffledStrengthAlternatives;
+                    alternative = pickAlternativeFromPool(pool, targetGroup, isCardio)?.name || null;
+                    if (!alternative) {
+                        alternative = 'Scale impact (slow tempo, reduced range)';
+                    }
+                }
                 html += renderItem(ex.name, reps, ex.tip, alternative);
             });
             html += `</ul>`;
