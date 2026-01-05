@@ -150,10 +150,82 @@
         }
 
         .day-selector {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 10px;
+        }
+
+        .day-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+            align-items: center;
+            padding: 10px;
+            background: rgba(10, 22, 40, 0.5);
+            border-radius: 8px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: #e8eef5;
+            font-size: 14px;
+        }
+
+        .day-type-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .day-type-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            border-radius: 6px;
+            color: #8fa3bf;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .day-type-btn.active {
+            border-width: 2px;
+        }
+
+        .day-type-btn.pt.active {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .day-type-btn.fep.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .day-type-btn.none.active {
+            background: rgba(100, 116, 139, 0.2);
+            border-color: #64748b;
+            color: #64748b;
+        }
+
+        .location-manager {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .location-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .location-input-row input {
+            flex: 1;
         }
 
         .day-checkbox {
@@ -355,6 +427,11 @@
             border: 2px solid rgba(34, 197, 94, 0.5);
         }
 
+        .calendar-day.fep-day {
+            background: rgba(59, 130, 246, 0.15);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+        }
+
         .day-number {
             font-weight: 700;
             color: #ffd700;
@@ -547,6 +624,11 @@
                 border: 2px solid #00aa00 !important;
             }
 
+            .calendar-day.fep-day {
+                background: #e0e0ff !important;
+                border: 2px solid #0000aa !important;
+            }
+
             .day-number {
                 color: black !important;
             }
@@ -616,6 +698,10 @@
                 border-left: 4px solid rgba(34, 197, 94, 0.8);
             }
 
+            .calendar-day.fep-day {
+                border-left: 4px solid rgba(59, 130, 246, 0.8);
+            }
+
             .calendar-day.holiday {
                 border-left: 4px solid rgba(239, 68, 68, 0.8);
             }
@@ -653,15 +739,6 @@
 
         <main class="calculator-card">
             <div class="form-group">
-                <label>PT Type</label>
-                <div class="type-selector">
-                    <button class="type-btn active" onclick="setPTType('pt')">Command PT</button>
-                    <button class="type-btn" onclick="setPTType('fep')">FEP</button>
-                </div>
-                <p class="hint">PT defaults to M/W/F, FEP defaults to T/Th</p>
-            </div>
-
-            <div class="form-group">
                 <label>Select Month and Year</label>
                 <div class="row">
                     <select id="monthSelect">
@@ -685,38 +762,96 @@
             </div>
 
             <div class="form-group">
-                <label>PT Days of the Week</label>
+                <label>Schedule Days of the Week</label>
                 <div class="day-selector">
-                    <label class="day-checkbox" id="day-mon">
-                        <input type="checkbox" value="1" onchange="toggleDay('mon')">
-                        <span>Mon</span>
-                    </label>
-                    <label class="day-checkbox" id="day-tue">
-                        <input type="checkbox" value="2" onchange="toggleDay('tue')">
-                        <span>Tue</span>
-                    </label>
-                    <label class="day-checkbox" id="day-wed">
-                        <input type="checkbox" value="3" onchange="toggleDay('wed')">
-                        <span>Wed</span>
-                    </label>
-                    <label class="day-checkbox" id="day-thu">
-                        <input type="checkbox" value="4" onchange="toggleDay('thu')">
-                        <span>Thu</span>
-                    </label>
-                    <label class="day-checkbox" id="day-fri">
-                        <input type="checkbox" value="5" onchange="toggleDay('fri')">
-                        <span>Fri</span>
-                    </label>
-                    <label class="day-checkbox" id="day-sat">
-                        <input type="checkbox" value="6" onchange="toggleDay('sat')">
-                        <span>Sat</span>
-                    </label>
-                    <label class="day-checkbox" id="day-sun">
-                        <input type="checkbox" value="0" onchange="toggleDay('sun')">
-                        <span>Sun</span>
-                    </label>
+                    <div class="day-row">
+                        <div class="day-name">Monday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('mon', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('mon', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('mon', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Tuesday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('tue', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('tue', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('tue', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Wednesday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('wed', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('wed', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('wed', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Thursday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('thu', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('thu', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('thu', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Friday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('fri', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('fri', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('fri', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Saturday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('sat', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('sat', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('sat', 'none')">None</button>
+                        </div>
+                    </div>
+                    <div class="day-row">
+                        <div class="day-name">Sunday</div>
+                        <div class="day-type-selector">
+                            <button class="day-type-btn pt" onclick="setDayType('sun', 'pt')">PT</button>
+                            <button class="day-type-btn fep" onclick="setDayType('sun', 'fep')">FEP</button>
+                            <button class="day-type-btn none active" onclick="setDayType('sun', 'none')">None</button>
+                        </div>
+                    </div>
                 </div>
-                <p class="hint">Select which days of the week PT will be held</p>
+                <p class="hint">Set PT for M/W/F and FEP for T/Th, or customize as needed</p>
+            </div>
+
+            <div class="form-group">
+                <label>Default PT Time</label>
+                <select id="defaultTime">
+                    <option value="05:30">0530</option>
+                    <option value="06:00" selected>0600</option>
+                    <option value="06:30">0630</option>
+                    <option value="07:00">0700</option>
+                    <option value="11:30">1130</option>
+                    <option value="15:00">1500</option>
+                </select>
+                <p class="hint">This will be the default time selected for all PT sessions</p>
+            </div>
+
+            <div class="form-group">
+                <label>Location Options</label>
+                <div class="location-manager" id="locationManager">
+                    <div class="location-input-row">
+                        <input type="text" value="Base Gym" readonly style="background: rgba(10, 22, 40, 0.5);">
+                    </div>
+                    <div class="location-input-row">
+                        <input type="text" value="Track" readonly style="background: rgba(10, 22, 40, 0.5);">
+                    </div>
+                </div>
+                <div class="location-input-row">
+                    <input type="text" id="newLocation" placeholder="Add custom location (e.g., Pool, Field)">
+                    <button class="btn-add" onclick="addLocation()" style="width: auto; padding: 12px 24px;">+ Add</button>
+                </div>
+                <p class="hint">Add custom locations to appear in dropdown menus</p>
             </div>
 
             <div class="form-group">
@@ -797,8 +932,17 @@
             ]
         };
 
-        let currentPTType = 'pt';
         let ptSchedule = [];
+        let dayTypes = {
+            sun: 'none',
+            mon: 'pt',      // Default M/W/F for PT
+            tue: 'fep',     // Default T/Th for FEP
+            wed: 'pt',
+            thu: 'fep',
+            fri: 'pt',
+            sat: 'none'
+        };
+        let customLocations = [];
 
         // Populate year selector (2026-2027 only)
         const yearSelect = document.getElementById('yearSelect');
@@ -816,50 +960,77 @@
         // Set current month as default
         document.getElementById('monthSelect').value = currentMonth;
 
-        // Set default PT days (M/W/F)
-        setPTType('pt');
+        // Initialize default day types (M/W/F for PT, T/Th for FEP)
+        ['mon', 'wed', 'fri'].forEach(day => {
+            setDayType(day, 'pt', true);
+        });
+        ['tue', 'thu'].forEach(day => {
+            setDayType(day, 'fep', true);
+        });
 
-        function setPTType(type) {
-            currentPTType = type;
+        function setDayType(day, type, init = false) {
+            dayTypes[day] = type;
 
             // Update button states
-            document.querySelectorAll('.type-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Clear all day selections
-            ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach(day => {
-                const checkbox = document.getElementById(`day-${day}`);
-                checkbox.querySelector('input').checked = false;
-                checkbox.classList.remove('selected');
-            });
-
-            // Set default days based on type
-            if (type === 'pt') {
-                // M/W/F
-                ['mon', 'wed', 'fri'].forEach(day => {
-                    const checkbox = document.getElementById(`day-${day}`);
-                    checkbox.querySelector('input').checked = true;
-                    checkbox.classList.add('selected');
+            const dayRow = document.querySelector(`.day-row:has(.day-name:contains("${day}"))`);
+            if (!dayRow) {
+                // Find by day name
+                const dayNames = {mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday'};
+                const rows = document.querySelectorAll('.day-row');
+                rows.forEach(row => {
+                    if (row.querySelector('.day-name').textContent === dayNames[day]) {
+                        row.querySelectorAll('.day-type-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.classList.contains(type)) {
+                                btn.classList.add('active');
+                            }
+                        });
+                    }
                 });
-            } else {
-                // T/Th
-                ['tue', 'thu'].forEach(day => {
-                    const checkbox = document.getElementById(`day-${day}`);
-                    checkbox.querySelector('input').checked = true;
-                    checkbox.classList.add('selected');
-                });
+                return;
             }
+
+            dayRow.querySelectorAll('.day-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.classList.contains(type)) {
+                    btn.classList.add('active');
+                }
+            });
         }
 
-        function toggleDay(day) {
-            const checkbox = document.getElementById(`day-${day}`);
-            if (checkbox.querySelector('input').checked) {
-                checkbox.classList.add('selected');
-            } else {
-                checkbox.classList.remove('selected');
+        function addLocation() {
+            const newLocationInput = document.getElementById('newLocation');
+            const location = newLocationInput.value.trim();
+
+            if (!location) {
+                alert('Please enter a location name');
+                return;
             }
+
+            // Check if already exists
+            if (customLocations.includes(location) || location === 'Base Gym' || location === 'Track') {
+                alert('This location already exists');
+                return;
+            }
+
+            customLocations.push(location);
+
+            // Add to location manager display
+            const locationManager = document.getElementById('locationManager');
+            const newRow = document.createElement('div');
+            newRow.className = 'location-input-row';
+            newRow.innerHTML = `
+                <input type="text" value="${location}" readonly style="background: rgba(10, 22, 40, 0.5);">
+                <button class="btn-remove" onclick="removeLocation('${location}', this)">Remove</button>
+            `;
+            locationManager.appendChild(newRow);
+
+            newLocationInput.value = '';
+        }
+
+        function removeLocation(location, button) {
+            customLocations = customLocations.filter(loc => loc !== location);
+            button.parentElement.remove();
         }
 
         function addCFL() {
@@ -893,18 +1064,14 @@
             // Get inputs
             const month = parseInt(document.getElementById('monthSelect').value);
             const year = parseInt(document.getElementById('yearSelect').value);
+            const defaultTime = document.getElementById('defaultTime').value;
 
-            // Get selected days
-            const selectedDays = [];
-            ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].forEach((day, index) => {
-                const checkbox = document.getElementById(`day-${day}`).querySelector('input');
-                if (checkbox.checked) {
-                    selectedDays.push(index);
-                }
-            });
+            // Get days with PT or FEP
+            const dayTypeMap = {0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu', 5: 'fri', 6: 'sat'};
+            const activeDays = Object.entries(dayTypes).filter(([day, type]) => type !== 'none');
 
-            if (selectedDays.length === 0) {
-                alert('Please select at least one PT day');
+            if (activeDays.length === 0) {
+                alert('Please select at least one PT or FEP day');
                 return;
             }
 
@@ -919,40 +1086,51 @@
                 return;
             }
 
-            // Generate PT schedule
+            // Generate PT/FEP schedule
             ptSchedule = [];
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const firstDay = new Date(year, month, 1).getDay();
+            const defaultLocation = customLocations.length > 0 ? customLocations[0] : 'Base Gym';
             let cflIndex = 0;
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
                 const dayOfWeek = date.getDay();
+                const dayName = dayTypeMap[dayOfWeek];
+                const dayType = dayTypes[dayName];
                 const holiday = isHoliday(date);
 
-                // Only add PT if it's a selected day and NOT a holiday
-                if (selectedDays.includes(dayOfWeek) && !holiday) {
+                // Only add session if it's a PT/FEP day and NOT a holiday
+                if (dayType !== 'none' && !holiday) {
                     ptSchedule.push({
                         date: date,
                         day: day,
                         dayOfWeek: dayOfWeek,
+                        type: dayType,  // 'pt' or 'fep'
                         cfl: cflRoster[cflIndex % cflRoster.length],
-                        time: '06:00',
+                        time: defaultTime,
                         location: 'Base Gym'
                     });
                     cflIndex++;
                 }
             }
 
+            // Build location options
+            const allLocations = ['Base Gym', 'Track', ...customLocations];
+
             // Build calendar
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+            // Count PT vs FEP sessions
+            const ptCount = ptSchedule.filter(s => s.type === 'pt').length;
+            const fepCount = ptSchedule.filter(s => s.type === 'fep').length;
+
             let calendarHTML = `
                 <div class="watchbill-header">
-                    <h2>${monthNames[month]} ${year} - ${currentPTType.toUpperCase()} Watchbill</h2>
-                    <p>Total Sessions: ${ptSchedule.length}</p>
+                    <h2>${monthNames[month]} ${year} - PT/FEP Watchbill</h2>
+                    <p>Total Sessions: ${ptSchedule.length} (PT: ${ptCount}, FEP: ${fepCount})</p>
                 </div>
 
                 <div class="calendar-grid">
@@ -986,32 +1164,41 @@
                         <div class="pt-info" style="color: #ef4444;">No PT - Federal Holiday</div>
                     `;
                 } else if (ptSession) {
-                    dayClass += ' pt-day';
+                    // Add appropriate class based on session type
+                    dayClass += ptSession.type === 'pt' ? ' pt-day' : ' fep-day';
                     const sessionIndex = ptSchedule.indexOf(ptSession);
+                    const sessionLabel = ptSession.type === 'pt' ? 'Command PT' : 'FEP';
+                    const sessionColor = ptSession.type === 'pt' ? '#22c55e' : '#3b82f6';
+
+                    // Build time options with default selected
+                    const timeOptions = ['05:30', '06:00', '06:30', '07:00', '11:30', '15:00'].map(time => {
+                        const selected = time === ptSession.time ? 'selected' : '';
+                        const display = time.replace(':', '');
+                        return `<option value="${time}" ${selected}>${display}</option>`;
+                    }).join('');
+
+                    // Build location options with default selected
+                    const locationOptions = allLocations.map(loc => {
+                        const selected = loc === ptSession.location ? 'selected' : '';
+                        return `<option value="${loc}" ${selected}>${loc}</option>`;
+                    }).join('');
+
                     dayContent = `
                         <div class="day-number" data-day-name="${fullDayNames[dayOfWeek]}">${day}</div>
                         <div class="pt-info">
-                            <strong>PT Session</strong>
+                            <strong style="color: ${sessionColor};">${sessionLabel}</strong>
                             <div>
                                 Time: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'time', this.value)">
-                                    <option value="05:30">0530</option>
-                                    <option value="06:00" selected>0600</option>
-                                    <option value="06:30">0630</option>
-                                    <option value="07:00">0700</option>
-                                    <option value="11:30">1130</option>
-                                    <option value="15:00">1500</option>
+                                    ${timeOptions}
                                 </select>
                             </div>
                             <div>
                                 Location: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'location', this.value)">
-                                    <option value="Base Gym" selected>Base Gym</option>
-                                    <option value="Track">Track</option>
-                                    <option value="Field">Field</option>
-                                    <option value="Custom">Custom</option>
+                                    ${locationOptions}
                                 </select>
                             </div>
                             <div>
-                                CFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
+                                CFL/ACFL: <select class="editable-field" onchange="updateSession(${sessionIndex}, 'cfl', this.value)">
                                     ${cflRoster.map(cfl => `<option value="${cfl}" ${cfl === ptSession.cfl ? 'selected' : ''}>${cfl}</option>`).join('')}
                                 </select>
                             </div>
