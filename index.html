@@ -1937,7 +1937,6 @@
                 bcaTables.female = parseBcaTable(femaleCsv);
                 bcaTablesLoaded = true;
                 hideLoading();
-                showNotification('BCA data loaded successfully', 'success');
             } catch (error) {
                 console.error('Failed to load BCA tables:', error);
                 hideLoading();
