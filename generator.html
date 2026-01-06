@@ -176,7 +176,7 @@
             flex: 1 1 140px;
         }
 
-        .funday-none-toggle-row {
+        .left-toggle-row {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -185,11 +185,11 @@
             justify-content: flex-start;
         }
 
-        .funday-none-toggle-row .group-title {
+        .left-toggle-row .group-title {
             flex: 0 0 auto;
         }
 
-        .funday-none-toggle-row .toggle-pill {
+        .left-toggle-row .toggle-pill {
             width: auto;
             padding: 6px 10px;
         }
@@ -953,7 +953,7 @@
                 <label>Available Equipment/Facilities for Fun Day</label>
 
                 <!-- No Equipment Option -->
-                <div class="funday-none-toggle-row">
+                <div class="left-toggle-row">
                     <span class="group-title">No Equipment Mode</span>
                     <label class="toggle-pill" id="fundayNoneLabel">
                         <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()">
@@ -1042,7 +1042,7 @@
 
             <div class="form-group" id="equipmentGroup">
                 <label>Equipment Available</label>
-                <div class="group-header" style="margin-bottom: 12px;">
+                <div class="left-toggle-row">
                     <span class="group-title">No Equipment</span>
                     <label class="toggle-pill" id="equipNoneLabel">
                         <input type="checkbox" id="equipNone" checked onchange="toggleNone()">
