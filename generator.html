@@ -549,6 +549,24 @@
             }
         }
 
+        /* Skip to Content Link - Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #ffd700;
+            color: #0a1628;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -635,6 +653,9 @@
 </head>
 
 <body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div class="container">
         <!-- Top Ad Banner -->
         <div class="ad-container">
@@ -651,7 +672,7 @@
             <p class="subtitle">Command Physical Training Session Builder</p>
         </header>
 
-        <main class="calculator-card">
+        <main id="main-content" class="calculator-card">
             <!-- PPAQ Section - Always Visible for CFLs -->
             <div class="ppaq-section">
                 <div class="ppaq-title">📋 Pre-Physical Activity Questions (PPAQ)</div>
