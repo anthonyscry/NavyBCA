@@ -339,6 +339,11 @@
             color: #27ae60;
         }
 
+        .tag-core {
+            background: rgba(155, 89, 182, 0.2);
+            color: #caa5e9;
+        }
+
         .exercise-tip {
             font-size: 0.9em;
             color: #8fa3bf;
@@ -928,7 +933,8 @@
                         equipment: equipment,
                         type: 'strength',
                         mode: 'standard',
-                        bodyPart: getBodyPart(ex.name)
+                        bodyPart: getBodyPart(ex.name),
+                        isCore: isCoreExercise(ex.name)
                     });
                 });
             });
@@ -941,7 +947,8 @@
                         equipment: equipment,
                         type: 'cardio',
                         mode: 'standard',
-                        bodyPart: 'lower'
+                        bodyPart: 'lower',
+                        isCore: isCoreExercise(ex.name)
                     });
                 });
             });
@@ -959,7 +966,8 @@
                             equipment: equipment,
                             type: 'strength',
                             mode: 'lowImpact',
-                            bodyPart: getBodyPart(ex.name)
+                            bodyPart: getBodyPart(ex.name),
+                            isCore: isCoreExercise(ex.name)
                         });
                     }
                 });
@@ -977,7 +985,8 @@
                             equipment: equipment,
                             type: 'cardio',
                             mode: 'lowImpact',
-                            bodyPart: 'lower'
+                            bodyPart: 'lower',
+                            isCore: isCoreExercise(ex.name)
                         });
                     }
                 });
@@ -996,6 +1005,31 @@
                 return 'upper';
             }
             return 'full';
+        }
+
+        function isCoreExercise(exerciseName) {
+            const coreKeywords = [
+                'plank',
+                'pillar bridge',
+                'hollow',
+                'v-up',
+                'crunch',
+                'flutter',
+                'bicycle',
+                'dead bug',
+                'bird dog',
+                'leg raise',
+                'knee raise',
+                'toes to bar',
+                'windshield',
+                'pallof',
+                'woodchop',
+                'l-sit',
+                'seated twist',
+                'mountain climber'
+            ];
+            const name = exerciseName.toLowerCase();
+            return coreKeywords.some(keyword => name.includes(keyword));
         }
 
         function getEquipmentLabel(equip) {
@@ -1121,6 +1155,7 @@
                         <div class="exercise-tags">
                             <span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.equipment)}</span>
                             <span class="exercise-tag tag-body-part">${ex.type === 'cardio' ? 'Cardio' : getBodyPartLabel(ex.bodyPart)}</span>
+                            ${ex.isCore ? '<span class="exercise-tag tag-core">Core</span>' : ''}
                             ${ex.mode === 'lowImpact' || ex.hasLowImpact ? '<span class="exercise-tag tag-low-impact">Low Impact</span>' : ''}
                         </div>
                         <p class="exercise-tip">${ex.tip}</p>

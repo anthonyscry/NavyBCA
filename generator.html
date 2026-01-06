@@ -140,9 +140,37 @@
 
         .controls-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
             margin-bottom: 25px;
+        }
+
+        .controls-grid .form-group {
+            background: rgba(10, 20, 36, 0.65);
+            border: 1px solid rgba(74, 144, 226, 0.25);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .controls-grid .form-group label {
+            margin-bottom: 8px;
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .group-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8fa3bf;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .equip-grid {
@@ -187,11 +215,27 @@
         .toggle-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            gap: 10px;
             font-size: 0.85em;
             color: #dfe7f3;
             cursor: pointer;
             user-select: none;
+            width: 100%;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(100, 130, 180, 0.35);
+            background: rgba(15, 25, 40, 0.45);
+        }
+
+        .group-header .toggle-pill {
+            width: auto;
+            padding: 6px 12px;
+        }
+
+        .toggle-pill-text {
+            letter-spacing: 0.4px;
+            text-transform: none;
         }
 
         .toggle-pill input {
@@ -233,7 +277,7 @@
 
         .injury-options {
             display: grid;
-            grid-template-columns: repeat(3, minmax(120px, 1fr));
+            grid-template-columns: repeat(2, minmax(140px, 1fr));
             gap: 8px;
             margin-top: 10px;
         }
@@ -241,6 +285,22 @@
         .injury-options .equip-checkbox {
             font-size: 0.8em;
             padding: 6px 10px;
+        }
+
+        .injury-options p {
+            grid-column: 1 / -1;
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: #8fa3bf;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .helper-text.tight {
+            margin: 8px 0 10px;
+            font-style: italic;
         }
 
         .equip-grid.disabled {
@@ -434,6 +494,32 @@
         .exercise-meta {
             font-size: 0.9em;
             color: #8fa3bf;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exercise-meta .meta-text {
+            font-weight: 600;
+            color: #8fa3bf;
+        }
+
+        .exercise-meta .meta-pill {
+            font-size: 0.65em;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(74, 144, 226, 0.15);
+            border: 1px solid rgba(74, 144, 226, 0.4);
+            color: #cfe2ff;
+        }
+
+        .exercise-meta .meta-pill.core {
+            background: rgba(255, 215, 0, 0.12);
+            border-color: rgba(255, 215, 0, 0.6);
+            color: #ffd700;
         }
 
         .search-link {
@@ -729,14 +815,16 @@
                     </select>
                 </div>
                 <div class="form-group" id="lowImpactGroup">
-                    <label>Low Impact / Injured Mode</label>
-                    <label class="toggle-pill">
-                        <input type="checkbox" id="lowImpactToggle">
-                        <span class="toggle-pill-track"></span>
-                        <span class="toggle-pill-text">Low-impact alternatives</span>
-                    </label>
+                    <div class="group-header">
+                        <span class="group-title">Low Impact / Injured Mode</span>
+                        <label class="toggle-pill">
+                            <input type="checkbox" id="lowImpactToggle">
+                            <span class="toggle-pill-track"></span>
+                            <span class="toggle-pill-text">Low-impact alternatives</span>
+                        </label>
+                    </div>
                     <div class="injury-options" id="injuryOptions" style="display:none;">
-                        <p style="font-size: 12px; color: #6b7c94; margin: 8px 0 10px 0; font-style: italic;">
+                        <p class="helper-text tight">
                             Select your injured area. Those exercises will be replaced with alternatives.
                         </p>
                         <label class="equip-checkbox injury-select">
@@ -749,13 +837,15 @@
                 </div>
 
                 <div class="form-group" id="warmupStyleGroup">
-                    <label>Warm-Up Style</label>
-                    <label class="toggle-pill">
-                        <input type="checkbox" id="randomWarmupToggle">
-                        <span class="toggle-pill-track"></span>
-                        <span class="toggle-pill-text">Randomize warm-up exercises</span>
-                    </label>
-                    <p style="font-size: 11px; color: #6b7c94; margin-top: 5px;">
+                    <div class="group-header">
+                        <span class="group-title">Warm-Up Style</span>
+                        <label class="toggle-pill">
+                            <input type="checkbox" id="randomWarmupToggle">
+                            <span class="toggle-pill-track"></span>
+                            <span class="toggle-pill-text">Randomize warm-up exercises</span>
+                        </label>
+                    </div>
+                    <p class="helper-text">
                         Standard uses official Navy NOFFS warm-up sequence. Random picks varied exercises each session.
                     </p>
                 </div>
@@ -1893,6 +1983,31 @@
             return plankKeywords.some(keyword => name.toLowerCase().includes(keyword));
         }
 
+        function isCoreExercise(name) {
+            const coreKeywords = [
+                'plank',
+                'pillar bridge',
+                'hollow',
+                'v-up',
+                'crunch',
+                'flutter',
+                'bicycle',
+                'dead bug',
+                'bird dog',
+                'leg raise',
+                'knee raise',
+                'toes to bar',
+                'windshield',
+                'pallof',
+                'woodchop',
+                'l-sit',
+                'seated twist',
+                'mountain climber'
+            ];
+            const lowerName = name.toLowerCase();
+            return coreKeywords.some(keyword => lowerName.includes(keyword));
+        }
+
         function isCardioExercise(exercise) {
             return exercise.reps !== undefined;
         }
@@ -1905,12 +2020,16 @@
                         <span class="exercise-alt-name">${alternative}</span>
                    </div>`
                 : '';
+            const coreTag = isCoreExercise(name) ? '<span class="meta-pill core">Core</span>' : '';
             return `
                 <li class="exercise-item">
                     <div class="exercise-row">
                         <div class="exercise-main">
                             <span class="exercise-name">${name}</span>
-                            <div class="exercise-meta">${meta}</div>
+                            <div class="exercise-meta">
+                                <span class="meta-text">${meta}</span>
+                                ${coreTag}
+                            </div>
                         </div>
                         ${altHtml}
                     </div>${tipHtml}
