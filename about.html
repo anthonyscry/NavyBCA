@@ -249,10 +249,31 @@
             color: #6b7c94;
             padding: 0 4px;
         }
+
+        /* Skip to Content Link - Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #ffd700;
+            color: #0a1628;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div class="container">
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
@@ -268,7 +289,7 @@
             <p class="subtitle">A Retired Sailor's Quest to Never Plan Another Burpee</p>
         </header>
 
-        <main class="content-card">
+        <main id="main-content" class="content-card">
             <h2>About This Site</h2>
 
             <p>

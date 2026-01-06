@@ -203,10 +203,31 @@
             color: #6b7c94;
             padding: 0 4px;
         }
+
+        /* Skip to Content Link - Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #ffd700;
+            color: #0a1628;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div class="container">
         <!-- Top Ad Banner -->
         <div class="ad-container">
@@ -223,7 +244,7 @@
             <p class="subtitle">Navy Physical Readiness Program Resources & Guides</p>
         </header>
 
-        <div class="card">
+        <div id="main-content" class="card">
             <h2>Core Regulations & Official Sites</h2>
             <ul>
                 <li>
