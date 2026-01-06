@@ -258,7 +258,8 @@ li {
 
 .content-card,
 .section-card,
-.info-section {
+.info-section,
+.card {
     padding: 32px;
     margin-bottom: 28px;
 }
