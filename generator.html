@@ -867,6 +867,9 @@
                         <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()"> Treadmill
                     </label>
                     <label class="equip-checkbox">
+                        <input type="checkbox" class="equip-item" id="equipSwimming" onchange="equipChanged()"> Swimming Pool
+                    </label>
+                    <label class="equip-checkbox">
                         <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
                     </label>
                 </div>
@@ -941,7 +944,17 @@
             { name: "Heel-to-Glute w/ Reach", rep: "5 reps/side" },
             { name: "Squats", rep: "10 reps" },
             { name: "Drop Squat to 2-inch Run", rep: "2 reps (3s run)" },
-            { name: "Drop Squat to High Knees", rep: "2 reps (3s high knees)" }
+            { name: "Drop Squat to High Knees", rep: "2 reps (3s high knees)" },
+            { name: "Arm Circles", rep: "10 forward, 10 backward" },
+            { name: "Neck Rolls", rep: "5 each direction" },
+            { name: "Hip Circles", rep: "10 each direction" },
+            { name: "Leg Swings (Front/Back)", rep: "10 reps/side" },
+            { name: "Leg Swings (Side/Side)", rep: "10 reps/side" },
+            { name: "World's Greatest Stretch", rep: "5 reps/side" },
+            { name: "Cat-Cow", rep: "10 reps" },
+            { name: "Thoracic Rotation", rep: "8 reps/side" },
+            { name: "Ankle Circles", rep: "10 each direction" },
+            { name: "Toy Soldiers", rep: "10 reps/side" }
         ];
 
         const preCardioWarmup = [
@@ -973,15 +986,37 @@
                     { name: "Diamond Pushups", tip: "Hands form diamond under chest. Triceps focus. Modify on knees if needed." },
                     { name: "Hand-Release Pushups", tip: "Chest touches deck, lift hands, then push. Full range of motion." },
                     { name: "Decline Pushups", tip: "Feet elevated. Increases shoulder and upper chest activation." },
+                    { name: "Pike Pushups", tip: "Hips high, body in inverted V. Press head toward deck. Shoulder focus." },
+                    { name: "Archer Pushups", tip: "One arm extended to side, other arm does the work. Advanced unilateral strength." },
+                    { name: "Hindu Pushups", tip: "Flow from downward dog to cobra. Great for flexibility and strength." },
+                    { name: "Clapping Pushups", tip: "Explosive push, clap at top, soft landing. Power builder. Advanced only." },
+                    { name: "Spiderman Pushups", tip: "Bring knee to elbow as you descend. Core and hip mobility." },
                     { name: "Standard Plank", tip: "Straight line ear to ankle. Don't sag hips. Engage core." },
                     { name: "Side Plank (L/R)", tip: "Stack feet or stagger. Keep hips high. Feel obliques working." },
+                    { name: "Plank Shoulder Taps", tip: "In plank, tap opposite shoulder. Keep hips stable. Anti-rotation." },
+                    { name: "Plank Up-Downs", tip: "Plank to pushup position and back. Control the movement." },
                     { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat. Core stability." },
                     { name: "Dead Bug", tip: "Press low back into deck. Move slow and controlled." },
+                    { name: "Hollow Body Hold", tip: "Lower back pressed to deck, arms and legs extended. Core killer." },
+                    { name: "V-Ups", tip: "Simultaneously lift legs and torso to form V. Control descent." },
+                    { name: "Bicycle Crunches", tip: "Opposite elbow to knee, rotate through core. Slow and controlled." },
+                    { name: "Flutter Kicks", tip: "Lower back pressed down, alternate kicking legs. Core and hip flexors." },
                     { name: "Air Squats", tip: "Weight in heels, knees track toes. Thighs parallel. Core tight." },
                     { name: "Walking Lunges", tip: "Chest up, front knee behind toes. Feel glutes and quads." },
+                    { name: "Reverse Lunges", tip: "Step backward into lunge. More knee-friendly than forward lunges." },
+                    { name: "Lateral Lunges", tip: "Step to side, sit back into hip. Inner thigh and glutes." },
+                    { name: "Split Squats", tip: "Feet staggered, lower straight down. Keep front knee behind toes." },
+                    { name: "Jump Squats", tip: "Explosive jump from squat position. Land soft, reset, repeat." },
+                    { name: "Box Jumps (Step-up Alternative)", tip: "Jump onto elevated surface. Step down to protect knees." },
+                    { name: "Single-Leg RDL", tip: "Balance on one leg, hinge forward. Hamstring and balance." },
                     { name: "Calf Raises", tip: "Full extension at top, slow lower. Feel the burn in calves." },
                     { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Quads should burn." },
-                    { name: "Glute Bridges", tip: "Squeeze glutes at top. Don't hyperextend back." }
+                    { name: "Glute Bridges", tip: "Squeeze glutes at top. Don't hyperextend back." },
+                    { name: "Single-Leg Glute Bridge", tip: "One leg extended, drive through planted heel. Unilateral strength." },
+                    { name: "Superman Hold", tip: "Lie face down, lift arms and legs. Lower back and glutes." },
+                    { name: "Prone Cobra", tip: "Face down, arms at sides, lift chest. Squeeze shoulder blades." },
+                    { name: "Squat Hold", tip: "Hold bottom of squat position. Build endurance and mobility." },
+                    { name: "Inchworms", tip: "Walk hands out to plank, walk feet to hands. Full body mobility." }
                 ],
                 bands: [
                     { name: "Band Pull-Aparts", tip: "Arms straight, squeeze shoulder blades together. Upper back." },
@@ -990,28 +1025,74 @@
                     { name: "Band Squats", tip: "Band above knees pushes them out. Focus on glute engagement." },
                     { name: "Band Rows", tip: "Pull to ribcage, squeeze shoulder blades. Feel upper back." },
                     { name: "Band Tricep Extensions", tip: "Keep elbows high and stable. Squeeze at extension." },
-                    { name: "Band Lateral Walks", tip: "Stay low in squat. Feel glute medius on outer hip." }
+                    { name: "Band Lateral Walks", tip: "Stay low in squat. Feel glute medius on outer hip." },
+                    { name: "Band Face Pulls", tip: "Pull to face, elbows high. Rear delts and rotator cuff." },
+                    { name: "Band Chest Press", tip: "Anchor behind, press forward. Chest and triceps." },
+                    { name: "Band Pallof Press", tip: "Resist rotation, press away from body. Core anti-rotation." },
+                    { name: "Band Good Mornings", tip: "Band on shoulders, hinge at hips. Hamstrings and glutes." },
+                    { name: "Band Deadlifts", tip: "Stand on band, hinge and drive up. Hip hinge pattern." },
+                    { name: "Band Monster Walks", tip: "Band above knees, walk forward with wide steps. Glute activation." },
+                    { name: "Band Clamshells", tip: "Lying on side, open knees against band. Hip external rotators." },
+                    { name: "Band Woodchops", tip: "Rotate through core, low to high or high to low. Obliques." }
                 ],
                 pullup: [
                     { name: "Pull-ups", tip: "Overhand grip. Pull chest to bar, control down. Lats and back." },
                     { name: "Chin-ups", tip: "Underhand grip. More bicep involvement. Chin over bar." },
                     { name: "Negative Pull-ups", tip: "Jump to top, lower slow (3-5 sec). Build pulling strength." },
+                    { name: "Wide-Grip Pull-ups", tip: "Hands wider than shoulders. Emphasizes outer lats." },
+                    { name: "Close-Grip Pull-ups", tip: "Hands close together. More mid-back and bicep focus." },
+                    { name: "Commando Pull-ups", tip: "Hands staggered inline, alternate sides. Unilateral strength." },
+                    { name: "L-Sit Pull-ups", tip: "Hold legs at 90° while pulling. Core and grip intensive." },
                     { name: "Hanging Leg Raises", tip: "Legs together, no swinging. Core and hip flexors." },
-                    { name: "Dead Hangs", tip: "Relax shoulders, decompress spine. Grip strength builder." }
+                    { name: "Hanging Knee Raises", tip: "Knees to chest while hanging. Easier than leg raises." },
+                    { name: "Toes to Bar", tip: "Swing legs to touch bar. CrossFit standard. Requires kip." },
+                    { name: "Windshield Wipers", tip: "Legs up, rotate side to side. Advanced oblique work." },
+                    { name: "Dead Hangs", tip: "Relax shoulders, decompress spine. Grip strength builder." },
+                    { name: "Scapular Pull-ups", tip: "Hang and retract scapula only. Builds foundation for pull-ups." },
+                    { name: "Muscle-up Progressions", tip: "Pull high, transition over bar. Advanced movement." }
                 ],
                 kettlebells: [
                     { name: "Kettlebell Swings", tip: "Hinge at hips, not squat. Power from glutes. Arms are just hooks." },
+                    { name: "Single-Arm KB Swing", tip: "One arm at a time. Trains anti-rotation. Alternate sides." },
                     { name: "Goblet Squats", tip: "Hold KB at chest. Elbows inside knees. Deep squat." },
                     { name: "KB Deadlifts", tip: "Hinge at hips, flat back. Drive through heels." },
                     { name: "KB Rows", tip: "One arm at a time. Pull to hip, squeeze lat." },
-                    { name: "KB Lunges", tip: "Hold KB at chest or sides. Control the descent." }
+                    { name: "KB Lunges", tip: "Hold KB at chest or sides. Control the descent." },
+                    { name: "KB Clean", tip: "Swing to rack position. Keep bell close to body. Wrist neutral." },
+                    { name: "KB Press", tip: "From rack, press overhead. Keep core tight." },
+                    { name: "KB Clean and Press", tip: "Combine clean and press in one fluid motion. Full body power." },
+                    { name: "KB Turkish Get-Up", tip: "Lie to stand with KB overhead. Mobility and stability. Go slow!" },
+                    { name: "KB Snatch", tip: "Swing to overhead in one motion. Power and coordination." },
+                    { name: "KB Windmill", tip: "KB overhead, hinge to side. Hip and shoulder mobility." },
+                    { name: "KB Halo", tip: "Circle KB around head. Shoulder mobility and stability." },
+                    { name: "KB Figure 8", tip: "Pass KB around and between legs. Coordination and grip." },
+                    { name: "KB Farmer Carry", tip: "Walk with KBs at sides. Grip, core, and posture." },
+                    { name: "KB Rack Carry", tip: "KB in rack position, walk. Core anti-rotation." },
+                    { name: "KB Sumo Deadlift", tip: "Wide stance, KB between feet. Inner thighs and glutes." },
+                    { name: "KB Thruster", tip: "Squat to overhead press in one motion. Leg and shoulder power." }
                 ],
                 dumbbells: [
                     { name: "Dumbbell Rows", tip: "One hand on bench. Pull to hip, squeeze back." },
+                    { name: "Renegade Rows", tip: "Plank position, alternate rows. Core and back." },
                     { name: "DB Overhead Press", tip: "Start at shoulders, press straight up. Don't arch back." },
+                    { name: "Arnold Press", tip: "Rotate palms as you press. Full shoulder development." },
+                    { name: "DB Lateral Raises", tip: "Slight bend in elbows, raise to shoulder height. Side delts." },
+                    { name: "DB Front Raises", tip: "Alternating or together, raise to eye level. Front delts." },
+                    { name: "DB Rear Delt Flyes", tip: "Bent over, raise arms to sides. Rear delts and upper back." },
                     { name: "DB Lunges", tip: "DBs at sides. Step forward, control down and up." },
+                    { name: "DB Romanian Deadlift", tip: "DBs in front, hinge at hips. Hamstrings and glutes." },
                     { name: "DB Curls", tip: "No swinging. Elbows pinned. Full range of motion." },
-                    { name: "DB Tricep Extensions", tip: "One or both hands overhead. Lower behind head, extend." }
+                    { name: "Hammer Curls", tip: "Palms facing in. Targets brachialis and forearms." },
+                    { name: "Concentration Curls", tip: "Seated, elbow on thigh. Isolate the bicep." },
+                    { name: "DB Tricep Extensions", tip: "One or both hands overhead. Lower behind head, extend." },
+                    { name: "DB Skull Crushers", tip: "Lying down, lower to forehead. Tricep isolation." },
+                    { name: "DB Kickbacks", tip: "Bent over, extend arm back. Squeeze tricep at top." },
+                    { name: "DB Thrusters", tip: "Squat to press in one motion. Full body power." },
+                    { name: "DB Farmer Carry", tip: "Walk with DBs at sides. Grip and core stability." },
+                    { name: "DB Goblet Squat", tip: "Hold one DB at chest, squat deep. Leg and core." },
+                    { name: "DB Step-Ups", tip: "DBs at sides, step onto box. Unilateral leg strength." },
+                    { name: "DB Pullover", tip: "Lying on bench, lower DB behind head. Lats and chest." },
+                    { name: "DB Shrugs", tip: "Heavy DBs, shrug shoulders to ears. Upper traps." }
                 ],
                 barbell: [
                     { name: "Barbell Deadlift", tip: "Hinge at hips, flat back. Bar close to body. Drive through heels." },
@@ -1136,6 +1217,14 @@
                     treadmill: [
                         { name: "Incline Walk", tip: "10-15% incline, moderate pace.", reps: "5-10 min", isFinisher: true },
                         { name: "Treadmill Intervals", tip: "1 min jog, 1 min walk. Adjust speed to comfort.", reps: "6-8 rounds" }
+                    ],
+                    swimming: [
+                        { name: "Easy Freestyle Laps", tip: "Relaxed pace, focus on form. Low impact on joints.", reps: "300-500m", isFinisher: true },
+                        { name: "Breaststroke Laps", tip: "Gentle stroke, easy on shoulders. Good recovery swim.", reps: "200-400m", isFinisher: true },
+                        { name: "Backstroke Laps", tip: "Shoulder-friendly, relaxed pace. Great for recovery.", reps: "200-300m" },
+                        { name: "Pool Walking/Jogging", tip: "Walk or jog in shallow end. Zero impact cardio.", reps: "10-15 min", isFinisher: true },
+                        { name: "Gentle Kick Laps", tip: "Easy flutter kick with board. Light leg work.", reps: "200-300m" },
+                        { name: "Treading Water (Relaxed)", tip: "Easy pace treading. Use eggbeater or scissor kick.", reps: "3-5 min" }
                     ]
                 }
             },
@@ -1197,6 +1286,22 @@
                     { name: "Incline Walk", tip: "10-15% incline, moderate pace. Great for glutes and calves.", reps: "5-10 min", isFinisher: true },
                     { name: "Treadmill Run", tip: "Steady pace jog. Focus on breathing rhythm.", reps: "5-10 min", isFinisher: true },
                     { name: "Incline Sprints", tip: "5-8% incline, sprint 20s, rest 40s. Power builder.", reps: "5-6 sprints" }
+                ],
+                swimming: [
+                    { name: "Freestyle Laps", tip: "Steady pace freestyle. Focus on smooth stroke and bilateral breathing.", reps: "500m steady", isFinisher: true },
+                    { name: "Freestyle Intervals", tip: "50m sprint, 20s rest. Maintain form at speed.", reps: "8-10 x 50m" },
+                    { name: "Freestyle Sprints", tip: "25m all-out effort, full recovery between.", reps: "6-8 x 25m" },
+                    { name: "Breaststroke Laps", tip: "Steady breaststroke. Good for active recovery or variety.", reps: "200-400m" },
+                    { name: "Backstroke Laps", tip: "Focus on hip rotation and steady kick. Shoulder-friendly option.", reps: "200-400m" },
+                    { name: "Mixed Stroke Pyramid", tip: "100m free, 75m breast, 50m back, 25m fly (or free). Build up and down.", reps: "500m total" },
+                    { name: "Kick Board Laps", tip: "Flutter kick with board. Builds leg endurance and kick power.", reps: "200-400m" },
+                    { name: "Pull Buoy Laps", tip: "Upper body focus. Keep legs still, power from arms.", reps: "200-400m" },
+                    { name: "Underwater Swim", tip: "Breath hold and streamline glide. Build lung capacity. Safety first!", reps: "4-6 x 15m" },
+                    { name: "Treading Water", tip: "Vertical in deep end. Hands out of water for challenge.", reps: "2-5 min continuous" },
+                    { name: "Combat Sidestroke (CSS)", tip: "Navy swim standard. Head low, efficient stroke. Practice breathing.", reps: "500m steady", isFinisher: true },
+                    { name: "CSS Intervals", tip: "100m CSS at goal pace, 30s rest. Build speed and efficiency.", reps: "5-8 x 100m" },
+                    { name: "Pool Running", tip: "Deep water running with flotation belt. Zero impact cardio.", reps: "10-15 min" },
+                    { name: "Buddy Tow Drill", tip: "Tow partner across pool. Rescue swim practice. Switch roles.", reps: "4-6 lengths" }
                 ]
             },
             yoga: [
@@ -1417,7 +1522,8 @@
                 rower: document.getElementById('equipRower').checked,
                 cycle: document.getElementById('equipCycle').checked,
                 bicycle: document.getElementById('equipBicycle').checked,
-                treadmill: document.getElementById('equipTreadmill').checked
+                treadmill: document.getElementById('equipTreadmill').checked,
+                swimming: document.getElementById('equipSwimming').checked
             };
         }
 
@@ -1464,6 +1570,7 @@
                     cycle: document.getElementById('equipCycle').checked,
                     bicycle: document.getElementById('equipBicycle').checked,
                     treadmill: document.getElementById('equipTreadmill').checked,
+                    swimming: document.getElementById('equipSwimming').checked,
                     sled: document.getElementById('equipSled').checked
                 },
                 fundayEquipment: {
