@@ -16,6 +16,7 @@
         content="Navy BCA calculator, body composition assessment, Navy PRT, waist to height ratio, Navy body fat calculator, military fitness, Navy physical readiness, BCA standards 2025, Navy fitness test, PRIMS calculator">
     <meta name="author" content="Navy PRT Tools">
     <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
@@ -159,7 +160,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -516,24 +517,6 @@
         .day-type-btn:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
-        }
-
-        /* Skip to Content Link */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--color-primary);
-            color: var(--color-background);
-            padding: var(--space-sm) var(--space-lg);
-            text-decoration: none;
-            border-radius: 0 0 var(--radius-md) 0;
-            z-index: 10000;
-            font-weight: 600;
-        }
-
-        .skip-link:focus {
-            top: 0;
         }
 
         /* Gender Buttons */
@@ -1126,15 +1109,6 @@
             color: #ffd700;
         }
 
-        .footer-links {
-            margin-top: 10px;
-        }
-
-        .footer-separator {
-            color: #6b7c94;
-            padding: 0 4px;
-        }
-
         /* PT Generator Banner */
         .pt-banner {
             border-radius: 12px;
@@ -1406,9 +1380,6 @@
 </head>
 
 <body>
-    <!-- Skip to Content Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
         <div class="loading-spinner"></div>
@@ -1435,6 +1406,15 @@
                 <h1>NAVY BCA CALCULATOR</h1>
             </div>
             <p class="subtitle">Body Composition Assessment • Guide-4 • Dec 2025</p>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html" class="active">BCA Calculator</a>
+                <a href="generator.html">PT Generator</a>
+                <a href="watchbill.html">Watchbill</a>
+                <a href="prt-prep.html">PRT Prep</a>
+                <a href="exercises.html">Exercises</a>
+                <a href="references.html">References</a>
+                <a href="about.html">About</a>
+            </nav>
         </header>
 
         <!-- PT Generator Banner -->
@@ -1717,19 +1697,6 @@
 
         <footer>
             <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
-            <p class="footer-links">
-                <a href="references.html">References & Guides</a><span class="footer-separator">|</span>
-                <a href="index.html">BCA Calculator</a><span class="footer-separator">|</span>
-                <a href="generator.html">PT Generator</a><span class="footer-separator">|</span>
-                <a href="exercises.html">Exercise Library</a><span class="footer-separator">|</span>
-                <a href="watchbill.html">Watchbill Generator</a><span class="footer-separator">|</span>
-                <a href="prt-prep.html">8-Week PRT Prep</a>
-                <br>
-                <a href="about.html">About</a><span class="footer-separator">|</span>
-                <a href="privacy.html">Privacy Policy</a><span class="footer-separator">|</span>
-                <a href="terms.html">Terms of Use</a><span class="footer-separator">|</span>
-                <a href="mailto:administrator@navybca.com">Contact</a>
-            </p>
             <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
         </footer>
     </div>

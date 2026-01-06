@@ -7,6 +7,7 @@
     <title>8-Week PRT Prep Program | Navy Physical Readiness Test Training</title>
     <meta name="description"
         content="8-week structured training program focusing on pushups, planks, and 1.5-mile run. Build muscular endurance and cardio speed for Navy PRT.">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
@@ -39,7 +40,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -257,15 +258,6 @@
             color: #ffd700;
         }
 
-        .footer-links {
-            margin-top: 10px;
-        }
-
-        .footer-separator {
-            color: #6b7c94;
-            padding: 0 4px;
-        }
-
         @media print {
             body {
                 background: white !important;
@@ -302,35 +294,15 @@
         }
 
         /* Skip to Content Link - Accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #ffd700;
-            color: #0a1628;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 0 0 8px 0;
-            z-index: 10000;
-            font-weight: 600;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
     </style>
 </head>
 
 <body>
     <!-- Skip to Content Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div class="container">
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
         </div>
-
-        <a href="generator.html" class="btn-back">← Back to PT Generator</a>
 
         <header>
             <div class="logo-container">
@@ -338,6 +310,15 @@
                 <h1>8-Week PRT Prep Program</h1>
             </div>
             <p class="subtitle">Build Strength & Speed for Test Day</p>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html">BCA Calculator</a>
+                <a href="generator.html">PT Generator</a>
+                <a href="watchbill.html">Watchbill</a>
+                <a href="prt-prep.html" class="active">PRT Prep</a>
+                <a href="exercises.html">Exercises</a>
+                <a href="references.html">References</a>
+                <a href="about.html">About</a>
+            </nav>
         </header>
 
         <main id="main-content" class="calculator-card">
@@ -867,19 +848,6 @@
 
         <footer>
             <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
-            <p class="footer-links">
-                <a href="references.html">References & Guides</a><span class="footer-separator">|</span>
-                <a href="index.html">BCA Calculator</a><span class="footer-separator">|</span>
-                <a href="generator.html">PT Generator</a><span class="footer-separator">|</span>
-                <a href="exercises.html">Exercise Library</a><span class="footer-separator">|</span>
-                <a href="watchbill.html">Watchbill Generator</a><span class="footer-separator">|</span>
-                <a href="prt-prep.html">8-Week PRT Prep</a>
-                <br>
-                <a href="about.html">About</a><span class="footer-separator">|</span>
-                <a href="privacy.html">Privacy Policy</a><span class="footer-separator">|</span>
-                <a href="terms.html">Terms of Use</a><span class="footer-separator">|</span>
-                <a href="mailto:administrator@navybca.com">Contact</a>
-            </p>
             <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
         </footer>
     </div>

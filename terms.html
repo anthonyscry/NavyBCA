@@ -6,6 +6,7 @@
     <title>Terms of Use | Navy BCA Calculator</title>
     <meta name="description" content="Terms of Use for Navy BCA Calculator.">
     <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
@@ -23,81 +24,8 @@
     </script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
-            min-height: 100vh;
-            color: #e8eef5;
-            line-height: 1.6;
-        }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; padding: 30px 0; }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-        }
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 1px;
-        }
-        .subtitle {
-            color: #8fa3bf;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
         .updated { color: #8fa3bf; font-size: 14px; margin-bottom: 30px; }
-        .content-card {
-            background: rgba(20, 35, 60, 0.8);
-            border-radius: 16px;
-            border: 1px solid rgba(100, 130, 180, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            padding: 40px;
-            margin-bottom: 30px;
-        }
-        h2 {
-            color: #ffd700;
-            font-size: 24px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 10px;
-        }
-        p, li { color: #e8eef5; font-size: 16px; margin-bottom: 15px; line-height: 1.8; }
-        ul { color: #e8eef5; margin-left: 25px; margin-bottom: 20px; }
-        a { color: #ffd700; }
-        .btn-back {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-        .btn-back:hover { background: rgba(255, 255, 255, 0.2); }
+
         .disclaimer {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -105,89 +33,17 @@
             padding: 20px;
             margin: 20px 0;
         }
+
         .disclaimer p { color: #f8a0a0; margin-bottom: 0; }
-
-        /* Ad Container Styles */
-        .ad-container {
-            background: rgba(30, 50, 80, 0.3);
-            border: 1px dashed rgba(100, 130, 180, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-            min-height: 90px;
-        }
-
-        .ad-container.large {
-            min-height: 250px;
-        }
-
-        .ad-label {
-            color: #6b7c94;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        footer {
-            text-align: center;
-            color: #6b7c94;
-            font-size: 12px;
-            padding: 30px;
-        }
-
-        footer a {
-            color: #8fa3bf;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            line-height: 1.4;
-            padding: 2px 4px;
-        }
-
-        footer a:hover {
-            color: #ffd700;
-        }
-
-        .footer-links {
-            margin-top: 10px;
-        }
-
-        .footer-separator {
-            color: #6b7c94;
-            padding: 0 4px;
-        }
-
-        /* Skip to Content Link - Accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #ffd700;
-            color: #0a1628;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 0 0 8px 0;
-            z-index: 10000;
-            font-weight: 600;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
     </style>
 </head>
 <body>
     <!-- Skip to Content Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <div class="container">
         <!-- Top Ad Banner -->
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
         </div>
-
-        <a href="index.html" class="btn-back">← Back to Calculator</a>
 
         <header>
             <div class="logo-container">
@@ -195,6 +51,16 @@
                 <h1>Terms of Use</h1>
             </div>
             <p class="subtitle">Conditions for Using Navy BCA Calculator</p>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html">BCA Calculator</a>
+                <a href="generator.html">PT Generator</a>
+                <a href="watchbill.html">Watchbill</a>
+                <a href="prt-prep.html">PRT Prep</a>
+                <a href="exercises.html">Exercises</a>
+                <a href="references.html">References</a>
+                <a href="about.html">About</a>
+                <a href="terms.html" class="active">Terms</a>
+            </nav>
         </header>
 
         <main id="main-content" class="content-card">
@@ -263,19 +129,6 @@
 
         <footer>
             <p>Based on Navy Physical Readiness Program Guide-4 (December 2025)</p>
-            <p class="footer-links">
-                <a href="references.html">References & Guides</a><span class="footer-separator">|</span>
-                <a href="index.html">BCA Calculator</a><span class="footer-separator">|</span>
-                <a href="generator.html">PT Generator</a><span class="footer-separator">|</span>
-                <a href="exercises.html">Exercise Library</a><span class="footer-separator">|</span>
-                <a href="watchbill.html">Watchbill Generator</a><span class="footer-separator">|</span>
-                <a href="prt-prep.html">8-Week PRT Prep</a>
-                <br>
-                <a href="about.html">About</a><span class="footer-separator">|</span>
-                <a href="privacy.html">Privacy Policy</a><span class="footer-separator">|</span>
-                <a href="terms.html">Terms of Use</a><span class="footer-separator">|</span>
-                <a href="mailto:administrator@navybca.com">Contact</a>
-            </p>
             <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
         </footer>
     </div>

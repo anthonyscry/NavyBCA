@@ -7,6 +7,7 @@
     <title>Exercise Library | Navy PT Generator</title>
     <meta name="description"
         content="Searchable exercise library for Navy PT. Browse strength and cardio exercises filtered by equipment, body part, and intensity level.">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
@@ -40,7 +41,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -383,23 +384,6 @@
         }
 
         /* Skip to Content Link - Accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #ffd700;
-            color: #0a1628;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 0 0 8px 0;
-            z-index: 10000;
-            font-weight: 600;
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
-
         footer {
             text-align: center;
             color: #6b7c94;
@@ -418,15 +402,6 @@
 
         footer a:hover {
             color: #ffd700;
-        }
-
-        .footer-links {
-            margin-top: 10px;
-        }
-
-        .footer-separator {
-            color: #6b7c94;
-            padding: 0 4px;
         }
 
         @media (max-width: 600px) {
@@ -454,17 +429,22 @@
 </head>
 
 <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
-
     <div class="container">
-        <a href="index.html" class="btn-back">← Back to BCA Calculator</a>
-
         <header>
             <div class="logo-container">
                 <div class="logo">⚓</div>
                 <h1>Exercise Library</h1>
             </div>
             <p class="subtitle">Browse & Search All PT Exercises</p>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html">BCA Calculator</a>
+                <a href="generator.html">PT Generator</a>
+                <a href="watchbill.html">Watchbill</a>
+                <a href="prt-prep.html">PRT Prep</a>
+                <a href="exercises.html" class="active">Exercises</a>
+                <a href="references.html">References</a>
+                <a href="about.html">About</a>
+            </nav>
         </header>
 
         <main id="main-content">
@@ -584,19 +564,6 @@
 
         <footer>
             <p>For official Navy fitness guidance, refer to your Command Fitness Leader.</p>
-            <div class="footer-links">
-                <a href="index.html">BCA Calculator</a>
-                <span class="footer-separator">|</span>
-                <a href="generator.html">PT Generator</a>
-                <span class="footer-separator">|</span>
-                <a href="prt-prep.html">8-Week PRT Prep</a>
-                <span class="footer-separator">|</span>
-                <a href="about.html">About</a>
-                <span class="footer-separator">|</span>
-                <a href="privacy.html">Privacy</a>
-                <span class="footer-separator">|</span>
-                <a href="terms.html">Terms</a>
-            </div>
         </footer>
     </div>
 
