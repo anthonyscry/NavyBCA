@@ -139,23 +139,33 @@
             background: rgba(10, 22, 40, 0.7);
             border: 1px solid rgba(100, 130, 180, 0.3);
             border-radius: 12px;
-            padding: 20px;
             margin-bottom: 20px;
+            overflow: hidden;
         }
 
         .week-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            gap: 12px;
+            padding: 20px;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .week-header::-webkit-details-marker {
+            display: none;
+        }
+
+        .week-card[open] .week-header {
             border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+            margin-bottom: 15px;
         }
 
         .week-title {
             color: #ffd700;
             font-size: 20px;
             font-weight: 700;
+            flex: 1;
         }
 
         .week-focus {
@@ -163,6 +173,22 @@
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .week-toggle {
+            color: #ffd700;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .week-card:not([open]) .week-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .week-body {
+            padding: 0 20px 20px;
         }
 
         .day-row {
@@ -283,6 +309,14 @@
                 border: 1px solid #ccc;
             }
 
+            .week-card:not([open]) .week-body {
+                display: block !important;
+            }
+
+            .week-card .week-toggle {
+                display: none !important;
+            }
+
             .week-title {
                 color: #000 !important;
             }
@@ -302,6 +336,14 @@
     <div class="container">
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
+            <!-- Google AdSense Ad Unit -->
+            <!-- <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
         </div>
 
         <header>
@@ -331,17 +373,22 @@
                     <li><strong>Recovery:</strong> Built-in rest days and active recovery</li>
                     <li><strong>Progressive Overload:</strong> Gradually increasing volume and intensity</li>
                 </ul>
+                <p style="margin-top: 15px; color: #8fa3bf;">
+                    Stay hydrated and well rested for next week’s PRT, and skip preworkout or caffeine if you aren’t used to it.
+                </p>
                 <p style="margin-top: 15px; color: #ffd700; font-weight: 600;">
                     📋 Complete each workout as written. Listen to your body and scale as needed. Consistency is key!
                 </p>
             </div>
 
             <!-- Week 1 -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card" open>
+                <summary class="week-header">
                     <div class="week-title">Week 1</div>
                     <div class="week-focus">Foundation Building</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Pushup Focus</div>
                     <div class="day-content">
@@ -394,14 +441,17 @@
                         • Stay consistent, no walking
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 2 -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 2</div>
                     <div class="week-focus">Volume Increase</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Pushup Ladder</div>
                     <div class="day-content">
@@ -456,14 +506,17 @@
                         • Negative split (2nd half faster)
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 3 -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 3</div>
                     <div class="week-focus">Intensity Build</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Pushup Pyramid</div>
                     <div class="day-content">
@@ -517,14 +570,17 @@
                         • Practice pacing control
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 4: Recovery Week -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 4</div>
                     <div class="week-focus">Active Recovery (Deload)</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Light Pushups</div>
                     <div class="day-content">
@@ -577,14 +633,17 @@
                         • Prep for next training block
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 5 -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 5</div>
                     <div class="week-focus">Strength Peak</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - High Volume Pushups</div>
                     <div class="day-content">
@@ -638,14 +697,17 @@
                         • Confidence builder
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 6 -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 6</div>
                     <div class="week-focus">Peak Performance</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Max Pushups</div>
                     <div class="day-content">
@@ -699,14 +761,17 @@
                         • Keep it easy
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 7: Taper -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 7</div>
                     <div class="week-focus">Taper & Sharpen</div>
-                </div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Maintenance Volume</div>
                     <div class="day-content">
@@ -759,14 +824,17 @@
                         • Practice pacing feel
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <!-- Week 8: Test Week -->
-            <div class="week-card">
-                <div class="week-header">
+            <details class="week-card">
+                <summary class="week-header">
                     <div class="week-title">Week 8</div>
-                    <div class="week-focus">Test Week</div>
-                </div>
+                    <div class="week-focus">Final Prep</div>
+                    <span class="week-toggle" aria-hidden="true">▾</span>
+                </summary>
+                <div class="week-body">
                 <div class="day-row">
                     <div class="day-header">Monday - Light Activation</div>
                     <div class="day-content">
@@ -815,17 +883,16 @@
                         • Lay out test gear
                     </div>
                 </div>
-                <div class="day-row test-day">
-                    <div class="day-header">Sunday - TEST DAY 🎯</div>
+                <div class="day-row rest-day">
+                    <div class="day-header">Sunday - Recovery & Prep</div>
                     <div class="day-content">
-                        <strong>YOU'RE READY!</strong><br>
-                        • Arrive early, warm up properly<br>
-                        • Trust your training<br>
-                        • Execute your plan<br>
-                        • Leave it all out there!
+                        • Stay hydrated and well rested for next week’s PRT<br>
+                        • Avoid preworkout or caffeine if you’re not used to it<br>
+                        • Keep stress low and focus on sleep
                     </div>
                 </div>
-            </div>
+                </div>
+            </details>
 
             <button class="action-btn" onclick="window.print()">🖨️ Print 8-Week Program</button>
 
