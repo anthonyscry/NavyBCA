@@ -930,8 +930,9 @@
 
                 <!-- No Equipment Option -->
                 <div class="equip-grid" style="margin-bottom: 15px;">
-                    <label class="equip-checkbox none-selected" id="fundayNoneLabel">
-                        <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()"> No Equipment (Games Only)
+                    <label class="equip-checkbox equip-chip none-selected" id="fundayNoneLabel">
+                        <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()">
+                        <span>No Equipment (Games Only)</span>
                     </label>
                 </div>
 
@@ -939,58 +940,74 @@
                 <div id="fundayFacilitiesSection">
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">PLAYING AREAS / FACILITIES</label>
                     <div class="equip-grid" style="margin-bottom: 20px;">
-                        <label class="equip-checkbox" id="fundayBaseballFieldLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()"> Baseball/Softball Field
+                        <label class="equip-checkbox equip-chip" id="fundayBaseballFieldLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayBaseballField" onchange="fundayEquipChanged()">
+                            <span>Baseball/Softball Field</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayBasketballCourtLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayBasketballCourt" onchange="fundayEquipChanged()"> Basketball Court
+                        <label class="equip-checkbox equip-chip" id="fundayBasketballCourtLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayBasketballCourt" onchange="fundayEquipChanged()">
+                            <span>Basketball Court</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayOpenFieldLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()"> Open Field
+                        <label class="equip-checkbox equip-chip" id="fundayOpenFieldLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayOpenField" onchange="fundayEquipChanged()">
+                            <span>Open Field</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayTrackLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayTrack" onchange="fundayEquipChanged()"> Track/Running Path
+                        <label class="equip-checkbox equip-chip" id="fundayTrackLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayTrack" onchange="fundayEquipChanged()">
+                            <span>Track/Running Path</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayVolleyballCourtLabel">
-                            <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()"> Volleyball Court
+                        <label class="equip-checkbox equip-chip" id="fundayVolleyballCourtLabel">
+                            <input type="checkbox" class="funday-facility" id="fundayVolleyballCourt" onchange="fundayEquipChanged()">
+                            <span>Volleyball Court</span>
                         </label>
                     </div>
 
                     <!-- Equipment -->
                     <label style="font-size: 11px; color: #6b7c94; margin-bottom: 8px; display: block;">AVAILABLE EQUIPMENT</label>
                     <div class="equip-grid">
-                        <label class="equip-checkbox" id="fundayBaseballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()"> Softballs/Bats
+                        <label class="equip-checkbox equip-chip" id="fundayBaseballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayBaseball" onchange="fundayEquipChanged()">
+                            <span>Softballs/Bats</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayBasketballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="fundayEquipChanged()"> Basketball
+                        <label class="equip-checkbox equip-chip" id="fundayBasketballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayBasketball" onchange="fundayEquipChanged()">
+                            <span>Basketball</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayConesLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()"> Cones/Markers
+                        <label class="equip-checkbox equip-chip" id="fundayConesLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayCones" onchange="fundayEquipChanged()">
+                            <span>Cones/Markers</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayDodgeballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="fundayEquipChanged()"> Dodgeballs
+                        <label class="equip-checkbox equip-chip" id="fundayDodgeballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayDodgeball" onchange="fundayEquipChanged()">
+                            <span>Dodgeballs</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayFlagSetLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayFlagSet" onchange="fundayEquipChanged()"> Flag Set
+                        <label class="equip-checkbox equip-chip" id="fundayFlagSetLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayFlagSet" onchange="fundayEquipChanged()">
+                            <span>Flag Set</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayFootballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()"> Football
+                        <label class="equip-checkbox equip-chip" id="fundayFootballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayFootball" onchange="fundayEquipChanged()">
+                            <span>Football</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayFrisbeeLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()"> Frisbee
+                        <label class="equip-checkbox equip-chip" id="fundayFrisbeeLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayFrisbee" onchange="fundayEquipChanged()">
+                            <span>Frisbee</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayKickballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()"> Kickball
+                        <label class="equip-checkbox equip-chip" id="fundayKickballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayKickball" onchange="fundayEquipChanged()">
+                            <span>Kickball</span>
                         </label>
-                        <label class="equip-checkbox" id="fundaySoccerLabel">
-                            <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()"> Soccer Ball
+                        <label class="equip-checkbox equip-chip" id="fundaySoccerLabel">
+                            <input type="checkbox" class="funday-equip" id="fundaySoccer" onchange="fundayEquipChanged()">
+                            <span>Soccer Ball</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayTugRopeLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayTugRope" onchange="fundayEquipChanged()"> Tug-of-War Rope
+                        <label class="equip-checkbox equip-chip" id="fundayTugRopeLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayTugRope" onchange="fundayEquipChanged()">
+                            <span>Tug-of-War Rope</span>
                         </label>
-                        <label class="equip-checkbox" id="fundayVolleyballLabel">
-                            <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()"> Volleyball
+                        <label class="equip-checkbox equip-chip" id="fundayVolleyballLabel">
+                            <input type="checkbox" class="funday-equip" id="fundayVolleyball" onchange="fundayEquipChanged()">
+                            <span>Volleyball</span>
                         </label>
                     </div>
                 </div>
