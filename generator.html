@@ -176,11 +176,32 @@
             flex: 1 1 140px;
         }
 
+        .left-toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .left-toggle-row .group-title {
+            flex: 0 0 auto;
+        }
+
+        .left-toggle-row .toggle-pill {
+            width: auto;
+            padding: 6px 10px;
+        }
+
         .equip-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 10px;
             margin-top: 10px;
+            align-items: stretch;
+            justify-items: stretch;
+            justify-content: start;
         }
 
         .equip-grid.equip-grid-pt {
@@ -220,6 +241,7 @@
             padding: 0;
             border: none;
             background: transparent;
+            height: 100%;
         }
 
         .equip-checkbox.equip-chip input {
@@ -247,6 +269,7 @@
             width: 100%;
             text-align: left;
             min-width: 0;
+            height: 100%;
         }
 
         .equip-checkbox.equip-chip span::before {
@@ -393,6 +416,7 @@
 
         .equip-grid.disabled {
             opacity: 0.5;
+            pointer-events: none;
         }
 
         select {
@@ -929,10 +953,12 @@
                 <label>Available Equipment/Facilities for Fun Day</label>
 
                 <!-- No Equipment Option -->
-                <div class="equip-grid" style="margin-bottom: 15px;">
-                    <label class="equip-checkbox equip-chip none-selected" id="fundayNoneLabel">
-                        <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()">
-                        <span>No Equipment (Games Only)</span>
+                <div class="left-toggle-row">
+                    <span class="group-title">No Equipment Mode</span>
+                    <label class="toggle-pill" id="fundayNoneLabel">
+                        <input type="checkbox" id="fundayNoEquip" onchange="toggleFundayNone()">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">No equipment (games only)</span>
                     </label>
                 </div>
 
@@ -1016,11 +1042,15 @@
 
             <div class="form-group" id="equipmentGroup">
                 <label>Equipment Available</label>
-                <div class="equip-grid equip-grid-pt" id="equipmentGrid">
-                    <label class="equip-checkbox equip-chip none-selected">
-                        <input type="checkbox" id="equipNone" checked onchange="toggleNone()">
-                        <span>None (Bodyweight Only)</span>
+                <div class="left-toggle-row">
+                    <span class="group-title">No Equipment</span>
+                    <label class="toggle-pill" id="equipNoneLabel">
+                        <input type="checkbox" id="equipNone" onchange="toggleNone()">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">Bodyweight only</span>
                     </label>
+                </div>
+                <div class="equip-grid equip-grid-pt" id="equipmentGrid">
                     <label class="equip-checkbox equip-chip">
                         <input type="checkbox" class="equip-item" id="equipAdjBench" onchange="equipChanged()">
                         <span>Adjustable Bench</span>
@@ -1602,29 +1632,49 @@
         function toggleNone() {
             const noneBox = document.getElementById('equipNone');
             const equipItems = document.querySelectorAll('.equip-item');
-            const noneLabel = noneBox.closest('.equip-checkbox');
 
             if (noneBox.checked) {
                 equipItems.forEach(item => {
                     item.checked = false;
-                    item.closest('.equip-checkbox').classList.remove('none-selected');
                 });
-                noneLabel.classList.add('none-selected');
             }
+            updateMainEquipmentState();
+            savePTGeneratorPreferences();
         }
 
         function equipChanged() {
             const noneBox = document.getElementById('equipNone');
-            const noneLabel = noneBox.closest('.equip-checkbox');
             const equipItems = document.querySelectorAll('.equip-item');
             const anyChecked = Array.from(equipItems).some(item => item.checked);
 
             if (anyChecked) {
                 noneBox.checked = false;
-                noneLabel.classList.remove('none-selected');
             } else {
                 noneBox.checked = true;
-                noneLabel.classList.add('none-selected');
+            }
+            updateMainEquipmentState();
+            savePTGeneratorPreferences();
+        }
+
+        function updateMainEquipmentState() {
+            const focus = document.getElementById('focusSelect').value;
+            const equipmentGrid = document.getElementById('equipmentGrid');
+            const equipmentCheckboxes = equipmentGrid.querySelectorAll('.equip-checkbox');
+            const equipItems = document.querySelectorAll('.equip-item');
+            const noneBox = document.getElementById('equipNone');
+            const disableByFocus = focus === 'yoga';
+            const disableByNone = noneBox.checked;
+            const shouldDisable = disableByFocus || disableByNone;
+
+            equipmentGrid.classList.toggle('disabled', shouldDisable);
+            equipmentCheckboxes.forEach(checkbox => {
+                checkbox.classList.toggle('disabled', shouldDisable);
+            });
+
+            if (disableByNone) {
+                equipItems.forEach(item => {
+                    item.checked = false;
+                });
             }
         }
 
@@ -1633,7 +1683,6 @@
         function toggleFundayNone() {
             const noneBox = document.getElementById('fundayNoEquip');
             const fundayEquipItems = document.querySelectorAll('.funday-equip');
-            const noneLabel = document.getElementById('fundayNoneLabel');
             const facilitiesSection = document.getElementById('fundayFacilitiesSection');
 
             if (noneBox.checked) {
@@ -1642,7 +1691,6 @@
                     item.checked = false;
                     item.closest('.equip-checkbox').classList.add('disabled');
                 });
-                noneLabel.classList.add('none-selected');
 
                 // Keep facilities section enabled - they can influence no-equipment game selection
                 const facilityCheckboxes = document.querySelectorAll('.funday-facility');
@@ -1660,7 +1708,6 @@
                 fundayEquipItems.forEach(item => {
                     item.closest('.equip-checkbox').classList.remove('disabled');
                 });
-                noneLabel.classList.remove('none-selected');
 
                 const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
                 if (equipmentGrids.length > 1) {
@@ -1673,7 +1720,6 @@
 
         function fundayEquipChanged() {
             const noneBox = document.getElementById('fundayNoEquip');
-            const noneLabel = document.getElementById('fundayNoneLabel');
             const fundayEquipItems = document.querySelectorAll('.funday-equip');
             const facilitiesSection = document.getElementById('fundayFacilitiesSection');
             const anyEquipmentChecked = Array.from(fundayEquipItems).some(item => item.checked);
@@ -1681,7 +1727,6 @@
             if (anyEquipmentChecked) {
                 // Equipment selected, disable "No Equipment" mode
                 noneBox.checked = false;
-                noneLabel.classList.remove('none-selected');
 
                 const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
                 if (equipmentGrids.length > 1) {
@@ -1696,7 +1741,6 @@
                 // Only enable "No Equipment" mode if no facilities are selected either
                 if (!anyFacilityChecked) {
                     noneBox.checked = true;
-                    noneLabel.classList.add('none-selected');
 
                     const equipmentGrids = facilitiesSection.querySelectorAll('.equip-grid');
                     if (equipmentGrids.length > 1) {
@@ -1937,8 +1981,6 @@
             const focus = document.getElementById('focusSelect').value;
             const equipmentGroup = document.getElementById('equipmentGroup');
             const fundayEquipmentGroup = document.getElementById('fundayEquipmentGroup');
-            const equipmentGrid = document.getElementById('equipmentGrid');
-            const equipmentCheckboxes = equipmentGrid.querySelectorAll('.equip-checkbox');
             const lowImpactGroup = document.getElementById('lowImpactGroup');
 
             // Show/hide fun day equipment section
@@ -1951,19 +1993,8 @@
             }
 
             // Disable equipment for Chill Day (Yoga)
-            if (focus === 'yoga') {
-                equipmentGrid.classList.add('disabled');
-                equipmentCheckboxes.forEach(checkbox => {
-                    checkbox.classList.add('disabled');
-                });
-                lowImpactGroup.style.display = 'none';
-            } else {
-                equipmentGrid.classList.remove('disabled');
-                equipmentCheckboxes.forEach(checkbox => {
-                    checkbox.classList.remove('disabled');
-                });
-                lowImpactGroup.style.display = (focus === 'funday') ? 'none' : 'block';
-            }
+            updateMainEquipmentState();
+            lowImpactGroup.style.display = (focus === 'funday' || focus === 'yoga') ? 'none' : 'block';
         }
 
         function updateInjuryOptionsVisibility() {
@@ -2053,6 +2084,7 @@
                 localStorage.removeItem(ptGeneratorStorageKey);
             }
             updateFundayFacilitiesForLocation();
+            updateEquipmentOptions();
             updateInjuryOptionsVisibility();
         });
 
