@@ -736,14 +736,14 @@
                         <span class="toggle-pill-text">Low-impact alternatives</span>
                     </label>
                     <div class="injury-options" id="injuryOptions" style="display:none;">
-                        <label class="equip-checkbox">
-                            <input type="checkbox" id="injuryBack"> Back
+                        <p style="font-size: 12px; color: #6b7c94; margin: 8px 0 10px 0; font-style: italic;">
+                            Select your injured area. Those exercises will be replaced with alternatives.
+                        </p>
+                        <label class="equip-checkbox injury-select">
+                            <input type="checkbox" id="injuryUpper"> Upper Body Injured
                         </label>
-                        <label class="equip-checkbox">
-                            <input type="checkbox" id="injuryLower"> Lower Body
-                        </label>
-                        <label class="equip-checkbox">
-                            <input type="checkbox" id="injuryUpper"> Upper Body
+                        <label class="equip-checkbox injury-select">
+                            <input type="checkbox" id="injuryLower"> Lower Body Injured
                         </label>
                     </div>
                 </div>
@@ -931,6 +931,7 @@
                 <a href="references.html">References & Guides</a><span class="footer-separator">|</span>
                 <a href="index.html">BCA Calculator</a><span class="footer-separator">|</span>
                 <a href="generator.html">PT Generator</a><span class="footer-separator">|</span>
+                <a href="exercises.html">Exercise Library</a><span class="footer-separator">|</span>
                 <a href="watchbill.html">Watchbill Generator</a><span class="footer-separator">|</span>
                 <a href="prt-prep.html">8-Week PRT Prep</a>
                 <br>
@@ -1565,8 +1566,7 @@
                 randomWarmup: document.getElementById('randomWarmupToggle').checked,
                 injuries: {
                     upper: document.getElementById('injuryUpper')?.checked || false,
-                    lower: document.getElementById('injuryLower')?.checked || false,
-                    back: document.getElementById('injuryBack')?.checked || false
+                    lower: document.getElementById('injuryLower')?.checked || false
                 },
                 equipment: {
                     none: document.getElementById('equipNone').checked,
@@ -1642,10 +1642,8 @@
                 if (preferences.injuries) {
                     const injuryUpper = document.getElementById('injuryUpper');
                     const injuryLower = document.getElementById('injuryLower');
-                    const injuryBack = document.getElementById('injuryBack');
                     if (injuryUpper) injuryUpper.checked = preferences.injuries.upper;
                     if (injuryLower) injuryLower.checked = preferences.injuries.lower;
-                    if (injuryBack) injuryBack.checked = preferences.injuries.back;
                 }
                 if (preferences.equipment) {
                     Object.entries(preferences.equipment).forEach(([key, value]) => {
@@ -1954,8 +1952,7 @@
         function getInjurySelections() {
             return {
                 upper: document.getElementById('injuryUpper')?.checked || false,
-                lower: document.getElementById('injuryLower')?.checked || false,
-                back: document.getElementById('injuryBack')?.checked || false
+                lower: document.getElementById('injuryLower')?.checked || false
             };
         }
 
@@ -1964,13 +1961,9 @@
             if (isCardio) {
                 return 'lower';
             }
-            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest'];
-            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust'];
-            const backKeywords = ['row', 'pull', 'deadlift', 'hinge', 'back', 'y-t-w', 'good morning'];
+            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest', 'y-t-w'];
+            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust', 'hinge', 'good morning'];
 
-            if (backKeywords.some(keyword => name.includes(keyword))) {
-                return 'back';
-            }
             if (lowerKeywords.some(keyword => name.includes(keyword))) {
                 return 'lower';
             }
@@ -1983,7 +1976,6 @@
         function filterAlternativesByInjury(alternatives, injuries) {
             return alternatives.filter(ex => {
                 const group = getExerciseGroup(ex.name, isCardioExercise(ex));
-                if (injuries.back && group === 'back') return false;
                 if (injuries.upper && group === 'upper') return false;
                 if (injuries.lower && group === 'lower') return false;
                 return true;

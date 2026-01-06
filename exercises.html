@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Library | Navy PT Generator</title>
+    <meta name="description"
+        content="Searchable exercise library for Navy PT. Browse strength and cardio exercises filtered by equipment, body part, and intensity level.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1829 100%);
+            min-height: 100vh;
+            color: #e8eef5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .calculator-card {
+            background: rgba(20, 35, 60, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Search Box */
+        .search-box {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1e3250;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box:focus {
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+            border-color: #ffd700;
+        }
+
+        .search-box::placeholder {
+            color: #6b7c94;
+        }
+
+        /* Filter Grid */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background: #1e3250;
+            border: 1px solid #4a90e2;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+
+        /* Equipment Filter */
+        .equip-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .equip-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            transition: all 0.2s;
+        }
+
+        .equip-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .equip-checkbox input {
+            accent-color: #ffd700;
+        }
+
+        .equip-checkbox.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Results Stats */
+        .results-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .results-count {
+            color: #8fa3bf;
+            font-size: 14px;
+        }
+
+        .results-count strong {
+            color: #ffd700;
+        }
+
+        .clear-filters {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-filters:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Exercise Grid */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 18px;
+            border-left: 3px solid #4a90e2;
+            transition: all 0.2s;
+        }
+
+        .exercise-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .exercise-card.upper-body {
+            border-left-color: #e74c3c;
+        }
+
+        .exercise-card.lower-body {
+            border-left-color: #27ae60;
+        }
+
+        .exercise-card.full-body {
+            border-left-color: #9b59b6;
+        }
+
+        .exercise-card.cardio {
+            border-left-color: #f39c12;
+        }
+
+        .exercise-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 1.05em;
+            color: #fff;
+        }
+
+        .exercise-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .tag-equipment {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+        }
+
+        .tag-body-part {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+        }
+
+        .tag-type {
+            background: rgba(255, 255, 255, 0.1);
+            color: #8fa3bf;
+        }
+
+        .tag-low-impact {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+
+        .exercise-tip {
+            font-size: 0.9em;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .exercise-reps {
+            font-size: 0.85em;
+            color: #6b7c94;
+            font-style: italic;
+        }
+
+        .search-link {
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .search-link:hover {
+            text-decoration: underline;
+            color: #ffd700;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7c94;
+        }
+
+        .no-results h3 {
+            color: #8fa3bf;
+            margin-bottom: 10px;
+        }
+
+        /* Skip to Content Link - Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #ffd700;
+            color: #0a1628;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        footer {
+            text-align: center;
+            color: #6b7c94;
+            font-size: 12px;
+            padding: 30px;
+        }
+
+        footer a {
+            color: #8fa3bf;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            line-height: 1.4;
+            padding: 2px 4px;
+        }
+
+        footer a:hover {
+            color: #ffd700;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-separator {
+            color: #6b7c94;
+            padding: 0 4px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .calculator-card {
+                padding: 20px;
+            }
+
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <div class="container">
+        <a href="index.html" class="btn-back">← Back to BCA Calculator</a>
+
+        <header>
+            <div class="logo-container">
+                <div class="logo">⚓</div>
+                <h1>Exercise Library</h1>
+            </div>
+            <p class="subtitle">Browse & Search All PT Exercises</p>
+        </header>
+
+        <main id="main-content">
+            <div class="calculator-card">
+                <div class="card-header">
+                    <h2>Search & Filter Exercises</h2>
+                </div>
+
+                <!-- Search Box -->
+                <div class="form-group">
+                    <label for="searchInput">Search Exercises</label>
+                    <input type="text" id="searchInput" class="search-box"
+                           placeholder="Search by exercise name or keyword..."
+                           oninput="filterExercises()">
+                </div>
+
+                <!-- Filter Grid -->
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="typeFilter">Exercise Type</label>
+                        <select id="typeFilter" onchange="filterExercises()">
+                            <option value="all">All Types</option>
+                            <option value="strength">Strength</option>
+                            <option value="cardio">Cardio</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bodyPartFilter">Body Part</label>
+                        <select id="bodyPartFilter" onchange="filterExercises()">
+                            <option value="all">All Body Parts</option>
+                            <option value="upper">Upper Body</option>
+                            <option value="lower">Lower Body</option>
+                            <option value="full">Full Body / Core</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modeFilter">Intensity Mode</label>
+                        <select id="modeFilter" onchange="filterExercises()">
+                            <option value="all">All Modes</option>
+                            <option value="standard">Standard</option>
+                            <option value="lowImpact">Low Impact</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Equipment Filter -->
+                <div class="form-group">
+                    <label>Equipment (click to filter)</label>
+                    <div class="equip-grid" id="equipmentFilters">
+                        <label class="equip-checkbox" data-equip="bodyweight">
+                            <input type="checkbox" onchange="filterExercises()"> Bodyweight
+                        </label>
+                        <label class="equip-checkbox" data-equip="bands">
+                            <input type="checkbox" onchange="filterExercises()"> Resistance Bands
+                        </label>
+                        <label class="equip-checkbox" data-equip="kettlebells">
+                            <input type="checkbox" onchange="filterExercises()"> Kettlebells
+                        </label>
+                        <label class="equip-checkbox" data-equip="dumbbells">
+                            <input type="checkbox" onchange="filterExercises()"> Dumbbells
+                        </label>
+                        <label class="equip-checkbox" data-equip="barbell">
+                            <input type="checkbox" onchange="filterExercises()"> Barbell
+                        </label>
+                        <label class="equip-checkbox" data-equip="pullup">
+                            <input type="checkbox" onchange="filterExercises()"> Pull-up Bar
+                        </label>
+                        <label class="equip-checkbox" data-equip="flatBench">
+                            <input type="checkbox" onchange="filterExercises()"> Flat Bench
+                        </label>
+                        <label class="equip-checkbox" data-equip="adjBench">
+                            <input type="checkbox" onchange="filterExercises()"> Adj. Bench
+                        </label>
+                        <label class="equip-checkbox" data-equip="sled">
+                            <input type="checkbox" onchange="filterExercises()"> Sled
+                        </label>
+                        <label class="equip-checkbox" data-equip="jumprope">
+                            <input type="checkbox" onchange="filterExercises()"> Jump Rope
+                        </label>
+                        <label class="equip-checkbox" data-equip="assaultBike">
+                            <input type="checkbox" onchange="filterExercises()"> Assault Bike
+                        </label>
+                        <label class="equip-checkbox" data-equip="rower">
+                            <input type="checkbox" onchange="filterExercises()"> Rower
+                        </label>
+                        <label class="equip-checkbox" data-equip="cycle">
+                            <input type="checkbox" onchange="filterExercises()"> Stationary Bike
+                        </label>
+                        <label class="equip-checkbox" data-equip="treadmill">
+                            <input type="checkbox" onchange="filterExercises()"> Treadmill
+                        </label>
+                        <label class="equip-checkbox" data-equip="swimming">
+                            <input type="checkbox" onchange="filterExercises()"> Pool/Swimming
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Results Stats -->
+                <div class="results-stats">
+                    <span class="results-count">Showing <strong id="resultsCount">0</strong> exercises</span>
+                    <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+                </div>
+
+                <!-- Exercise Grid -->
+                <div class="exercise-grid" id="exerciseGrid">
+                    <!-- Exercises will be populated here -->
+                </div>
+
+                <div class="no-results" id="noResults" style="display: none;">
+                    <h3>No exercises found</h3>
+                    <p>Try adjusting your search or filters</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>For official Navy fitness guidance, refer to your Command Fitness Leader.</p>
+            <div class="footer-links">
+                <a href="index.html">BCA Calculator</a>
+                <span class="footer-separator">|</span>
+                <a href="generator.html">PT Generator</a>
+                <span class="footer-separator">|</span>
+                <a href="prt-prep.html">8-Week PRT Prep</a>
+                <span class="footer-separator">|</span>
+                <a href="about.html">About</a>
+                <span class="footer-separator">|</span>
+                <a href="privacy.html">Privacy</a>
+                <span class="footer-separator">|</span>
+                <a href="terms.html">Terms</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Exercise Database - Standard
+        const db = {
+            strength: {
+                bodyweight: [
+                    { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Feel it in chest and triceps." },
+                    { name: "Wide-Arm Pushups", tip: "Hands wider than shoulders. Focus on chest stretch at bottom." },
+                    { name: "Diamond Pushups", tip: "Hands form diamond under chest. Triceps focus. Modify on knees if needed." },
+                    { name: "Hand-Release Pushups", tip: "Chest touches deck, lift hands, then push. Full range of motion." },
+                    { name: "Decline Pushups", tip: "Feet elevated. Increases shoulder and upper chest activation." },
+                    { name: "Pike Pushups", tip: "Hips high, body in inverted V. Press head toward deck. Shoulder focus." },
+                    { name: "Archer Pushups", tip: "One arm extended to side, other arm does the work. Advanced unilateral strength." },
+                    { name: "Hindu Pushups", tip: "Flow from downward dog to cobra. Great for flexibility and strength." },
+                    { name: "Clapping Pushups", tip: "Explosive push, clap at top, soft landing. Power builder. Advanced only." },
+                    { name: "Spiderman Pushups", tip: "Bring knee to elbow as you descend. Core and hip mobility." },
+                    { name: "Standard Plank", tip: "Straight line ear to ankle. Don't sag hips. Engage core." },
+                    { name: "Side Plank (L/R)", tip: "Stack feet or stagger. Keep hips high. Feel obliques working." },
+                    { name: "Plank Shoulder Taps", tip: "In plank, tap opposite shoulder. Keep hips stable. Anti-rotation." },
+                    { name: "Plank Up-Downs", tip: "Plank to pushup position and back. Control the movement." },
+                    { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat. Core stability." },
+                    { name: "Dead Bug", tip: "Press low back into deck. Move slow and controlled." },
+                    { name: "Hollow Body Hold", tip: "Lower back pressed to deck, arms and legs extended. Core killer." },
+                    { name: "V-Ups", tip: "Simultaneously lift legs and torso to form V. Control descent." },
+                    { name: "Bicycle Crunches", tip: "Opposite elbow to knee, rotate through core. Slow and controlled." },
+                    { name: "Flutter Kicks", tip: "Lower back pressed down, alternate kicking legs. Core and hip flexors." },
+                    { name: "Air Squats", tip: "Weight in heels, knees track toes. Thighs parallel. Core tight." },
+                    { name: "Walking Lunges", tip: "Chest up, front knee behind toes. Feel glutes and quads." },
+                    { name: "Reverse Lunges", tip: "Step backward into lunge. More knee-friendly than forward lunges." },
+                    { name: "Lateral Lunges", tip: "Step to side, sit back into hip. Inner thigh and glutes." },
+                    { name: "Split Squats", tip: "Feet staggered, lower straight down. Keep front knee behind toes." },
+                    { name: "Jump Squats", tip: "Explosive jump from squat position. Land soft, reset, repeat." },
+                    { name: "Box Jumps (Step-up Alternative)", tip: "Jump onto elevated surface. Step down to protect knees." },
+                    { name: "Single-Leg RDL", tip: "Balance on one leg, hinge forward. Hamstring and balance." },
+                    { name: "Calf Raises", tip: "Full extension at top, slow lower. Feel the burn in calves." },
+                    { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Quads should burn." },
+                    { name: "Glute Bridges", tip: "Squeeze glutes at top. Don't hyperextend back." },
+                    { name: "Single-Leg Glute Bridge", tip: "One leg extended, drive through planted heel. Unilateral strength." },
+                    { name: "Superman Hold", tip: "Lie face down, lift arms and legs. Lower back and glutes." },
+                    { name: "Prone Cobra", tip: "Face down, arms at sides, lift chest. Squeeze shoulder blades." },
+                    { name: "Squat Hold", tip: "Hold bottom of squat position. Build endurance and mobility." },
+                    { name: "Inchworms", tip: "Walk hands out to plank, walk feet to hands. Full body mobility." }
+                ],
+                bands: [
+                    { name: "Band Pull-Aparts", tip: "Arms straight, squeeze shoulder blades together. Upper back." },
+                    { name: "Band Bicep Curls", tip: "Elbows pinned to sides. Control the negative." },
+                    { name: "Band Overhead Press", tip: "Press straight up, don't flare elbows. Core engaged." },
+                    { name: "Band Squats", tip: "Band above knees pushes them out. Focus on glute engagement." },
+                    { name: "Band Rows", tip: "Pull to ribcage, squeeze shoulder blades. Feel upper back." },
+                    { name: "Band Tricep Extensions", tip: "Keep elbows high and stable. Squeeze at extension." },
+                    { name: "Band Lateral Walks", tip: "Stay low in squat. Feel glute medius on outer hip." },
+                    { name: "Band Face Pulls", tip: "Pull to face, elbows high. Rear delts and rotator cuff." },
+                    { name: "Band Chest Press", tip: "Anchor behind, press forward. Chest and triceps." },
+                    { name: "Band Pallof Press", tip: "Resist rotation, press away from body. Core anti-rotation." },
+                    { name: "Band Good Mornings", tip: "Band on shoulders, hinge at hips. Hamstrings and glutes." },
+                    { name: "Band Deadlifts", tip: "Stand on band, hinge and drive up. Hip hinge pattern." },
+                    { name: "Band Monster Walks", tip: "Band above knees, walk forward with wide steps. Glute activation." },
+                    { name: "Band Clamshells", tip: "Lying on side, open knees against band. Hip external rotators." },
+                    { name: "Band Woodchops", tip: "Rotate through core, low to high or high to low. Obliques." }
+                ],
+                pullup: [
+                    { name: "Pull-ups", tip: "Overhand grip. Pull chest to bar, control down. Lats and back." },
+                    { name: "Chin-ups", tip: "Underhand grip. More bicep involvement. Chin over bar." },
+                    { name: "Negative Pull-ups", tip: "Jump to top, lower slow (3-5 sec). Build pulling strength." },
+                    { name: "Wide-Grip Pull-ups", tip: "Hands wider than shoulders. Emphasizes outer lats." },
+                    { name: "Close-Grip Pull-ups", tip: "Hands close together. More mid-back and bicep focus." },
+                    { name: "Commando Pull-ups", tip: "Hands staggered inline, alternate sides. Unilateral strength." },
+                    { name: "L-Sit Pull-ups", tip: "Hold legs at 90° while pulling. Core and grip intensive." },
+                    { name: "Hanging Leg Raises", tip: "Legs together, no swinging. Core and hip flexors." },
+                    { name: "Hanging Knee Raises", tip: "Knees to chest while hanging. Easier than leg raises." },
+                    { name: "Toes to Bar", tip: "Swing legs to touch bar. CrossFit standard. Requires kip." },
+                    { name: "Windshield Wipers", tip: "Legs up, rotate side to side. Advanced oblique work." },
+                    { name: "Dead Hangs", tip: "Relax shoulders, decompress spine. Grip strength builder." },
+                    { name: "Scapular Pull-ups", tip: "Hang and retract scapula only. Builds foundation for pull-ups." },
+                    { name: "Muscle-up Progressions", tip: "Pull high, transition over bar. Advanced movement." }
+                ],
+                kettlebells: [
+                    { name: "Kettlebell Swings", tip: "Hinge at hips, not squat. Power from glutes. Arms are just hooks." },
+                    { name: "Single-Arm KB Swing", tip: "One arm at a time. Trains anti-rotation. Alternate sides." },
+                    { name: "Goblet Squats", tip: "Hold KB at chest. Elbows inside knees. Deep squat." },
+                    { name: "KB Deadlifts", tip: "Hinge at hips, flat back. Drive through heels." },
+                    { name: "KB Rows", tip: "One arm at a time. Pull to hip, squeeze lat." },
+                    { name: "KB Lunges", tip: "Hold KB at chest or sides. Control the descent." },
+                    { name: "KB Clean", tip: "Swing to rack position. Keep bell close to body. Wrist neutral." },
+                    { name: "KB Press", tip: "From rack, press overhead. Keep core tight." },
+                    { name: "KB Clean and Press", tip: "Combine clean and press in one fluid motion. Full body power." },
+                    { name: "KB Turkish Get-Up", tip: "Lie to stand with KB overhead. Mobility and stability. Go slow!" },
+                    { name: "KB Snatch", tip: "Swing to overhead in one motion. Power and coordination." },
+                    { name: "KB Windmill", tip: "KB overhead, hinge to side. Hip and shoulder mobility." },
+                    { name: "KB Halo", tip: "Circle KB around head. Shoulder mobility and stability." },
+                    { name: "KB Figure 8", tip: "Pass KB around and between legs. Coordination and grip." },
+                    { name: "KB Farmer Carry", tip: "Walk with KBs at sides. Grip, core, and posture." },
+                    { name: "KB Rack Carry", tip: "KB in rack position, walk. Core anti-rotation." },
+                    { name: "KB Sumo Deadlift", tip: "Wide stance, KB between feet. Inner thighs and glutes." },
+                    { name: "KB Thruster", tip: "Squat to overhead press in one motion. Leg and shoulder power." }
+                ],
+                dumbbells: [
+                    { name: "Dumbbell Rows", tip: "One hand on bench. Pull to hip, squeeze back." },
+                    { name: "Renegade Rows", tip: "Plank position, alternate rows. Core and back." },
+                    { name: "DB Overhead Press", tip: "Start at shoulders, press straight up. Don't arch back." },
+                    { name: "Arnold Press", tip: "Rotate palms as you press. Full shoulder development." },
+                    { name: "DB Lateral Raises", tip: "Slight bend in elbows, raise to shoulder height. Side delts." },
+                    { name: "DB Front Raises", tip: "Alternating or together, raise to eye level. Front delts." },
+                    { name: "DB Rear Delt Flyes", tip: "Bent over, raise arms to sides. Rear delts and upper back." },
+                    { name: "DB Lunges", tip: "DBs at sides. Step forward, control down and up." },
+                    { name: "DB Romanian Deadlift", tip: "DBs in front, hinge at hips. Hamstrings and glutes." },
+                    { name: "DB Curls", tip: "No swinging. Elbows pinned. Full range of motion." },
+                    { name: "Hammer Curls", tip: "Palms facing in. Targets brachialis and forearms." },
+                    { name: "Concentration Curls", tip: "Seated, elbow on thigh. Isolate the bicep." },
+                    { name: "DB Tricep Extensions", tip: "One or both hands overhead. Lower behind head, extend." },
+                    { name: "DB Skull Crushers", tip: "Lying down, lower to forehead. Tricep isolation." },
+                    { name: "DB Kickbacks", tip: "Bent over, extend arm back. Squeeze tricep at top." },
+                    { name: "DB Thrusters", tip: "Squat to press in one motion. Full body power." },
+                    { name: "DB Farmer Carry", tip: "Walk with DBs at sides. Grip and core stability." },
+                    { name: "DB Goblet Squat", tip: "Hold one DB at chest, squat deep. Leg and core." },
+                    { name: "DB Step-Ups", tip: "DBs at sides, step onto box. Unilateral leg strength." },
+                    { name: "DB Pullover", tip: "Lying on bench, lower DB behind head. Lats and chest." },
+                    { name: "DB Shrugs", tip: "Heavy DBs, shrug shoulders to ears. Upper traps." }
+                ],
+                barbell: [
+                    { name: "Barbell Deadlift", tip: "Hinge at hips, flat back. Bar close to body. Drive through heels." },
+                    { name: "Barbell Back Squat", tip: "Bar on upper back, not neck. Depth to parallel or below." },
+                    { name: "Barbell Front Squat", tip: "Elbows high, bar on shoulders. Keep torso upright." },
+                    { name: "Barbell Overhead Press", tip: "Start at shoulders, press straight up. Squeeze glutes for stability." },
+                    { name: "Barbell Bent Over Row", tip: "Hinge forward 45°, pull to belly button. Squeeze back." },
+                    { name: "Barbell RDL", tip: "Slight knee bend, hinge at hips. Feel hamstrings stretch." },
+                    { name: "Barbell Lunges", tip: "Bar on back, step forward. Keep torso upright." },
+                    { name: "Barbell Floor Press", tip: "Lying on floor, press up. Great for triceps and lockout strength." },
+                    { name: "Barbell Hip Thrust", tip: "Upper back on bench, bar on hips. Squeeze glutes at top." },
+                    { name: "Barbell Good Mornings", tip: "Bar on back, hinge forward. Feel hamstrings and low back." }
+                ],
+                flatBench: [
+                    { name: "Dumbbell Bench Press", tip: "DBs at chest level, press up and together. Control the negative." },
+                    { name: "Dumbbell Flyes", tip: "Slight elbow bend, lower wide. Feel chest stretch." },
+                    { name: "Bench Step-Ups", tip: "Drive through front heel. Alternate legs." },
+                    { name: "Bench Hip Thrusts", tip: "Upper back on bench, drive hips up. Squeeze glutes." },
+                    { name: "Incline Push-ups", tip: "Hands on bench, easier angle. Good for beginners." },
+                    { name: "Bench Tricep Dips", tip: "Hands on edge, lower body. Elbows back, not out." },
+                    { name: "Single-Leg Bench Squats", tip: "One foot on bench behind, squat on front leg. Bulgarian split squat." }
+                ],
+                adjBench: [
+                    { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Press up from upper chest." },
+                    { name: "Incline Dumbbell Flyes", tip: "Bench at 30°, arms wide. Upper chest focus." },
+                    { name: "Seated Shoulder Press", tip: "Bench upright, press dumbbells overhead." },
+                    { name: "Incline Dumbbell Rows", tip: "Chest on incline bench, pull DBs up. Upper back focus." },
+                    { name: "Decline Push-ups", tip: "Feet on bench. Increases difficulty and shoulder engagement." },
+                    { name: "Seated Incline Curls", tip: "Bench at 45°, curl with stretch at bottom." },
+                    { name: "Prone Y-T-W Raises", tip: "Lie face down on incline, raise arms in Y, T, W patterns. Shoulder health." }
+                ],
+                sled: [
+                    { name: "Sled Push (High Handles)", tip: "Arms extended, drive with legs. Stay low and powerful." },
+                    { name: "Sled Push (Low Handles)", tip: "Hands low, chest down. More quad and glute drive." },
+                    { name: "Sled Pull (Backward)", tip: "Face sled, pull toward you walking backward. Quads burn." },
+                    { name: "Sled Drag (Forward)", tip: "Strap around waist, walk forward. Great for conditioning." },
+                    { name: "Sled Row", tip: "Face sled, row handle to chest. Upper back and biceps." },
+                    { name: "Sled Sprint", tip: "Explosive push for 20-40 yards. Max effort." }
+                ]
+            },
+            lowImpact: {
+                strength: {
+                    bodyweight: [
+                        { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Modify on knees if needed." },
+                        { name: "Incline Push-ups", tip: "Hands on bench or wall. Easier angle for shoulder comfort." },
+                        { name: "Standard Plank", tip: "Straight line ear to ankle. Breathe steady." },
+                        { name: "Side Plank (L/R)", tip: "Stack feet or stagger. Keep hips high." },
+                        { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat." },
+                        { name: "Dead Bug", tip: "Press low back into deck. Slow, controlled reps." },
+                        { name: "Air Squats", tip: "Controlled depth. Sit back into heels." },
+                        { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Hold steady." },
+                        { name: "Glute Bridges", tip: "Squeeze glutes at top. No hyperextension." },
+                        { name: "Calf Raises", tip: "Slow up/down. Use support if needed." }
+                    ],
+                    bands: [
+                        { name: "Band Pull-Aparts", tip: "Arms straight, squeeze shoulder blades together." },
+                        { name: "Band Bicep Curls", tip: "Elbows pinned to sides. Control the negative." },
+                        { name: "Band Overhead Press", tip: "Press straight up, ribs down." },
+                        { name: "Band Rows", tip: "Pull to ribcage, squeeze upper back." },
+                        { name: "Band Tricep Extensions", tip: "Keep elbows high and steady." },
+                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." }
+                    ],
+                    kettlebells: [
+                        { name: "Goblet Squats", tip: "Hold KB at chest. Stay controlled." },
+                        { name: "KB Deadlifts", tip: "Hinge at hips, flat back." },
+                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." }
+                    ],
+                    dumbbells: [
+                        { name: "Dumbbell Rows", tip: "Support on bench. Pull to hip, squeeze back." },
+                        { name: "DB Overhead Press", tip: "Press straight up. Keep core engaged." },
+                        { name: "DB Curls", tip: "No swinging. Full range of motion." },
+                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." }
+                    ],
+                    flatBench: [
+                        { name: "Dumbbell Bench Press", tip: "Control the negative. Keep shoulders packed." },
+                        { name: "Bench Hip Thrusts", tip: "Drive through heels, squeeze glutes." },
+                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." }
+                    ],
+                    adjBench: [
+                        { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Smooth tempo." },
+                        { name: "Incline Dumbbell Rows", tip: "Chest on bench, pull DBs up." },
+                        { name: "Seated Shoulder Press", tip: "Upright bench, steady reps." },
+                        { name: "Seated Incline Curls", tip: "Slow reps, full extension." },
+                        { name: "Prone Y-T-W Raises", tip: "Light weight. Focus on control." }
+                    ],
+                    sled: [
+                        { name: "Sled Push (High Handles)", tip: "Smooth drive, steady pace." },
+                        { name: "Sled Pull (Backward)", tip: "Short steps, stay tall." },
+                        { name: "Sled Drag (Forward)", tip: "Walk forward, keep pace even." }
+                    ]
+                },
+                cardio: {
+                    indoor: [
+                        { name: "March in Place", tip: "Tall posture, drive arms. Light impact.", reps: "60-90 seconds" },
+                        { name: "Step Touches", tip: "Side steps, keep rhythm. Add arm swings.", reps: "60 seconds" },
+                        { name: "Low-Impact Jacks", tip: "Step out instead of jump. Keep heart rate up.", reps: "30-45 seconds" },
+                        { name: "Shadow Boxing", tip: "Light footwork, punch combos. Keep knees soft.", reps: "45-60 seconds" },
+                        { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement.", reps: "30-45 seconds" },
+                        { name: "Jog (Gym Laps)", tip: "Easy pace. Stay light on feet.", reps: "2-4 laps" }
+                    ],
+                    outdoor: [
+                        { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
+                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min" }
+                    ],
+                    assaultBike: [
+                        { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min" },
+                        { name: "Assault Bike Intervals", tip: "15-30s on, 45-60s easy. Stay smooth.", reps: "6-8 rounds" }
+                    ],
+                    rower: [
+                        { name: "Rowing Steady State (2000m)", tip: "Moderate pace 18-22 strokes/min.", reps: "2000m" },
+                        { name: "Rowing Intervals (500m)", tip: "Moderate effort, focus on form.", reps: "500m x 4-5 intervals" }
+                    ],
+                    cycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min" },
+                        { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace.", reps: "5-10 min" },
+                        { name: "Cycling Intervals", tip: "1 min moderate, 1 min easy. Keep cadence smooth.", reps: "6-8 rounds" }
+                    ],
+                    bicycle: [
+                        { name: "Team Bike Ride", tip: "Easy-moderate pace to stay with the group.", reps: "10-15 min" },
+                        { name: "Bike Ride Intervals", tip: "2 min steady, 1 min easy spin. Stay smooth.", reps: "6-8 rounds" }
+                    ],
+                    treadmill: [
+                        { name: "Incline Walk", tip: "10-15% incline, moderate pace.", reps: "5-10 min" },
+                        { name: "Treadmill Intervals", tip: "1 min jog, 1 min walk. Adjust speed to comfort.", reps: "6-8 rounds" }
+                    ],
+                    swimming: [
+                        { name: "Easy Freestyle Laps", tip: "Relaxed pace, focus on form. Low impact on joints.", reps: "300-500m" },
+                        { name: "Breaststroke Laps", tip: "Gentle stroke, easy on shoulders. Good recovery swim.", reps: "200-400m" },
+                        { name: "Backstroke Laps", tip: "Shoulder-friendly, relaxed pace. Great for recovery.", reps: "200-300m" },
+                        { name: "Pool Walking/Jogging", tip: "Walk or jog in shallow end. Zero impact cardio.", reps: "10-15 min" },
+                        { name: "Gentle Kick Laps", tip: "Easy flutter kick with board. Light leg work.", reps: "200-300m" },
+                        { name: "Treading Water (Relaxed)", tip: "Easy pace treading. Use eggbeater or scissor kick.", reps: "3-5 min" }
+                    ]
+                }
+            },
+            cardio: {
+                indoor: [
+                    { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged.", reps: "30-45 seconds" },
+                    { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet.", reps: "30 seconds" },
+                    { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option.", reps: "20-30 reps" },
+                    { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest.", reps: "20-30 reps" },
+                    { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot.", reps: "10-15 per side" },
+                    { name: "Burpees (No Push-up)", tip: "Squat, jump back to plank, hop forward, stand. Modify as needed.", reps: "10-15 reps" },
+                    { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement. 10 yards each direction.", reps: "30-45 seconds" },
+                    { name: "Jog (Gym Laps)", tip: "1 lap around gym/basketball court. Light on feet, steady pace.", reps: "2-4 laps" }
+                ],
+                outdoor: [
+                    { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk 100m recovery. Repeat.", reps: "4-6 sprints" },
+                    { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns.", reps: "4-6 shuttles" },
+                    { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline.", reps: "4-6 repeats" },
+                    { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. 25-50 yards.", reps: "2-4 lengths" },
+                    { name: "Track Run (Steady State)", tip: "1 lap around the track at consistent pace. Breathe rhythmically.", reps: "1-2 laps" },
+                    { name: "400m Run", tip: "1 lap around the track at moderate pace. Control breathing.", reps: "1 lap" },
+                    { name: "Warrior Run (Last Runner Up)", tip: "Jog in formation, last person sprints to front. Repeat.", reps: "5-10 min" }
+                ],
+                jumprope: [
+                    { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed.", reps: "2 min" },
+                    { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core.", reps: "1 min" },
+                    { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill.", reps: "20-30 reps" },
+                    { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance.", reps: "3-4 rounds" }
+                ],
+                assaultBike: [
+                    { name: "Assault Bike Intervals", tip: "15-30s max effort with full recovery. Push and pull with arms.", reps: "15-30s on / 45-60s rest x 6-8" },
+                    { name: "Assault Bike Sprints", tip: "All-out effort, take full rest between. It's a killer!", reps: "20-30s sprint / 60s rest x 5-6" },
+                    { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min" },
+                    { name: "Assault Bike Tabata", tip: "Maximum intensity. Take extra rest between sets if needed.", reps: "20s on / 10s off x 8" },
+                    { name: "Assault Bike Calorie Sprints", tip: "Sprint to hit target calories, rest fully between rounds.", reps: "10 cal sprint / 60s rest x 5-6 rounds" }
+                ],
+                rower: [
+                    { name: "Rowing Intervals (500m)", tip: "500m hard, 1 min rest. Drive with legs first.", reps: "500m x 4-6 intervals" },
+                    { name: "Rowing Sprints (250m)", tip: "All-out effort for 250m, rest 1 min between.", reps: "250m x 5-6 sprints" },
+                    { name: "Rowing Steady State (2000m)", tip: "Moderate pace 18-22 strokes/min. Focus on form.", reps: "2000m" },
+                    { name: "Rowing Pyramid", tip: "250m-500m-750m-500m-250m. Control pace on longer pieces.", reps: "2250m total" },
+                    { name: "Rowing 1000m", tip: "Build pace throughout. Sprint last 200m.", reps: "1000m" }
+                ],
+                cycle: [
+                    { name: "Cycling Intervals", tip: "1 min high resistance, 1 min low. Maintain cadence.", reps: "6-8 rounds" },
+                    { name: "Cycling Sprints", tip: "30s max speed, 30s easy. Seated or standing.", reps: "6-8 sprints" },
+                    { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace. Good recovery.", reps: "5-10 min" },
+                    { name: "Cycling Hills", tip: "Increase resistance, stand and climb. 1 min on, 1 min off.", reps: "5-6 hills" },
+                    { name: "Cycling Tabata", tip: "20s sprint, 10s rest x 8. High cadence.", reps: "4 min" }
+                ],
+                bicycle: [
+                    { name: "Team Bike Ride", tip: "Match the group pace. Good for team building.", reps: "15-20 min" },
+                    { name: "Bike Ride Intervals", tip: "2 min hard, 1 min easy spin. Maintain effort.", reps: "6-8 rounds" }
+                ],
+                treadmill: [
+                    { name: "Incline Walk", tip: "10-15% incline, 3.5-4 mph. Great glute burner.", reps: "5-10 min" },
+                    { name: "Treadmill Intervals", tip: "1 min run, 1 min walk. Adjust speed to fitness level.", reps: "8-10 rounds" },
+                    { name: "Treadmill Sprints", tip: "30s max effort, 60s rest. Hold on if needed.", reps: "6-8 sprints" }
+                ],
+                swimming: [
+                    { name: "Freestyle Laps", tip: "Steady pace, breathe every 3 strokes. Full body cardio.", reps: "500-1000m" },
+                    { name: "Sprint Laps", tip: "Max effort for 25-50m, rest at wall. Repeat.", reps: "6-10 sprints" },
+                    { name: "Breaststroke Laps", tip: "Slower stroke, good for active recovery.", reps: "400-800m" },
+                    { name: "Kickboard Laps", tip: "Flutter kick with board. Leg focus.", reps: "300-500m" },
+                    { name: "Pull Buoy Laps", tip: "Upper body only, legs float with buoy.", reps: "300-500m" },
+                    { name: "Treading Water", tip: "Stay vertical, use arms and legs. Core stability.", reps: "3-5 min" }
+                ]
+            }
+        };
+
+        // Build flat exercise list
+        let allExercises = [];
+
+        function buildExerciseList() {
+            allExercises = [];
+
+            // Standard Strength
+            Object.entries(db.strength).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    allExercises.push({
+                        ...ex,
+                        equipment: equipment,
+                        type: 'strength',
+                        mode: 'standard',
+                        bodyPart: getBodyPart(ex.name)
+                    });
+                });
+            });
+
+            // Standard Cardio
+            Object.entries(db.cardio).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    allExercises.push({
+                        ...ex,
+                        equipment: equipment,
+                        type: 'cardio',
+                        mode: 'standard',
+                        bodyPart: 'lower'
+                    });
+                });
+            });
+
+            // Low Impact Strength
+            Object.entries(db.lowImpact.strength).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    // Check if already exists in standard (avoid duplicates)
+                    const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
+                    if (existing) {
+                        existing.hasLowImpact = true;
+                    } else {
+                        allExercises.push({
+                            ...ex,
+                            equipment: equipment,
+                            type: 'strength',
+                            mode: 'lowImpact',
+                            bodyPart: getBodyPart(ex.name)
+                        });
+                    }
+                });
+            });
+
+            // Low Impact Cardio
+            Object.entries(db.lowImpact.cardio).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
+                    if (existing) {
+                        existing.hasLowImpact = true;
+                    } else {
+                        allExercises.push({
+                            ...ex,
+                            equipment: equipment,
+                            type: 'cardio',
+                            mode: 'lowImpact',
+                            bodyPart: 'lower'
+                        });
+                    }
+                });
+            });
+        }
+
+        function getBodyPart(exerciseName) {
+            const name = exerciseName.toLowerCase();
+            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest', 'y-t-w'];
+            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust', 'hinge', 'good morning'];
+
+            if (lowerKeywords.some(keyword => name.includes(keyword))) {
+                return 'lower';
+            }
+            if (upperKeywords.some(keyword => name.includes(keyword))) {
+                return 'upper';
+            }
+            return 'full';
+        }
+
+        function getEquipmentLabel(equip) {
+            const labels = {
+                bodyweight: 'Bodyweight',
+                bands: 'Bands',
+                pullup: 'Pull-up Bar',
+                kettlebells: 'Kettlebells',
+                dumbbells: 'Dumbbells',
+                barbell: 'Barbell',
+                flatBench: 'Flat Bench',
+                adjBench: 'Adj. Bench',
+                sled: 'Sled',
+                indoor: 'Indoor',
+                outdoor: 'Outdoor',
+                jumprope: 'Jump Rope',
+                assaultBike: 'Assault Bike',
+                rower: 'Rower',
+                cycle: 'Stationary Bike',
+                bicycle: 'Bicycle',
+                treadmill: 'Treadmill',
+                swimming: 'Swimming'
+            };
+            return labels[equip] || equip;
+        }
+
+        function getBodyPartLabel(part) {
+            const labels = {
+                upper: 'Upper Body',
+                lower: 'Lower Body',
+                full: 'Full Body'
+            };
+            return labels[part] || part;
+        }
+
+        function filterExercises() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const bodyPartFilter = document.getElementById('bodyPartFilter').value;
+            const modeFilter = document.getElementById('modeFilter').value;
+
+            // Get selected equipment
+            const equipmentCheckboxes = document.querySelectorAll('#equipmentFilters input[type="checkbox"]');
+            const selectedEquipment = [];
+            equipmentCheckboxes.forEach(cb => {
+                const label = cb.closest('.equip-checkbox');
+                if (cb.checked) {
+                    selectedEquipment.push(label.dataset.equip);
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            });
+
+            let filtered = allExercises.filter(ex => {
+                // Search filter
+                if (search && !ex.name.toLowerCase().includes(search) && !ex.tip.toLowerCase().includes(search)) {
+                    return false;
+                }
+
+                // Type filter
+                if (typeFilter !== 'all' && ex.type !== typeFilter) {
+                    return false;
+                }
+
+                // Body part filter
+                if (bodyPartFilter !== 'all' && ex.bodyPart !== bodyPartFilter) {
+                    return false;
+                }
+
+                // Mode filter
+                if (modeFilter === 'standard' && ex.mode === 'lowImpact') {
+                    return false;
+                }
+                if (modeFilter === 'lowImpact' && ex.mode !== 'lowImpact' && !ex.hasLowImpact) {
+                    return false;
+                }
+
+                // Equipment filter
+                if (selectedEquipment.length > 0 && !selectedEquipment.includes(ex.equipment)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Remove duplicates by name (keep first occurrence)
+            const seen = new Set();
+            filtered = filtered.filter(ex => {
+                const key = ex.name + '-' + ex.equipment;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
+            renderExercises(filtered);
+        }
+
+        function renderExercises(exercises) {
+            const grid = document.getElementById('exerciseGrid');
+            const noResults = document.getElementById('noResults');
+            const countEl = document.getElementById('resultsCount');
+
+            countEl.textContent = exercises.length;
+
+            if (exercises.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            grid.innerHTML = exercises.map(ex => {
+                const bodyPartClass = ex.type === 'cardio' ? 'cardio' : ex.bodyPart + '-body';
+                const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(ex.name + ' exercise demo')}`;
+
+                return `
+                    <div class="exercise-card ${bodyPartClass}">
+                        <div class="exercise-card-header">
+                            <span class="exercise-name">${ex.name}</span>
+                        </div>
+                        <div class="exercise-tags">
+                            <span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.equipment)}</span>
+                            <span class="exercise-tag tag-body-part">${ex.type === 'cardio' ? 'Cardio' : getBodyPartLabel(ex.bodyPart)}</span>
+                            ${ex.mode === 'lowImpact' || ex.hasLowImpact ? '<span class="exercise-tag tag-low-impact">Low Impact</span>' : ''}
+                        </div>
+                        <p class="exercise-tip">${ex.tip}</p>
+                        ${ex.reps ? `<p class="exercise-reps">${ex.reps}</p>` : ''}
+                        <a href="${searchUrl}" target="_blank" class="search-link">Watch demo →</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('typeFilter').value = 'all';
+            document.getElementById('bodyPartFilter').value = 'all';
+            document.getElementById('modeFilter').value = 'all';
+
+            document.querySelectorAll('#equipmentFilters input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+                cb.closest('.equip-checkbox').classList.remove('active');
+            });
+
+            filterExercises();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            buildExerciseList();
+            filterExercises();
+        });
+    </script>
+</body>
+
+</html>
