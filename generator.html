@@ -177,8 +177,8 @@
         }
 
         .equip-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 10px;
             margin-top: 10px;
         }
@@ -229,6 +229,14 @@
             border-radius: 999px;
             border: 1px solid rgba(100, 130, 180, 0.35);
             background: rgba(15, 25, 40, 0.45);
+        }
+
+        .toggle-pill-compact {
+            width: auto;
+            justify-content: flex-start;
+            padding: 0;
+            border: none;
+            background: transparent;
         }
 
         .group-header .toggle-pill {
@@ -962,7 +970,7 @@
 
             <div class="form-group">
                 <label>Remember Settings</label>
-                <label class="toggle-pill">
+                <label class="toggle-pill toggle-pill-compact">
                     <input type="checkbox" id="rememberPtToggle">
                     <span class="toggle-pill-track"></span>
                     <span class="toggle-pill-text">Save selections on this device</span>
