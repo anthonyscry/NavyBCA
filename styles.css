@@ -360,33 +360,6 @@ footer a:hover {
     color: var(--color-primary);
 }
 
-.footer-links {
-    margin-top: 10px;
-}
-
-.footer-separator {
-    color: #6b7c94;
-    padding: 0 4px;
-}
-
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 10px;
-    background: var(--color-primary);
-    color: #0a1628;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    z-index: 1000;
-    transition: top 0.2s;
-}
-
-.skip-link:focus {
-    top: 10px;
-}
-
 @media (max-width: 768px) {
     .container {
         padding: 20px;
