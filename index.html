@@ -1451,17 +1451,29 @@
                             <div class="col">
                                 <select id="heightInches">
                                     <option value="0">0 in</option>
+                                    <option value="0.5">0.5 in</option>
                                     <option value="1">1 in</option>
+                                    <option value="1.5">1.5 in</option>
                                     <option value="2">2 in</option>
+                                    <option value="2.5">2.5 in</option>
                                     <option value="3">3 in</option>
+                                    <option value="3.5">3.5 in</option>
                                     <option value="4">4 in</option>
+                                    <option value="4.5">4.5 in</option>
                                     <option value="5">5 in</option>
+                                    <option value="5.5">5.5 in</option>
                                     <option value="6">6 in</option>
+                                    <option value="6.5">6.5 in</option>
                                     <option value="7">7 in</option>
+                                    <option value="7.5">7.5 in</option>
                                     <option value="8">8 in</option>
+                                    <option value="8.5">8.5 in</option>
                                     <option value="9">9 in</option>
+                                    <option value="9.5">9.5 in</option>
                                     <option value="10" selected>10 in</option>
+                                    <option value="10.5">10.5 in</option>
                                     <option value="11">11 in</option>
+                                    <option value="11.5">11.5 in</option>
                                 </select>
                             </div>
                         </div>
@@ -1819,7 +1831,7 @@
                         document.getElementById('heightFeet').value = data.heightFeet;
                     }
 
-                    if (data.heightInches && !isNaN(data.heightInches) && data.heightInches >= 0 && data.heightInches <= 11) {
+                    if (data.heightInches && !isNaN(data.heightInches) && data.heightInches >= 0 && data.heightInches <= 11.5) {
                         document.getElementById('heightInches').value = data.heightInches;
                     }
 
@@ -1954,7 +1966,7 @@
 
             // Get inputs
             const heightFeet = parseInt(document.getElementById('heightFeet').value);
-            const heightInches = parseInt(document.getElementById('heightInches').value);
+            const heightInches = parseFloat(document.getElementById('heightInches').value);
             const weight = parseFloat(document.getElementById('weight').value);
             const waist = parseFloat(document.getElementById('waist').value);
 
