@@ -215,20 +215,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            background: rgba(15, 25, 40, 0.65);
-            padding: 10px 12px;
-            border-radius: 10px;
             cursor: pointer;
             font-size: 0.78em;
-            border: 1px solid rgba(100, 130, 180, 0.35);
-            transition: all 0.2s;
-            min-height: 44px;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             font-weight: 600;
             color: #d7e2f1;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
         .equip-checkbox:hover {
@@ -239,9 +232,73 @@
             accent-color: #ffd700;
         }
 
-        .equip-checkbox.active {
+        .equip-checkbox.active span {
             border-color: #ffd700;
             background: rgba(255, 215, 0, 0.1);
+        }
+
+        .equip-checkbox.equip-chip {
+            position: relative;
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .equip-checkbox.equip-chip input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .equip-checkbox.equip-chip span {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 130, 180, 0.35);
+            background: rgba(15, 25, 40, 0.65);
+            transition: all 0.2s ease;
+            min-height: 44px;
+            font-size: 0.78em;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+            color: #d7e2f1;
+            width: 100%;
+            text-align: left;
+            min-width: 0;
+            height: 100%;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .equip-checkbox.equip-chip span::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            background: transparent;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+        }
+
+        .equip-checkbox.equip-chip:hover span {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(180, 200, 230, 0.6);
+        }
+
+        .equip-checkbox.equip-chip input:checked + span {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.35);
+        }
+
+        .equip-checkbox.equip-chip input:checked + span::before {
+            border-color: #ffd700;
+            background: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
         }
 
         /* Results Stats */
@@ -533,50 +590,65 @@
                 <div class="form-group equipment-filter-group">
                     <label>Equipment (click to filter)</label>
                     <div class="equip-grid" id="equipmentFilters">
-                        <label class="equip-checkbox" data-equip="bodyweight">
-                            <input type="checkbox" onchange="filterExercises()"> Bodyweight
+                        <label class="equip-checkbox equip-chip" data-equip="bodyweight">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Bodyweight</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="bands">
-                            <input type="checkbox" onchange="filterExercises()"> Resistance Bands
+                        <label class="equip-checkbox equip-chip" data-equip="bands">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Resistance Bands</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="kettlebells">
-                            <input type="checkbox" onchange="filterExercises()"> Kettlebells
+                        <label class="equip-checkbox equip-chip" data-equip="kettlebells">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Kettlebells</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="dumbbells">
-                            <input type="checkbox" onchange="filterExercises()"> Dumbbells
+                        <label class="equip-checkbox equip-chip" data-equip="dumbbells">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Dumbbells</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="barbell">
-                            <input type="checkbox" onchange="filterExercises()"> Barbell
+                        <label class="equip-checkbox equip-chip" data-equip="barbell">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Barbell</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="pullup">
-                            <input type="checkbox" onchange="filterExercises()"> Pull-up Bar
+                        <label class="equip-checkbox equip-chip" data-equip="pullup">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Pull-up Bar</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="flatBench">
-                            <input type="checkbox" onchange="filterExercises()"> Flat Bench
+                        <label class="equip-checkbox equip-chip" data-equip="flatBench">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Flat Bench</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="adjBench">
-                            <input type="checkbox" onchange="filterExercises()"> Adj. Bench
+                        <label class="equip-checkbox equip-chip" data-equip="adjBench">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Adj. Bench</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="sled">
-                            <input type="checkbox" onchange="filterExercises()"> Sled
+                        <label class="equip-checkbox equip-chip" data-equip="sled">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Sled</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="jumprope">
-                            <input type="checkbox" onchange="filterExercises()"> Jump Rope
+                        <label class="equip-checkbox equip-chip" data-equip="jumprope">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Jump Rope</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="assaultBike">
-                            <input type="checkbox" onchange="filterExercises()"> Assault Bike
+                        <label class="equip-checkbox equip-chip" data-equip="assaultBike">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Assault Bike</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="rower">
-                            <input type="checkbox" onchange="filterExercises()"> Rower
+                        <label class="equip-checkbox equip-chip" data-equip="rower">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Rower</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="cycle">
-                            <input type="checkbox" onchange="filterExercises()"> Stationary Bike
+                        <label class="equip-checkbox equip-chip" data-equip="cycle">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Stationary Bike</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="treadmill">
-                            <input type="checkbox" onchange="filterExercises()"> Treadmill
+                        <label class="equip-checkbox equip-chip" data-equip="treadmill">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Treadmill</span>
                         </label>
-                        <label class="equip-checkbox" data-equip="swimming">
-                            <input type="checkbox" onchange="filterExercises()"> Pool/Swimming
+                        <label class="equip-checkbox equip-chip" data-equip="swimming">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Pool/Swimming</span>
                         </label>
                     </div>
                 </div>

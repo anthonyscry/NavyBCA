@@ -956,7 +956,7 @@
                 <div class="left-toggle-row">
                     <span class="group-title">No Equipment Mode</span>
                     <label class="toggle-pill" id="fundayNoneLabel">
-                        <input type="checkbox" id="fundayNoEquip" checked onchange="toggleFundayNone()">
+                        <input type="checkbox" id="fundayNoEquip" onchange="toggleFundayNone()">
                         <span class="toggle-pill-track"></span>
                         <span class="toggle-pill-text">No equipment (games only)</span>
                     </label>
@@ -1045,7 +1045,7 @@
                 <div class="left-toggle-row">
                     <span class="group-title">No Equipment</span>
                     <label class="toggle-pill" id="equipNoneLabel">
-                        <input type="checkbox" id="equipNone" checked onchange="toggleNone()">
+                        <input type="checkbox" id="equipNone" onchange="toggleNone()">
                         <span class="toggle-pill-track"></span>
                         <span class="toggle-pill-text">Bodyweight only</span>
                     </label>
@@ -2084,6 +2084,7 @@
                 localStorage.removeItem(ptGeneratorStorageKey);
             }
             updateFundayFacilitiesForLocation();
+            updateEquipmentOptions();
             updateInjuryOptionsVisibility();
         });
 
