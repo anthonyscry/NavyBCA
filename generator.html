@@ -747,6 +747,18 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="form-group" id="warmupStyleGroup">
+                    <label>Warm-Up Style</label>
+                    <label class="toggle-pill">
+                        <input type="checkbox" id="randomWarmupToggle">
+                        <span class="toggle-pill-track"></span>
+                        <span class="toggle-pill-text">Randomize warm-up exercises</span>
+                    </label>
+                    <p style="font-size: 11px; color: #6b7c94; margin-top: 5px;">
+                        Standard uses official Navy NOFFS warm-up sequence. Random picks varied exercises each session.
+                    </p>
+                </div>
             </div>
 
             <div class="form-group" id="fundayEquipmentGroup" style="display: none;">
@@ -1550,6 +1562,7 @@
                 location: document.getElementById('locationSelect').value,
                 scheme: document.getElementById('schemeSelect').value,
                 lowImpact: document.getElementById('lowImpactToggle').checked,
+                randomWarmup: document.getElementById('randomWarmupToggle').checked,
                 injuries: {
                     upper: document.getElementById('injuryUpper')?.checked || false,
                     lower: document.getElementById('injuryLower')?.checked || false,
@@ -1622,6 +1635,9 @@
                 }
                 if (preferences.lowImpact !== undefined) {
                     document.getElementById('lowImpactToggle').checked = preferences.lowImpact;
+                }
+                if (preferences.randomWarmup !== undefined) {
+                    document.getElementById('randomWarmupToggle').checked = preferences.randomWarmup;
                 }
                 if (preferences.injuries) {
                     const injuryUpper = document.getElementById('injuryUpper');
@@ -2041,9 +2057,20 @@
             }
 
             // 1. Warmup (Collapsible - collapsed by default)
-            let html = renderCollapsibleHeader('1. Standardized Warm-Up (10-12 Min)', 'warmupContent', false);
+            const randomWarmup = document.getElementById('randomWarmupToggle').checked;
+            const warmupTitle = randomWarmup ? '1. Randomized Warm-Up (10-12 Min)' : '1. Standardized Warm-Up (10-12 Min)';
+            let html = renderCollapsibleHeader(warmupTitle, 'warmupContent', false);
             html += `<ul class="exercise-list" id="warmupContent" style="display:none">`;
-            warmupExercises.forEach(ex => html += renderItem(ex.name, ex.rep));
+
+            if (randomWarmup) {
+                // Randomize: pick 8-10 exercises from the warmup pool
+                const shuffledWarmup = [...warmupExercises].sort(() => Math.random() - 0.5);
+                const selectedWarmup = shuffledWarmup.slice(0, 10);
+                selectedWarmup.forEach(ex => html += renderItem(ex.name, ex.rep));
+            } else {
+                // Standard: use official NOFFS sequence (first 10 exercises)
+                warmupExercises.slice(0, 10).forEach(ex => html += renderItem(ex.name, ex.rep));
+            }
 
             if (focus === 'mixed' || focus === 'cardio' || focus === 'funday') {
                 html += `<li style="padding:10px; color:#4a90e2; font-weight:bold; background:none; border:none;">— Pre-Cardio Additions —</li>`;
