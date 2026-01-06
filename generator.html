@@ -183,6 +183,11 @@
             margin-top: 10px;
         }
 
+        .equip-grid.equip-grid-pt {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+        }
+
         .equip-checkbox {
             display: flex;
             align-items: center;
@@ -207,6 +212,71 @@
 
         .equip-checkbox input {
             accent-color: #ffd700;
+        }
+
+        .equip-checkbox.equip-chip {
+            position: relative;
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .equip-checkbox.equip-chip input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .equip-checkbox.equip-chip span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 130, 180, 0.35);
+            background: rgba(15, 25, 40, 0.65);
+            transition: all 0.2s ease;
+            min-height: 44px;
+            font-size: 0.78em;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+            color: #d7e2f1;
+            width: 100%;
+        }
+
+        .equip-checkbox.equip-chip span::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            background: transparent;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+        }
+
+        .equip-checkbox.equip-chip:hover span {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(180, 200, 230, 0.6);
+        }
+
+        .equip-checkbox.equip-chip input:checked + span {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.35);
+        }
+
+        .equip-checkbox.equip-chip input:checked + span::before {
+            border-color: #ffd700;
+            background: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
+        }
+
+        .equip-checkbox.equip-chip.none-selected span {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.12);
         }
 
         .equip-checkbox.disabled {
@@ -924,54 +994,70 @@
 
             <div class="form-group" id="equipmentGroup">
                 <label>Equipment Available</label>
-                <div class="equip-grid" id="equipmentGrid">
-                    <label class="equip-checkbox none-selected">
-                        <input type="checkbox" id="equipNone" checked onchange="toggleNone()"> None (Bodyweight Only)
+                <div class="equip-grid equip-grid-pt" id="equipmentGrid">
+                    <label class="equip-checkbox equip-chip none-selected">
+                        <input type="checkbox" id="equipNone" checked onchange="toggleNone()">
+                        <span>None (Bodyweight Only)</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipAdjBench" onchange="equipChanged()"> Adjustable Bench
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipAdjBench" onchange="equipChanged()">
+                        <span>Adjustable Bench</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipAssaultBike" onchange="equipChanged()"> Assault Bike
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipAssaultBike" onchange="equipChanged()">
+                        <span>Assault Bike</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()"> Barbell
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipBarbell" onchange="equipChanged()">
+                        <span>Barbell</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipBicycle" onchange="equipChanged()"> Bicycles
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipBicycle" onchange="equipChanged()">
+                        <span>Bicycles</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()"> Dumbbells
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipDumbbells" onchange="equipChanged()">
+                        <span>Dumbbells</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipFlatBench" onchange="equipChanged()"> Flat Bench
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipFlatBench" onchange="equipChanged()">
+                        <span>Flat Bench</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()"> Jump Rope
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipJumprope" onchange="equipChanged()">
+                        <span>Jump Rope</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipKettlebells" onchange="equipChanged()"> Kettlebells
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipKettlebells" onchange="equipChanged()">
+                        <span>Kettlebells</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipPullup" onchange="equipChanged()"> Pull-up Bar
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipPullup" onchange="equipChanged()">
+                        <span>Pull-up Bar</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipBands" onchange="equipChanged()"> Resistance Bands
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipBands" onchange="equipChanged()">
+                        <span>Resistance Bands</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipRower" onchange="equipChanged()"> Rowing Machine
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipRower" onchange="equipChanged()">
+                        <span>Rowing Machine</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipCycle" onchange="equipChanged()"> Stationary Cycle
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipCycle" onchange="equipChanged()">
+                        <span>Stationary Cycle</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()"> Treadmill
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipTreadmill" onchange="equipChanged()">
+                        <span>Treadmill</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipSwimming" onchange="equipChanged()"> Swimming Pool
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipSwimming" onchange="equipChanged()">
+                        <span>Swimming Pool</span>
                     </label>
-                    <label class="equip-checkbox">
-                        <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()"> Weight Sled
+                    <label class="equip-checkbox equip-chip">
+                        <input type="checkbox" class="equip-item" id="equipSled" onchange="equipChanged()">
+                        <span>Weight Sled</span>
                     </label>
                 </div>
             </div>
