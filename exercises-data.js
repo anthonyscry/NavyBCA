@@ -53,8 +53,8 @@ const cooldownExercises = [
 
 // Main exercise database
 const db = {
-        strength: {
-            bodyweight: [
+    strength: {
+        bodyweight: [
                 { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Feel it in chest and triceps." },
                 { name: "Wide-Arm Pushups", tip: "Hands wider than shoulders. Focus on chest stretch at bottom." },
                 { name: "Diamond Pushups", tip: "Hands form diamond under chest. Triceps focus. Modify on knees if needed." },
@@ -207,8 +207,8 @@ const db = {
                 { name: "Sled Sprint", tip: "Explosive push for 20-40 yards. Max effort." }
             ]
         },
-        lowImpact: {
-            strength: {
+    lowImpact: {
+        strength: {
                 bodyweight: [
                     { name: "Standard Pushups", tip: "Keep core tight, elbows at 45°. Modify on knees if needed." },
                     { name: "Incline Push-ups", tip: "Hands on bench or wall. Easier angle for shoulder comfort." },
@@ -312,8 +312,8 @@ const db = {
                 ]
             }
         },
-        cardio: {
-            indoor: [
+    cardio: {
+        indoor: [
                 { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged.", reps: "30-45 seconds" },
                 { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet.", reps: "30 seconds" },
                 { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option.", reps: "20-30 reps" },
@@ -388,7 +388,7 @@ const db = {
                 { name: "Buddy Tow Drill", tip: "Tow partner across pool. Rescue swim practice. Switch roles.", reps: "4-6 lengths" }
             ]
         },
-        yoga: [
+    yoga: [
             { name: "Cat-Cow Stretch", duration: "30-45 seconds", tip: "Flow between arching and rounding back. Sync with breath." },
             { name: "Child's Pose", duration: "30-60 seconds", tip: "Knees wide, arms extended. Rest forehead on mat." },
             { name: "Downward Dog", duration: "30-45 seconds", tip: "Hips high, heels reaching down. Press hands into mat." },
@@ -412,9 +412,9 @@ const db = {
             { name: "Triangle Pose", duration: "30 seconds/side", tip: "Front leg straight, reach down and up. Open chest." },
             { name: "Tree Pose", duration: "30 seconds/side", tip: "Foot on inner thigh or calf. Balance practice." },
             { name: "Corpse Pose (Savasana)", duration: "2-3 minutes", tip: "Final relaxation. Lie completely still, focus on breath." }
-        ],
-        funday: {
-            outdoor: [
+    ],
+    funday: {
+        outdoor: [
                 // Equipment-based games (with fitness penalties)
                 { name: "Kickball with PT", tip: "Standard baseball rules. FITNESS: Outs do 5 4-count pushups. Scored-on team does 10 4-count exercise chosen by scoring team.", requires: "kickball" },
                 { name: "Ultimate Frisbee", tip: "Score by catching in end zone. FITNESS: Scored-on team does 10 4-count burpees. Turnover = 5 4-count mountain climbers.", requires: "frisbee", link: "https://www.youtube.com/watch?v=LPd-XdI5tuk" },
@@ -452,8 +452,8 @@ const db = {
                 { name: "Team Elimination Sprint", tip: "Sprint to center line. FITNESS: Last team across loses one player AND does 10 4-count burpees. Eliminated players cheer!", noEquipment: true },
                 { name: "Fitness Bingo", tip: "Complete exercises in bingo pattern. FITNESS: All exercises are 4-count. First team to complete row wins. Losers do 20 4-count burpees!", noEquipment: true },
                 { name: "PT Station Circuit Race", tip: "8-10 stations, all 4-count exercises (10 reps each). Teams race through circuit. FITNESS: Losing team repeats final 2 stations!", noEquipment: true }
-            ],
-            indoor: [
+        ],
+        indoor: [
                 // Equipment-based games
                 { name: "Basketball", tip: "Full court or half court games. Rotate teams every 10-15 min.", requires: "basketball" },
                 { name: "Basketball Knockout", tip: "Players shoot from free throw. Miss and you're eliminated by player behind you. Last standing wins.", requires: "basketball" },
@@ -480,8 +480,8 @@ const db = {
                 { name: "Chain Tag", tip: "Tagged players join hands with tagger. Chain grows. Only end players can tag.", noEquipment: true },
                 { name: "Fitness Dice", tip: "Giant foam dice with exercises on each side. Roll dice, whole team does that exercise.", noEquipment: true },
                 { name: "Follow the Leader PT", tip: "Leader calls movements (burpees, jumping jacks, etc). Everyone follows. Rotate leaders every 3 min.", noEquipment: true }
-            ]
-        }
+        ]
+    }
 };
 
 // Export for use in HTML files
