@@ -1460,8 +1460,10 @@
                         { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat." },
                         { name: "Dead Bug", tip: "Press low back into deck. Slow, controlled reps." },
                         { name: "Air Squats", tip: "Controlled depth. Sit back into heels." },
+                        { name: "Chair Squats", tip: "Tap chair lightly, stand back up. Keep chest tall." },
                         { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Hold steady." },
                         { name: "Glute Bridges", tip: "Squeeze glutes at top. No hyperextension." },
+                        { name: "Glute Bridge March", tip: "Hold bridge, alternate lifting feet. Keep hips level." },
                         { name: "Calf Raises", tip: "Slow up/down. Use support if needed." }
                     ],
                     bands: [
@@ -1470,23 +1472,28 @@
                         { name: "Band Overhead Press", tip: "Press straight up, ribs down." },
                         { name: "Band Rows", tip: "Pull to ribcage, squeeze upper back." },
                         { name: "Band Tricep Extensions", tip: "Keep elbows high and steady." },
-                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." }
+                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." },
+                        { name: "Band Chest Press", tip: "Anchor behind you, press forward with control." },
+                        { name: "Band Pallof Press", tip: "Resist rotation as you press away from chest." }
                     ],
                     kettlebells: [
                         { name: "Goblet Squats", tip: "Hold KB at chest. Stay controlled." },
                         { name: "KB Deadlifts", tip: "Hinge at hips, flat back." },
-                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." }
+                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." },
+                        { name: "KB Suitcase Carry", tip: "Walk tall with KB at side. Brace core." }
                     ],
                     dumbbells: [
                         { name: "Dumbbell Rows", tip: "Support on bench. Pull to hip, squeeze back." },
                         { name: "DB Overhead Press", tip: "Press straight up. Keep core engaged." },
                         { name: "DB Curls", tip: "No swinging. Full range of motion." },
-                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." }
+                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." },
+                        { name: "DB Floor Press", tip: "Press from floor, keep elbows at 45°." }
                     ],
                     flatBench: [
                         { name: "Dumbbell Bench Press", tip: "Control the negative. Keep shoulders packed." },
                         { name: "Bench Hip Thrusts", tip: "Drive through heels, squeeze glutes." },
-                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." }
+                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." },
+                        { name: "Bench Step-Ups", tip: "Controlled step up/down. Use light support if needed." }
                     ],
                     adjBench: [
                         { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Smooth tempo." },
@@ -1506,13 +1513,16 @@
                         { name: "March in Place", tip: "Tall posture, drive arms. Light impact.", reps: "60-90 seconds" },
                         { name: "Step Touches", tip: "Side steps, keep rhythm. Add arm swings.", reps: "60 seconds" },
                         { name: "Low-Impact Jacks", tip: "Step out instead of jump. Keep heart rate up.", reps: "30-45 seconds" },
+                        { name: "Step Jacks", tip: "Step wide as arms go overhead. No jumping.", reps: "30-45 seconds" },
                         { name: "Shadow Boxing", tip: "Light footwork, punch combos. Keep knees soft.", reps: "45-60 seconds" },
+                        { name: "Standing Knee Tucks", tip: "Alternate knee lifts with a crunch. Stay tall.", reps: "30-45 seconds" },
                         { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement.", reps: "30-45 seconds" },
                         { name: "Jog (Gym Laps)", tip: "Easy pace. Stay light on feet.", reps: "2-4 laps", isFinisher: true }
                     ],
                     outdoor: [
                         { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
-                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true }
+                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true },
+                        { name: "Walk/Jog Intervals", tip: "2 min walk, 1 min jog. Keep impact low.", reps: "8-12 rounds" }
                     ],
                     assaultBike: [
                         { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min", isFinisher: true },
@@ -1660,16 +1670,20 @@
                     { name: "Speedball", tip: "Hybrid sport - kick or throw to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Fast-paced!", requires: "soccer", link: "https://www.youtube.com/watch?v=yP3VvqYYlGI" },
                     { name: "Spikeball (Roundnet)", tip: "2v2 teams, 3 touches to return. FITNESS: Losing team each game does 10 4-count pushups. Play best of 5 to 21 points.", requires: "spikeball", link: "https://www.youtube.com/watch?v=FRmjRZpHQH8" },
                     { name: "Kan Jam", tip: "Frisbee to can, partner deflects. FITNESS: Losing team does 10 4-count exercise. First to 21 wins!", requires: "frisbee" },
+                    { name: "Cone Shuttle Gauntlet", tip: "Set 4 cones 10yd apart. Teams sprint down/back. FITNESS: Losing team does 15 4-count burpees.", requires: "cones" },
+                    { name: "Frisbee Conditioning Relay", tip: "Relay to cone, toss frisbee to teammate, sprint back. FITNESS: Drops = 5 4-count pushups.", requires: "frisbee" },
                     // No-equipment games (with facility preferences and fitness penalties)
                     { name: "British Bulldog", tip: "Players run across field. Bulldogs tag with two-hand touch (no tackling). FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField", link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
                     { name: "Manhunt", tip: "Hide and seek meets tag. FITNESS: Tagged players do 10 4-count burpees before becoming hunters. Keeps fitness high!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. FITNESS: Tagged players do 10 4-count mountain climbers to unfreeze OR wait for teammate crawl-through.", noEquipment: true },
                     { name: "Red Light Green Light", tip: "Leader calls movements. FITNESS: Caught moving = 5 4-count pushups at start line, then rejoin.", noEquipment: true },
                     { name: "Blob Tag", tip: "Tagged players join 'blob'. FITNESS: When blob catches 3+ people, everyone does 10 4-count jumping jacks, then restart.", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Bear Crawl Relay", tip: "Teams bear crawl to cone and back. FITNESS: Slowest team does 10 4-count burpees.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Relay Races with PT", tip: "Sprint relays with PT stops. FITNESS: Each leg = sprint 50m → 10 4-count exercise → sprint back. Rotate: pushups, situps, squats, burpees.", noEquipment: true, preferredFacility: "track" },
                     { name: "Track Sprints Competition", tip: "400m relay, 800m time trials. FITNESS: Losing team does 10 4-count exercise chosen by winners after each round.", noEquipment: true, preferredFacility: "track" },
                     { name: "Mile Challenge", tip: "Team mile runs with PT penalties. FITNESS: Last team to finish does 15 4-count exercise chosen by winners.", noEquipment: true, preferredFacility: "track" },
                     { name: "Fartlek Training Game", tip: "Swedish speed play with PT stations. FITNESS: After each sprint interval, group does 10 4-count exercise (rotating: burpees, mountain climbers, squat thrusts).", noEquipment: true, preferredFacility: "track" },
+                    { name: "Sprint Ladder Challenge", tip: "Leader calls 50-100-150-200m sprints. FITNESS: Last finishers do 10 4-count squats.", noEquipment: true, preferredFacility: "track" },
                     { name: "Sharks and Minnows", tip: "Minnows sprint across while sharks tag. FITNESS: Tagged minnows do 10 4-count pushups before becoming sharks. Constant movement!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Capture the Territory", tip: "Mark zones, tag to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Play to 5 points.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Ultimate (No Disc)", tip: "Pass invisible 'disc' with hand touches. FITNESS: Scoring team picks exercise, defending team does 10 4-count reps. Play to 7.", noEquipment: true, preferredFacility: "openField" },
@@ -1692,14 +1706,17 @@
                     { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline.", requires: "dodgeball" },
                     { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball", link: "https://www.youtube.com/watch?v=JQbqfK5Z8_A" },
                     { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies.", requires: "hockey" },
+                    { name: "Free-Throw Fitness", tip: "Missed free throw = 5 4-count pushups. Make 3 in a row to clear.", requires: "basketball" },
                     // No-equipment games (with facility preferences)
                     { name: "Octopus Tag", tip: "Tagger in middle can only pivot on one foot. Others run past. Tagged join as octopi.", noEquipment: true },
                     { name: "Fitness Tag", tip: "Tagged players do 10 pushups to get back in. Constant movement and exercise.", noEquipment: true },
                     { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable.", noEquipment: true },
                     { name: "Partner Exercises Circuit", tip: "Partner-based exercises: wheelbarrow, partner sit-ups, plank high-fives.", noEquipment: true },
                     { name: "Mirror Drill", tip: "Partners face each other. One leads movements, other mirrors. Switch every 2 min.", noEquipment: true },
+                    { name: "Burpee Relay", tip: "Teams sprint to line, do 5 4-count burpees, tag next runner.", noEquipment: true },
                     { name: "Line Drills", tip: "Use court lines for sprints, shuffles, carioca, high knees between lines.", noEquipment: true, preferredFacility: "basketballCourt" },
                     { name: "Basketball Court Suicides", tip: "Sprint to each line and back. Baseline to free throw, half court, far free throw, baseline.", noEquipment: true, preferredFacility: "basketballCourt" },
+                    { name: "Plank High-Five Challenge", tip: "Pairs hold plank and alternate high-fives. Losers do 10 4-count mountain climbers.", noEquipment: true },
                     { name: "Full Court Tag", tip: "Use basketball court boundaries. Can't cross out of bounds. Constant direction changes!", noEquipment: true, preferredFacility: "basketballCourt" },
                     { name: "Volleyball Court Relay", tip: "Teams line up on each side. Sprint under net, tag teammate. Fast rotation relay.", noEquipment: true, preferredFacility: "volleyballCourt" },
                     { name: "Ship Captain Crew", tip: "Leader calls commands (Port/Starboard/Captain's Coming). Last to respond is out.", noEquipment: true },

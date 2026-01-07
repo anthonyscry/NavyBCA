@@ -4453,6 +4453,15 @@ footer a:hover {
                             <p>Try adjusting your search or filters</p>
                         </div>
                     </div>
+                    <div class="calculator-card fun-day-library">
+                        <div class="card-header">
+                            <h2>Fun Day Games</h2>
+                        </div>
+                        <div class="results-stats">
+                            <span class="results-count">Showing <strong id="funDayCount">0</strong> games</span>
+                        </div>
+                        <div class="exercise-grid" id="funDayGrid"></div>
+                    </div>
                 </div>
                 <div id="tab-watchbill" class="offline-panel" role="tabpanel">
                     <h3 class="offline-section-title">Watchbill Generator</h3>
@@ -22105,8 +22114,10 @@ HeightWaistDiff,Weight,BodyFatPercent
                         { name: "Bird Dog", tip: "Opposite arm/leg extend. Keep back flat." },
                         { name: "Dead Bug", tip: "Press low back into deck. Slow, controlled reps." },
                         { name: "Air Squats", tip: "Controlled depth. Sit back into heels." },
+                        { name: "Chair Squats", tip: "Tap chair lightly, stand back up. Keep chest tall." },
                         { name: "Wall Sit", tip: "Thighs parallel, back flat on wall. Hold steady." },
                         { name: "Glute Bridges", tip: "Squeeze glutes at top. No hyperextension." },
+                        { name: "Glute Bridge March", tip: "Hold bridge, alternate lifting feet. Keep hips level." },
                         { name: "Calf Raises", tip: "Slow up/down. Use support if needed." }
                     ],
                     bands: [
@@ -22115,23 +22126,28 @@ HeightWaistDiff,Weight,BodyFatPercent
                         { name: "Band Overhead Press", tip: "Press straight up, ribs down." },
                         { name: "Band Rows", tip: "Pull to ribcage, squeeze upper back." },
                         { name: "Band Tricep Extensions", tip: "Keep elbows high and steady." },
-                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." }
+                        { name: "Band Lateral Walks", tip: "Stay low, short steps. Feel glute medius." },
+                        { name: "Band Chest Press", tip: "Anchor behind you, press forward with control." },
+                        { name: "Band Pallof Press", tip: "Resist rotation as you press away from chest." }
                     ],
                     kettlebells: [
                         { name: "Goblet Squats", tip: "Hold KB at chest. Stay controlled." },
                         { name: "KB Deadlifts", tip: "Hinge at hips, flat back." },
-                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." }
+                        { name: "KB Rows", tip: "One arm at a time. Pull to hip." },
+                        { name: "KB Suitcase Carry", tip: "Walk tall with KB at side. Brace core." }
                     ],
                     dumbbells: [
                         { name: "Dumbbell Rows", tip: "Support on bench. Pull to hip, squeeze back." },
                         { name: "DB Overhead Press", tip: "Press straight up. Keep core engaged." },
                         { name: "DB Curls", tip: "No swinging. Full range of motion." },
-                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." }
+                        { name: "DB Tricep Extensions", tip: "Control the lowering phase." },
+                        { name: "DB Floor Press", tip: "Press from floor, keep elbows at 45°." }
                     ],
                     flatBench: [
                         { name: "Dumbbell Bench Press", tip: "Control the negative. Keep shoulders packed." },
                         { name: "Bench Hip Thrusts", tip: "Drive through heels, squeeze glutes." },
-                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." }
+                        { name: "Incline Push-ups", tip: "Hands on bench, steady pace." },
+                        { name: "Bench Step-Ups", tip: "Controlled step up/down. Use light support if needed." }
                     ],
                     adjBench: [
                         { name: "Incline Dumbbell Press", tip: "Bench at 30-45°. Smooth tempo." },
@@ -22151,13 +22167,16 @@ HeightWaistDiff,Weight,BodyFatPercent
                         { name: "March in Place", tip: "Tall posture, drive arms. Light impact.", reps: "60-90 seconds" },
                         { name: "Step Touches", tip: "Side steps, keep rhythm. Add arm swings.", reps: "60 seconds" },
                         { name: "Low-Impact Jacks", tip: "Step out instead of jump. Keep heart rate up.", reps: "30-45 seconds" },
+                        { name: "Step Jacks", tip: "Step wide as arms go overhead. No jumping.", reps: "30-45 seconds" },
                         { name: "Shadow Boxing", tip: "Light footwork, punch combos. Keep knees soft.", reps: "45-60 seconds" },
+                        { name: "Standing Knee Tucks", tip: "Alternate knee lifts with a crunch. Stay tall.", reps: "30-45 seconds" },
                         { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement.", reps: "30-45 seconds" },
                         { name: "Jog (Gym Laps)", tip: "Easy pace. Stay light on feet.", reps: "2-4 laps", isFinisher: true }
                     ],
                     outdoor: [
                         { name: "Brisk Walk Intervals", tip: "Power walk, pump arms. 1 min brisk, 1 min easy.", reps: "6-8 rounds" },
-                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true }
+                        { name: "Light Jog/Walk", tip: "Conversational pace, avoid pounding.", reps: "8-12 min", isFinisher: true },
+                        { name: "Walk/Jog Intervals", tip: "2 min walk, 1 min jog. Keep impact low.", reps: "8-12 rounds" }
                     ],
                     assaultBike: [
                         { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min", isFinisher: true },
@@ -22305,16 +22324,20 @@ HeightWaistDiff,Weight,BodyFatPercent
                     { name: "Speedball", tip: "Hybrid sport - kick or throw to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Fast-paced!", requires: "soccer" },
                     { name: "Spikeball (Roundnet)", tip: "2v2 teams, 3 touches to return. FITNESS: Losing team each game does 10 4-count pushups. Play best of 5 to 21 points.", requires: "spikeball" },
                     { name: "Kan Jam", tip: "Frisbee to can, partner deflects. FITNESS: Losing team does 10 4-count exercise. First to 21 wins!", requires: "frisbee" },
+                    { name: "Cone Shuttle Gauntlet", tip: "Set 4 cones 10yd apart. Teams sprint down/back. FITNESS: Losing team does 15 4-count burpees.", requires: "cones" },
+                    { name: "Frisbee Conditioning Relay", tip: "Relay to cone, toss frisbee to teammate, sprint back. FITNESS: Drops = 5 4-count pushups.", requires: "frisbee" },
                     // No-equipment games (with facility preferences and fitness penalties)
                     { name: "British Bulldog", tip: "Players run across field. Bulldogs tag with two-hand touch (no tackling). FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Manhunt", tip: "Hide and seek meets tag. FITNESS: Tagged players do 10 4-count burpees before becoming hunters. Keeps fitness high!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. FITNESS: Tagged players do 10 4-count mountain climbers to unfreeze OR wait for teammate crawl-through.", noEquipment: true },
                     { name: "Red Light Green Light", tip: "Leader calls movements. FITNESS: Caught moving = 5 4-count pushups at start line, then rejoin.", noEquipment: true },
                     { name: "Blob Tag", tip: "Tagged players join 'blob'. FITNESS: When blob catches 3+ people, everyone does 10 4-count jumping jacks, then restart.", noEquipment: true, preferredFacility: "openField" },
+                    { name: "Bear Crawl Relay", tip: "Teams bear crawl to cone and back. FITNESS: Slowest team does 10 4-count burpees.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Relay Races with PT", tip: "Sprint relays with PT stops. FITNESS: Each leg = sprint 50m → 10 4-count exercise → sprint back. Rotate: pushups, situps, squats, burpees.", noEquipment: true, preferredFacility: "track" },
                     { name: "Track Sprints Competition", tip: "400m relay, 800m time trials. FITNESS: Losing team does 10 4-count exercise chosen by winners after each round.", noEquipment: true, preferredFacility: "track" },
                     { name: "Mile Challenge", tip: "Team mile runs with PT penalties. FITNESS: Last team to finish does 15 4-count exercise chosen by winners.", noEquipment: true, preferredFacility: "track" },
                     { name: "Fartlek Training Game", tip: "Swedish speed play with PT stations. FITNESS: After each sprint interval, group does 10 4-count exercise (rotating: burpees, mountain climbers, squat thrusts).", noEquipment: true, preferredFacility: "track" },
+                    { name: "Sprint Ladder Challenge", tip: "Leader calls 50-100-150-200m sprints. FITNESS: Last finishers do 10 4-count squats.", noEquipment: true, preferredFacility: "track" },
                     { name: "Sharks and Minnows", tip: "Minnows sprint across while sharks tag. FITNESS: Tagged minnows do 10 4-count pushups before becoming sharks. Constant movement!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Capture the Territory", tip: "Mark zones, tag to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Play to 5 points.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Ultimate (No Disc)", tip: "Pass invisible 'disc' with hand touches. FITNESS: Scoring team picks exercise, defending team does 10 4-count reps. Play to 7.", noEquipment: true, preferredFacility: "openField" },
@@ -22337,14 +22360,17 @@ HeightWaistDiff,Weight,BodyFatPercent
                     { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline.", requires: "dodgeball" },
                     { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball" },
                     { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies.", requires: "hockey" },
+                    { name: "Free-Throw Fitness", tip: "Missed free throw = 5 4-count pushups. Make 3 in a row to clear.", requires: "basketball" },
                     // No-equipment games (with facility preferences)
                     { name: "Octopus Tag", tip: "Tagger in middle can only pivot on one foot. Others run past. Tagged join as octopi.", noEquipment: true },
                     { name: "Fitness Tag", tip: "Tagged players do 10 pushups to get back in. Constant movement and exercise.", noEquipment: true },
                     { name: "Musical Fitness", tip: "Music stops, everyone does called exercise. Fun and unpredictable.", noEquipment: true },
                     { name: "Partner Exercises Circuit", tip: "Partner-based exercises: wheelbarrow, partner sit-ups, plank high-fives.", noEquipment: true },
                     { name: "Mirror Drill", tip: "Partners face each other. One leads movements, other mirrors. Switch every 2 min.", noEquipment: true },
+                    { name: "Burpee Relay", tip: "Teams sprint to line, do 5 4-count burpees, tag next runner.", noEquipment: true },
                     { name: "Line Drills", tip: "Use court lines for sprints, shuffles, carioca, high knees between lines.", noEquipment: true, preferredFacility: "basketballCourt" },
                     { name: "Basketball Court Suicides", tip: "Sprint to each line and back. Baseline to free throw, half court, far free throw, baseline.", noEquipment: true, preferredFacility: "basketballCourt" },
+                    { name: "Plank High-Five Challenge", tip: "Pairs hold plank and alternate high-fives. Losers do 10 4-count mountain climbers.", noEquipment: true },
                     { name: "Full Court Tag", tip: "Use basketball court boundaries. Can't cross out of bounds. Constant direction changes!", noEquipment: true, preferredFacility: "basketballCourt" },
                     { name: "Volleyball Court Relay", tip: "Teams line up on each side. Sprint under net, tag teammate. Fast rotation relay.", noEquipment: true, preferredFacility: "volleyballCourt" },
                     { name: "Ship Captain Crew", tip: "Leader calls commands (Port/Starboard/Captain's Coming). Last to respond is out.", noEquipment: true },
@@ -22354,6 +22380,75 @@ HeightWaistDiff,Weight,BodyFatPercent
                     { name: "Ninja", tip: "Circle game. Take turns trying to 'chop' others' hands. Stay frozen until your turn. Strategy game!", noEquipment: true },
                     { name: "Human Knot", tip: "Circle up, grab random hands across circle. Untangle without letting go. Team building!", noEquipment: true },
                     { name: "Follow the Leader PT", tip: "Leader calls movements (burpees, jumping jacks, etc). Everyone follows. Rotate leaders every 3 min.", noEquipment: true }
+                ]
+            }
+        };
+
+        const libraryDb = {
+            ...db,
+            cardio: {
+                indoor: [
+                    { name: "High Knees (March/Run)", tip: "Drive knees up, pump arms. Keep core engaged.", reps: "30-45 seconds" },
+                    { name: "Fast Feet Drill", tip: "Quick, light steps. Stay on balls of feet.", reps: "30 seconds" },
+                    { name: "Seal Jacks", tip: "Arms out front instead of overhead. Low impact option.", reps: "20-30 reps" },
+                    { name: "Mountain Climbers (Controlled)", tip: "Hips level with shoulders. Alternate knees to chest.", reps: "20-30 reps" },
+                    { name: "Skater Jumps", tip: "Lateral jump, land soft. Touch opposite hand to foot.", reps: "10-15 per side" },
+                    { name: "Burpees (No Push-up)", tip: "Squat, jump back to plank, hop forward, stand. Modify as needed.", reps: "10-15 reps" },
+                    { name: "Lateral Shuffles", tip: "Stay low, quick side-to-side movement. 10 yards each direction.", reps: "30-45 seconds" },
+                    { name: "Jog (Gym Laps)", tip: "1 lap around gym/basketball court. Light on feet, steady pace.", reps: "2-4 laps" }
+                ],
+                outdoor: [
+                    { name: "Sprint Intervals (100m)", tip: "Max effort sprint, walk 100m recovery. Repeat.", reps: "4-6 sprints" },
+                    { name: "Shuttle Runs (25yd)", tip: "Touch line at each end. Explode out of turns.", reps: "4-6 shuttles" },
+                    { name: "Hill Repeats", tip: "Sprint up, walk down. Drive knees on incline.", reps: "4-6 repeats" },
+                    { name: "Linear Skips", tip: "Exaggerated skip, drive knee high. 25-50 yards.", reps: "2-4 lengths" },
+                    { name: "Track Run (Steady State)", tip: "1 lap around the track at consistent pace. Breathe rhythmically.", reps: "1-2 laps" },
+                    { name: "400m Run", tip: "1 lap around the track at moderate pace. Control breathing.", reps: "1 lap" },
+                    { name: "Warrior Run (Last Runner Up)", tip: "Jog in formation, last person sprints to front. Repeat.", reps: "5-10 min" }
+                ],
+                jumprope: [
+                    { name: "Jump Rope (2 min)", tip: "Light bounces, wrists turn rope. Stay relaxed.", reps: "2 min" },
+                    { name: "Jump Rope High Knees", tip: "Alternate high knees while jumping. Cardio + core.", reps: "1 min" },
+                    { name: "Double Unders", tip: "Higher jump, faster wrist spin. Advanced skill.", reps: "20-30 reps" },
+                    { name: "Jump Rope Intervals", tip: "30s fast, 30s easy. Build endurance.", reps: "3-4 rounds" }
+                ],
+                assaultBike: [
+                    { name: "Assault Bike Intervals", tip: "15-30s max effort with full recovery. Push and pull with arms.", reps: "15-30s on / 45-60s rest x 6-8" },
+                    { name: "Assault Bike Sprints", tip: "All-out effort, take full rest between. It's a killer!", reps: "20-30s sprint / 60s rest x 5-6" },
+                    { name: "Assault Bike Steady State", tip: "Moderate pace, keep RPM consistent.", reps: "3-5 min" },
+                    { name: "Assault Bike Tabata", tip: "Maximum intensity. Take extra rest between sets if needed.", reps: "20s on / 10s off x 8" },
+                    { name: "Assault Bike Calorie Sprints", tip: "Sprint to hit target calories, rest fully between rounds.", reps: "10 cal sprint / 60s rest x 5-6 rounds" }
+                ],
+                rower: [
+                    { name: "Rowing Intervals (500m)", tip: "500m hard, 1 min rest. Drive with legs first.", reps: "500m x 4-6 intervals" },
+                    { name: "Rowing Sprints (250m)", tip: "All-out effort for 250m, rest 1 min between.", reps: "250m x 5-6 sprints" },
+                    { name: "Rowing Steady State (2000m)", tip: "Moderate pace 18-22 strokes/min. Focus on form.", reps: "2000m" },
+                    { name: "Rowing Pyramid", tip: "250m-500m-750m-500m-250m. Control pace on longer pieces.", reps: "2250m total" },
+                    { name: "Rowing 1000m", tip: "Build pace throughout. Sprint last 200m.", reps: "1000m" }
+                ],
+                cycle: [
+                    { name: "Cycling Intervals", tip: "1 min high resistance, 1 min low. Maintain cadence.", reps: "6-8 rounds" },
+                    { name: "Cycling Sprints", tip: "30s max speed, 30s easy. Seated or standing.", reps: "6-8 sprints" },
+                    { name: "Cycling Steady State", tip: "Moderate resistance, consistent pace. Good recovery.", reps: "5-10 min" },
+                    { name: "Cycling Hills", tip: "Increase resistance, stand and climb. 1 min on, 1 min off.", reps: "5-6 hills" },
+                    { name: "Cycling Tabata", tip: "20s sprint, 10s rest x 8. High cadence.", reps: "4 min" }
+                ],
+                bicycle: [
+                    { name: "Team Bike Ride", tip: "Match the group pace. Good for team building.", reps: "15-20 min" },
+                    { name: "Bike Ride Intervals", tip: "2 min hard, 1 min easy spin. Maintain effort.", reps: "6-8 rounds" }
+                ],
+                treadmill: [
+                    { name: "Incline Walk", tip: "10-15% incline, 3.5-4 mph. Great glute burner.", reps: "5-10 min" },
+                    { name: "Treadmill Intervals", tip: "1 min run, 1 min walk. Adjust speed to fitness level.", reps: "8-10 rounds" },
+                    { name: "Treadmill Sprints", tip: "30s max effort, 60s rest. Hold on if needed.", reps: "6-8 sprints" }
+                ],
+                swimming: [
+                    { name: "Freestyle Laps", tip: "Steady pace, breathe every 3 strokes. Full body cardio.", reps: "500-1000m" },
+                    { name: "Sprint Laps", tip: "Max effort for 25-50m, rest at wall. Repeat.", reps: "6-10 sprints" },
+                    { name: "Breaststroke Laps", tip: "Slower stroke, good for active recovery.", reps: "400-800m" },
+                    { name: "Kickboard Laps", tip: "Flutter kick with board. Leg focus.", reps: "300-500m" },
+                    { name: "Pull Buoy Laps", tip: "Upper body only, legs float with buoy.", reps: "300-500m" },
+                    { name: "Treading Water", tip: "Stay vertical, use arms and legs. Core stability.", reps: "3-5 min" }
                 ]
             }
         };
@@ -24092,7 +24187,7 @@ HeightWaistDiff,Weight,BodyFatPercent
         function buildExerciseList() {
             allExercises = [];
 
-            Object.entries(db.strength).forEach(([equipment, exercises]) => {
+            Object.entries(libraryDb.strength).forEach(([equipment, exercises]) => {
                 exercises.forEach(ex => {
                     allExercises.push({
                         ...ex,
@@ -24105,7 +24200,7 @@ HeightWaistDiff,Weight,BodyFatPercent
                 });
             });
 
-            Object.entries(db.cardio).forEach(([equipment, exercises]) => {
+            Object.entries(libraryDb.cardio).forEach(([equipment, exercises]) => {
                 exercises.forEach(ex => {
                     allExercises.push({
                         ...ex,
@@ -24118,7 +24213,7 @@ HeightWaistDiff,Weight,BodyFatPercent
                 });
             });
 
-            Object.entries(db.lowImpact.strength).forEach(([equipment, exercises]) => {
+            Object.entries(libraryDb.lowImpact.strength).forEach(([equipment, exercises]) => {
                 exercises.forEach(ex => {
                     const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
                     if (existing) {
@@ -24136,7 +24231,7 @@ HeightWaistDiff,Weight,BodyFatPercent
                 });
             });
 
-            Object.entries(db.lowImpact.cardio).forEach(([equipment, exercises]) => {
+            Object.entries(libraryDb.lowImpact.cardio).forEach(([equipment, exercises]) => {
                 exercises.forEach(ex => {
                     const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
                     if (existing) {
@@ -24298,6 +24393,42 @@ HeightWaistDiff,Weight,BodyFatPercent
             }).join('');
         }
 
+        function renderFunDayGames() {
+            const grid = document.getElementById('funDayGrid');
+            const countEl = document.getElementById('funDayCount');
+            if (!grid || !countEl) {
+                return;
+            }
+
+            const games = [
+                ...db.funday.outdoor.map(game => ({ ...game, location: 'Outdoor' })),
+                ...db.funday.indoor.map(game => ({ ...game, location: 'Indoor' }))
+            ];
+
+            countEl.textContent = games.length;
+            grid.innerHTML = games.map(game => {
+                const equipmentLabel = game.requires ? 'Equipment' : 'No Equipment';
+                const equipmentClass = game.requires ? 'tag-equipment' : 'tag-low-impact';
+                const linkHtml = game.link
+                    ? `<a href="${game.link}" target="_blank" class="search-link">Watch demo →</a>`
+                    : '';
+
+                return `
+                    <div class="exercise-card">
+                        <div class="exercise-card-header">
+                            <span class="exercise-name">${game.name}</span>
+                        </div>
+                        <div class="exercise-tags">
+                            <span class="exercise-tag tag-body-part">${game.location}</span>
+                            <span class="exercise-tag ${equipmentClass}">${equipmentLabel}</span>
+                        </div>
+                        <p class="exercise-tip">${game.tip}</p>
+                        ${linkHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
         function clearFilters() {
             const searchInput = document.getElementById('searchInput');
             const typeFilter = document.getElementById('typeFilter');
@@ -24320,6 +24451,7 @@ HeightWaistDiff,Weight,BodyFatPercent
         document.addEventListener('DOMContentLoaded', function() {
             buildExerciseList();
             filterExercises();
+            renderFunDayGames();
         });
     </script>
 </body>
