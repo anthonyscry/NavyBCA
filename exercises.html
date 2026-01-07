@@ -1425,11 +1425,6 @@
                 return;
             }
 
-            const anyOtherChecked = otherLabels.some(label => label.querySelector('input')?.checked);
-            if (anyOtherChecked && noEquipmentInput.checked) {
-                noEquipmentInput.checked = false;
-            }
-
             const disableOthers = noEquipmentInput.checked;
             otherLabels.forEach(label => {
                 const input = label.querySelector('input');
