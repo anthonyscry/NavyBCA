@@ -21985,9 +21985,14 @@ HeightWaistDiff,Weight,BodyFatPercent
         });
     </script>
 
-    <script>
-        // --- Data: Official Lists ---
+    <!-- Load shared exercise database -->
+    <script src="exercises-data.js"></script>
 
+    <script>
+        // --- Data: Official Lists --- (Now loaded from exercises-data.js)
+        // warmupExercises, preCardioWarmup, cooldownExercises, and db are imported from exercises-data.js
+
+        /* MOVED TO exercises-data.js - Single source of truth for all exercise data
         const warmupExercises = [
             { name: "90/90 Stretch", rep: "5 reps/side" },
             { name: "Pillar Bridge", rep: "20 sec hold" },
@@ -22532,6 +22537,8 @@ HeightWaistDiff,Weight,BodyFatPercent
                 ]
             }
         };
+        */
+        // END OF DATA MOVED TO exercises-data.js
 
         // --- Equipment Toggle Logic ---
 
