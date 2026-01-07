@@ -824,6 +824,8 @@
 
             .calendar-day {
                 border-left: 4px solid rgba(100, 130, 180, 0.5);
+                min-height: 80px;
+                padding: 15px;
             }
 
             .calendar-day.pt-day {
@@ -838,10 +840,28 @@
                 border-left: 4px solid rgba(239, 68, 68, 0.8);
             }
 
+            .day-number {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
             .day-number::after {
                 content: ' - ' attr(data-day-name);
                 color: #8fa3bf;
-                font-size: 14px;
+                font-size: 16px;
+            }
+
+            .holiday-name {
+                font-size: 13px;
+            }
+
+            .pt-info {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .off-day-note {
+                font-size: 13px;
             }
         }
 
@@ -851,7 +871,7 @@
             }
 
             h1 {
-                font-size: 24px;
+                font-size: 22px;
             }
 
             h2 {
@@ -868,29 +888,58 @@
 
             .day-type-selector {
                 flex-wrap: wrap;
+                gap: 8px;
             }
 
             .day-type-btn {
                 flex: 1 1 45%;
-                font-size: 13px;
-                padding: 8px 12px;
+                font-size: 14px;
+                padding: 10px;
             }
 
             select, input[type="month"], input[type="text"] {
                 font-size: 16px;
             }
 
+            .calendar-grid {
+                gap: 12px;
+            }
+
             .calendar-day {
-                min-height: auto;
-                padding: 10px;
+                min-height: 70px;
+                padding: 12px;
+                border-radius: 6px;
             }
 
             .day-number {
-                font-size: 16px;
+                font-size: 17px;
+                margin-bottom: 8px;
             }
 
-            .day-content {
+            .day-number::after {
+                font-size: 15px;
+            }
+
+            .holiday-name {
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+
+            .pt-info {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .pt-info strong {
                 font-size: 13px;
+            }
+
+            .off-day-note {
+                font-size: 12px;
+            }
+
+            .off-day-hint {
+                font-size: 10px;
             }
         }
     </style>
