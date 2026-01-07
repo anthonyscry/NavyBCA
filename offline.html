@@ -21398,11 +21398,6 @@ HeightWaistDiff,Weight,BodyFatPercent
                 hideLoading();
                 showNotification('Failed to load BCA data. Please refresh the page.', 'error', 'Error');
             }
-        } catch (error) {
-                console.error('Failed to load BCA tables:', error);
-                hideLoading();
-                showNotification('Failed to load BCA data. Please refresh the page.', 'error', 'Error');
-            }
         }
 
         function getBcaTableValue(gender, heightWaistDiff, weight) {
