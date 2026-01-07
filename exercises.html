@@ -789,8 +789,14 @@
         </footer>
     </div>
 
+    <!-- Load shared exercise database -->
+    <script src="exercises-data.js"></script>
+
     <script>
-        // Exercise Database - Standard
+        // Exercise Database - Standard (Now loaded from exercises-data.js)
+        // db is imported from exercises-data.js
+
+        /* MOVED TO exercises-data.js - Single source of truth for all exercise data
         const db = {
             strength: {
                 bodyweight: [
@@ -1186,6 +1192,7 @@
                 ]
             }
         };
+        */
 
         // Build flat exercise list
         let allExercises = [];
