@@ -167,6 +167,11 @@
             flex-wrap: wrap;
         }
 
+        .equipment-disabled {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
         .group-title {
             font-size: 12px;
             font-weight: 600;
@@ -1722,17 +1727,26 @@
         function updateMainEquipmentState() {
             const focus = document.getElementById('focusSelect').value;
             const equipmentGrid = document.getElementById('equipmentGrid');
+            const equipmentGroup = document.getElementById('equipmentGroup');
             const equipmentCheckboxes = equipmentGrid.querySelectorAll('.equip-checkbox');
             const equipItems = document.querySelectorAll('.equip-item');
             const noneBox = document.getElementById('equipNone');
-            const disableByFocus = focus === 'yoga';
+            const disableByFocus = focus === 'yoga' || focus === 'core';
             const disableByNone = noneBox.checked;
             const shouldDisable = disableByFocus || disableByNone;
 
+            equipmentGroup.classList.toggle('equipment-disabled', disableByFocus);
             equipmentGrid.classList.toggle('disabled', shouldDisable);
             equipmentCheckboxes.forEach(checkbox => {
                 checkbox.classList.toggle('disabled', shouldDisable);
             });
+
+            if (disableByFocus) {
+                noneBox.checked = true;
+                equipItems.forEach(item => {
+                    item.checked = false;
+                });
+            }
 
             if (disableByNone) {
                 equipItems.forEach(item => {
