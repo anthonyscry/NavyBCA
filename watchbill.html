@@ -846,6 +846,18 @@
         }
 
         @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
             .row {
                 grid-template-columns: 1fr;
             }
@@ -859,7 +871,26 @@
             }
 
             .day-type-btn {
-                flex: 1 1 30%;
+                flex: 1 1 45%;
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+
+            select, input[type="month"], input[type="text"] {
+                font-size: 16px;
+            }
+
+            .calendar-day {
+                min-height: auto;
+                padding: 10px;
+            }
+
+            .day-number {
+                font-size: 16px;
+            }
+
+            .day-content {
+                font-size: 13px;
             }
         }
     </style>

@@ -782,6 +782,61 @@
             }
         }
 
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .equip-grid-pt {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px;
+            }
+
+            .equip-checkbox label {
+                font-size: 13px;
+                padding: 10px 8px;
+            }
+
+            .form-group label {
+                font-size: 15px;
+            }
+
+            select, .action-btn {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .equip-grid-pt {
+                grid-template-columns: 1fr !important;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
         /* Skip to Content Link - Accessibility */
         /* Print Styles */
         @media print {
