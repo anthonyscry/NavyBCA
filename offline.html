@@ -3264,6 +3264,10 @@ footer a:hover {
             margin-bottom: 20px;
         }
 
+        .calendar-grid.weekday-only {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
         .calendar-day-header {
             background: rgba(255, 215, 0, 0.15);
             padding: 10px;
@@ -23926,7 +23930,14 @@ HeightWaistDiff,Weight,BodyFatPercent
             // Build calendar
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const weekdayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
             const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const hasWeekendSessions = ptSchedule.some(session => {
+                const dayOfWeek = session.date.getDay();
+                return dayOfWeek === 0 || dayOfWeek === 6;
+            });
+            const useWeekdayOnlyLayout = !hasWeekendSessions;
+            const displayDayNames = useWeekdayOnlyLayout ? weekdayNames : dayNames;
 
             applyRotationAssignments();
 
@@ -23945,17 +23956,32 @@ HeightWaistDiff,Weight,BodyFatPercent
                     <p class="hint" style="margin-top: 8px;">${rotationHint}</p>
                 </div>
 
-                <div class="calendar-grid">
+                <div class="calendar-grid${useWeekdayOnlyLayout ? ' weekday-only' : ''}">
             `;
 
             // Day headers
-            for (let i = 0; i < 7; i++) {
-                calendarHTML += `<div class="calendar-day-header">${dayNames[i]}</div>`;
+            for (let i = 0; i < displayDayNames.length; i++) {
+                calendarHTML += `<div class="calendar-day-header">${displayDayNames[i]}</div>`;
             }
 
             // Empty cells before first day
-            for (let i = 0; i < firstDay; i++) {
-                calendarHTML += `<div class="calendar-day empty"></div>`;
+            if (useWeekdayOnlyLayout) {
+                let firstWeekdayIndex = 0;
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(currentWatchbillYear, currentWatchbillMonth, day);
+                    const dayOfWeek = date.getDay();
+                    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                        firstWeekdayIndex = dayOfWeek - 1;
+                        break;
+                    }
+                }
+                for (let i = 0; i < firstWeekdayIndex; i++) {
+                    calendarHTML += `<div class="calendar-day empty"></div>`;
+                }
+            } else {
+                for (let i = 0; i < firstDay; i++) {
+                    calendarHTML += `<div class="calendar-day empty"></div>`;
+                }
             }
 
             // Days of month
@@ -23964,6 +23990,9 @@ HeightWaistDiff,Weight,BodyFatPercent
                 const dayOfWeek = date.getDay();
                 const holiday = isHoliday(date);
                 const ptSession = ptSchedule.find(pt => pt.day === day);
+                if (useWeekdayOnlyLayout && (dayOfWeek === 0 || dayOfWeek === 6)) {
+                    continue;
+                }
 
                 let dayClass = 'calendar-day';
                 let dayContent = '';
