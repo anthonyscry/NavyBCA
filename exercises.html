@@ -211,6 +211,10 @@
             justify-content: start;
         }
 
+        .equip-grid-section {
+            display: contents;
+        }
+
         .equip-checkbox {
             display: flex;
             align-items: center;
@@ -271,6 +275,13 @@
             min-width: 0;
             height: 100%;
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .equip-checkbox.equip-chip.compact-toggle span {
+            padding: 6px 10px;
+            min-height: 36px;
+            font-size: 0.72em;
+            letter-spacing: 0.4px;
         }
 
         .equip-checkbox.equip-chip span::before {
@@ -560,7 +571,7 @@
                 <div class="filter-grid">
                     <div class="form-group">
                         <label for="typeFilter">Exercise Type</label>
-                        <select id="typeFilter" onchange="filterExercises()">
+                        <select id="typeFilter" onchange="handleTypeFilterChange()">
                             <option value="all">All Types</option>
                             <option value="cardio">Cardio</option>
                             <option value="strength">Strength</option>
@@ -592,6 +603,7 @@
                 <div class="form-group equipment-filter-group">
                     <label>Equipment</label>
                     <div class="equip-grid" id="equipmentFilters">
+                        <div id="standardEquipmentFilters" class="equip-grid-section">
                         <label class="equip-checkbox equip-chip" data-equip="adjBench">
                             <input type="checkbox" onchange="filterExercises()">
                             <span>Adj. Bench</span>
@@ -664,7 +676,9 @@
                             <input type="checkbox" onchange="filterExercises()">
                             <span>Treadmill</span>
                         </label>
-                        <label class="equip-checkbox equip-chip" data-equip="noEquipment">
+                        </div>
+                        <div id="fundayEquipmentFilters" class="equip-grid-section" style="display: none;">
+                        <label class="equip-checkbox equip-chip compact-toggle" data-equip="noEquipment">
                             <input type="checkbox" onchange="filterExercises()">
                             <span>No Equipment</span>
                         </label>
@@ -732,6 +746,7 @@
                             <input type="checkbox" onchange="filterExercises()">
                             <span>Volleyball</span>
                         </label>
+                        </div>
                     </div>
                 </div>
 
@@ -1430,6 +1445,25 @@
             renderExercises(filtered);
         }
 
+        function updateEquipmentFilterVisibility() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const standardEquipment = document.getElementById('standardEquipmentFilters');
+            const funDayEquipment = document.getElementById('fundayEquipmentFilters');
+
+            if (typeFilter === 'funday') {
+                if (standardEquipment) standardEquipment.style.display = 'none';
+                if (funDayEquipment) funDayEquipment.style.display = 'contents';
+            } else {
+                if (standardEquipment) standardEquipment.style.display = 'contents';
+                if (funDayEquipment) funDayEquipment.style.display = 'none';
+            }
+        }
+
+        function handleTypeFilterChange() {
+            updateEquipmentFilterVisibility();
+            filterExercises();
+        }
+
         function renderExercises(exercises) {
             const grid = document.getElementById('exerciseGrid');
             const noResults = document.getElementById('noResults');
@@ -1488,12 +1522,14 @@
                 cb.closest('.equip-checkbox').classList.remove('active');
             });
 
+            updateEquipmentFilterVisibility();
             filterExercises();
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             buildExerciseList();
+            updateEquipmentFilterVisibility();
             filterExercises();
         });
     </script>

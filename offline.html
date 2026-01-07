@@ -1883,6 +1883,10 @@ footer a:hover {
             justify-content: start;
         }
 
+        .equip-grid-section {
+            display: contents;
+        }
+
         .equip-grid.equip-grid-pt {
             grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 8px;
@@ -1949,6 +1953,13 @@ footer a:hover {
             text-align: left;
             min-width: 0;
             height: 100%;
+        }
+
+        .equip-checkbox.equip-chip.compact-toggle span {
+            padding: 6px 10px;
+            min-height: 36px;
+            font-size: 0.72em;
+            letter-spacing: 0.4px;
         }
 
         .equip-checkbox.equip-chip span::before {
@@ -4342,7 +4353,7 @@ footer a:hover {
                         <div class="filter-grid">
                             <div class="form-group">
                                 <label for="typeFilter">Type</label>
-                                <select id="typeFilter" onchange="filterExercises()">
+                                <select id="typeFilter" onchange="handleTypeFilterChange()">
                                     <option value="all">All Types</option>
                                     <option value="cardio">Cardio</option>
                                     <option value="strength">Strength</option>
@@ -4371,6 +4382,7 @@ footer a:hover {
                         <div class="equipment-filter-group">
                             <label>Equipment</label>
                             <div class="equip-grid" id="equipmentFilters">
+                                <div id="standardEquipmentFilters" class="equip-grid-section">
                                 <label class="equip-checkbox equip-chip" data-equip="adjBench">
                                     <input type="checkbox" onchange="filterExercises()">
                                     <span>Adj. Bench</span>
@@ -4443,7 +4455,9 @@ footer a:hover {
                                     <input type="checkbox" onchange="filterExercises()">
                                     <span>Treadmill</span>
                                 </label>
-                                <label class="equip-checkbox equip-chip" data-equip="noEquipment">
+                                </div>
+                                <div id="fundayEquipmentFilters" class="equip-grid-section" style="display: none;">
+                                <label class="equip-checkbox equip-chip compact-toggle" data-equip="noEquipment">
                                     <input type="checkbox" onchange="filterExercises()">
                                     <span>No Equipment</span>
                                 </label>
@@ -4511,6 +4525,7 @@ footer a:hover {
                                     <input type="checkbox" onchange="filterExercises()">
                                     <span>Volleyball</span>
                                 </label>
+                                </div>
                             </div>
                         </div>
 
@@ -24497,6 +24512,25 @@ HeightWaistDiff,Weight,BodyFatPercent
             renderExercises(filtered);
         }
 
+        function updateEquipmentFilterVisibility() {
+            const typeFilter = document.getElementById('typeFilter')?.value || 'all';
+            const standardEquipment = document.getElementById('standardEquipmentFilters');
+            const funDayEquipment = document.getElementById('fundayEquipmentFilters');
+
+            if (typeFilter === 'funday') {
+                if (standardEquipment) standardEquipment.style.display = 'none';
+                if (funDayEquipment) funDayEquipment.style.display = 'contents';
+            } else {
+                if (standardEquipment) standardEquipment.style.display = 'contents';
+                if (funDayEquipment) funDayEquipment.style.display = 'none';
+            }
+        }
+
+        function handleTypeFilterChange() {
+            updateEquipmentFilterVisibility();
+            filterExercises();
+        }
+
         function renderExercises(exercises) {
             const grid = document.getElementById('exerciseGrid');
             const noResults = document.getElementById('noResults');
@@ -24561,11 +24595,13 @@ HeightWaistDiff,Weight,BodyFatPercent
                 cb.closest('.equip-checkbox').classList.remove('active');
             });
 
+            updateEquipmentFilterVisibility();
             filterExercises();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             buildExerciseList();
+            updateEquipmentFilterVisibility();
             filterExercises();
         });
     </script>
