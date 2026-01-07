@@ -312,6 +312,15 @@
             box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
         }
 
+        .equip-checkbox.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .form-group.is-disabled {
+            opacity: 0.5;
+        }
+
         /* Results Stats */
         .results-stats {
             display: flex;
@@ -579,7 +588,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="bodyPartGroup">
                         <label for="bodyPartFilter">Body Part</label>
                         <select id="bodyPartFilter" onchange="filterExercises()">
                             <option value="all">All Body Parts</option>
@@ -589,7 +598,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="modeGroup">
                         <label for="modeFilter">Intensity Mode</label>
                         <select id="modeFilter" onchange="filterExercises()">
                             <option value="all">All Modes</option>
@@ -1171,11 +1180,8 @@
                     { name: "Full Court Tag", tip: "Use basketball court boundaries. Can't cross out of bounds. Constant direction changes!", noEquipment: true, preferredFacility: "basketballCourt" },
                     { name: "Volleyball Court Relay", tip: "Teams line up on each side. Sprint under net, tag teammate. Fast rotation relay.", noEquipment: true, preferredFacility: "volleyballCourt" },
                     { name: "Ship Captain Crew", tip: "Leader calls commands (Port/Starboard/Captain's Coming). Last to respond is out.", noEquipment: true },
-                    { name: "Stuck in the Mud", tip: "Tagged players spread legs (stuck in mud). Freed when teammate crawls through. Fast-paced!", noEquipment: true },
                     { name: "Chain Tag", tip: "Tagged players join hands with tagger. Chain grows. Only end players can tag.", noEquipment: true },
                     { name: "Fitness Dice", tip: "Giant foam dice with exercises on each side. Roll dice, whole team does that exercise.", noEquipment: true },
-                    { name: "Ninja", tip: "Circle game. Take turns trying to 'chop' others' hands. Stay frozen until your turn. Strategy game!", noEquipment: true, link: "https://www.youtube.com/watch?v=Cq5WhjJpixk" },
-                    { name: "Human Knot", tip: "Circle up, grab random hands across circle. Untangle without letting go. Team building!", noEquipment: true },
                     { name: "Follow the Leader PT", tip: "Leader calls movements (burpees, jumping jacks, etc). Everyone follows. Rotate leaders every 3 min.", noEquipment: true }
                 ]
             }
@@ -1377,7 +1383,65 @@
             return labels[part] || part;
         }
 
+        function updateLibraryFilterState() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const bodyPartFilter = document.getElementById('bodyPartFilter');
+            const modeFilter = document.getElementById('modeFilter');
+            const bodyPartGroup = document.getElementById('bodyPartGroup');
+            const modeGroup = document.getElementById('modeGroup');
+            const isFunDay = typeFilter === 'funday';
+
+            if (isFunDay) {
+                bodyPartFilter.value = 'all';
+                modeFilter.value = 'all';
+            }
+
+            bodyPartFilter.disabled = isFunDay;
+            modeFilter.disabled = isFunDay;
+            if (bodyPartGroup) bodyPartGroup.classList.toggle('is-disabled', isFunDay);
+            if (modeGroup) modeGroup.classList.toggle('is-disabled', isFunDay);
+
+            updateFunDayEquipmentState();
+        }
+
+        function updateFunDayEquipmentState() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const funDayEquipment = document.getElementById('fundayEquipmentFilters');
+            if (!funDayEquipment) return;
+
+            const noEquipmentLabel = funDayEquipment.querySelector('[data-equip="noEquipment"]');
+            const noEquipmentInput = noEquipmentLabel?.querySelector('input');
+            const otherLabels = Array.from(funDayEquipment.querySelectorAll('label.equip-checkbox'))
+                .filter(label => label.dataset.equip !== 'noEquipment');
+
+            if (!noEquipmentInput) return;
+
+            if (typeFilter !== 'funday') {
+                otherLabels.forEach(label => {
+                    label.classList.remove('disabled');
+                    const input = label.querySelector('input');
+                    if (input) input.disabled = false;
+                });
+                return;
+            }
+
+            const disableOthers = noEquipmentInput.checked;
+            otherLabels.forEach(label => {
+                const input = label.querySelector('input');
+                if (!input) return;
+                if (disableOthers) {
+                    input.checked = false;
+                    input.disabled = true;
+                    label.classList.add('disabled');
+                } else {
+                    input.disabled = false;
+                    label.classList.remove('disabled');
+                }
+            });
+        }
+
         function filterExercises() {
+            updateLibraryFilterState();
             const search = document.getElementById('searchInput').value.toLowerCase();
             const typeFilter = document.getElementById('typeFilter').value;
             const bodyPartFilter = document.getElementById('bodyPartFilter').value;
@@ -1461,6 +1525,7 @@
 
         function handleTypeFilterChange() {
             updateEquipmentFilterVisibility();
+            updateLibraryFilterState();
             filterExercises();
         }
 
@@ -1523,6 +1588,7 @@
             });
 
             updateEquipmentFilterVisibility();
+            updateLibraryFilterState();
             filterExercises();
         }
 
@@ -1530,6 +1596,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             buildExerciseList();
             updateEquipmentFilterVisibility();
+            updateLibraryFilterState();
             filterExercises();
         });
     </script>
