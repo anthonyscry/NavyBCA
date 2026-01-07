@@ -605,6 +605,19 @@
             font-weight: 600;
         }
 
+        .activity-title {
+            color: #ffd700;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .exercise-tip {
+            margin-top: 5px;
+            font-size: 0.85em;
+            color: #ffd700;
+            font-style: italic;
+        }
+
         .exercise-name {
             font-weight: 600;
             font-size: 1.1em;
@@ -851,6 +864,14 @@
 
             .exercise-alt-name {
                 color: #111 !important;
+            }
+
+            .activity-title {
+                color: #111 !important;
+            }
+
+            .exercise-tip {
+                color: #444 !important;
             }
 
             .search-link {
@@ -2184,7 +2205,7 @@
         }
 
         function renderItem(name, meta, tip = null, alternative = null) {
-            const tipHtml = tip ? `<div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${tip}</div>` : '';
+            const tipHtml = tip ? `<div class="exercise-tip">💡 ${tip}</div>` : '';
             const altHtml = alternative
                 ? `<div class="exercise-alt">
                         <span class="exercise-alt-label">Low-impact option</span>
@@ -2440,7 +2461,7 @@
 
                 html += `<div class="section-header">2. Fun Day Activity (40-45 Min)</div>`;
                 html += `<p style="margin-bottom:15px; padding:15px; background:rgba(255,215,0,0.1); border-radius:8px; border:1px solid rgba(255,215,0,0.3); font-size:0.95em;">
-                            <strong style="color:#ffd700; font-size:1.2em;">Today's Activity: ${primary.name}</strong><br>
+                            <strong class="activity-title">Today's Activity: ${primary.name}</strong><br>
                             <span style="color:#8fa3bf;">💡 ${primary.tip}</span>
                             ${primary.link ? `<br><a href="${primary.link}" target="_blank" style="color:#4a90e2; text-decoration:none; font-size:0.9em; margin-top:8px; display:inline-block;">▶ Watch How to Play</a>` : ''}
                          </p>`;
@@ -2452,7 +2473,7 @@
                     html += `<li class="exercise-item">
                                 <span class="exercise-name">${activity.name}</span>
                                 <div class="exercise-meta">Team Sport</div>
-                                <div style="margin-top:5px; font-size:0.85em; color:#ffd700; font-style:italic;">💡 ${activity.tip}${linkHtml}</div>
+                                <div class="exercise-tip">💡 ${activity.tip}${linkHtml}</div>
                              </li>`;
                 });
                 html += `</ul>`;
