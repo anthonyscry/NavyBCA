@@ -49,6 +49,7 @@ html {
     scroll-padding-top: 20px;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -58,6 +59,7 @@ body {
     color: var(--color-text-primary);
     line-height: 1.7;
     overflow-x: hidden;
+    width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
