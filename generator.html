@@ -951,6 +951,7 @@
                     <select id="focusSelect">
                         <option value="mixed">Mixed (Strength & Cardio)</option>
                         <option value="strength">Strength Focus</option>
+                        <option value="core">Core Only (Abs Abs Abs)</option>
                         <option value="cardio">Cardio Focus</option>
                         <option value="funday">Fun Day (Team Sports)</option>
                         <option value="yoga">Chill Day (Yoga/Stretching)</option>
@@ -2564,7 +2565,7 @@
                 if (equip.sled && strengthDb.sled) mainPool = [...mainPool, ...strengthDb.sled];
             }
 
-            if (focus !== 'strength') {
+            if (focus === 'cardio' || focus === 'mixed') {
                 const cardioDb = db.cardio;
                 mainPool = [...mainPool, ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)];
                 if (equip.jumprope && cardioDb.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
@@ -2573,6 +2574,10 @@
                 if (equip.cycle && cardioDb.cycle) mainPool = [...mainPool, ...cardioDb.cycle];
                 if (equip.bicycle && cardioDb.bicycle) mainPool = [...mainPool, ...cardioDb.bicycle];
                 if (equip.treadmill && cardioDb.treadmill) mainPool = [...mainPool, ...cardioDb.treadmill];
+            }
+
+            if (focus === 'core') {
+                mainPool = mainPool.filter(ex => isCoreExercise(ex.name));
             }
 
             // Separate finishers from regular exercises
@@ -2608,7 +2613,8 @@
                 }
             }
 
-            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, focus, location) : {
+            const alternativesFocus = focus === 'core' ? 'strength' : focus;
+            const lowImpactAlternatives = lowImpact ? getLowImpactAlternatives(equip, alternativesFocus, location) : {
                 strengthAlternatives: [],
                 cardioAlternatives: []
             };
