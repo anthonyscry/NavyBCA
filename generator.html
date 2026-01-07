@@ -660,6 +660,24 @@
             color: #ffd700;
         }
 
+        .exercise-meta .meta-pill.equipment {
+            background: rgba(74, 144, 226, 0.2);
+            border-color: rgba(74, 144, 226, 0.45);
+            color: #cfe2ff;
+        }
+
+        .exercise-meta .meta-pill.body-part {
+            background: rgba(155, 89, 182, 0.18);
+            border-color: rgba(155, 89, 182, 0.5);
+            color: #e6c7ff;
+        }
+
+        .exercise-meta .meta-pill.low-impact {
+            background: rgba(39, 174, 96, 0.18);
+            border-color: rgba(39, 174, 96, 0.5);
+            color: #a8f0c1;
+        }
+
         .search-link {
             color: #4a90e2;
             text-decoration: none;
@@ -2219,7 +2237,58 @@
             return exercise.reps !== undefined;
         }
 
-        function renderItem(name, meta, tip = null, alternative = null) {
+        function getEquipmentLabel(equip) {
+            const labels = {
+                bodyweight: 'Bodyweight',
+                bands: 'Bands',
+                pullup: 'Pull-up Bar',
+                kettlebells: 'Kettlebells',
+                dumbbells: 'Dumbbells',
+                barbell: 'Barbell',
+                flatBench: 'Flat Bench',
+                adjBench: 'Adj. Bench',
+                sled: 'Sled',
+                indoor: 'Indoor',
+                outdoor: 'Outdoor',
+                jumprope: 'Jump Rope',
+                assaultBike: 'Assault Bike',
+                rower: 'Rower',
+                cycle: 'Stationary Bike',
+                bicycle: 'Bicycle',
+                treadmill: 'Treadmill',
+                swimming: 'Swimming'
+            };
+            return labels[equip] || equip;
+        }
+
+        function getBodyPartLabel(part) {
+            const labels = {
+                upper: 'Upper Body',
+                lower: 'Lower Body',
+                full: 'Full Body'
+            };
+            return labels[part] || part;
+        }
+
+        function buildExerciseTags({ equipment, bodyPart, isCore, isLowImpact } = {}) {
+            const tags = [];
+            if (equipment) {
+                tags.push(`<span class="meta-pill equipment">${getEquipmentLabel(equipment)}</span>`);
+            }
+            if (bodyPart) {
+                const bodyLabel = bodyPart === 'cardio' ? 'Cardio' : getBodyPartLabel(bodyPart);
+                tags.push(`<span class="meta-pill body-part">${bodyLabel}</span>`);
+            }
+            if (isCore) {
+                tags.push('<span class="meta-pill core">Core</span>');
+            }
+            if (isLowImpact) {
+                tags.push('<span class="meta-pill low-impact">Low Impact</span>');
+            }
+            return tags.join('');
+        }
+
+        function renderItem(name, meta, tip = null, alternative = null, tagOptions = {}) {
             const tipHtml = tip ? `<div class="exercise-tip">💡 ${tip}</div>` : '';
             const altHtml = alternative
                 ? `<div class="exercise-alt">
@@ -2227,7 +2296,10 @@
                         <span class="exercise-alt-name">${alternative}</span>
                    </div>`
                 : '';
-            const coreTag = isCoreExercise(name) ? '<span class="meta-pill core">Core</span>' : '';
+            const tagHtml = buildExerciseTags({
+                ...tagOptions,
+                isCore: tagOptions.isCore ?? isCoreExercise(name)
+            });
             return `
                 <li class="exercise-item">
                     <div class="exercise-row">
@@ -2235,7 +2307,7 @@
                             <span class="exercise-name">${name}</span>
                             <div class="exercise-meta">
                                 <span class="meta-text">${meta}</span>
-                                ${coreTag}
+                                ${tagHtml}
                             </div>
                         </div>
                         ${altHtml}
@@ -2568,26 +2640,32 @@
 
             if (focus !== 'cardio') {
                 const strengthDb = db.strength;
-                mainPool = [...mainPool, ...strengthDb.bodyweight];
-                if (equip.bands && strengthDb.bands) mainPool = [...mainPool, ...strengthDb.bands];
-                if (equip.pullup && strengthDb.pullup) mainPool = [...mainPool, ...strengthDb.pullup];
-                if (equip.kettlebells && strengthDb.kettlebells) mainPool = [...mainPool, ...strengthDb.kettlebells];
-                if (equip.dumbbells && strengthDb.dumbbells) mainPool = [...mainPool, ...strengthDb.dumbbells];
-                if (equip.barbell && strengthDb.barbell) mainPool = [...mainPool, ...strengthDb.barbell];
-                if (equip.flatBench && strengthDb.flatBench) mainPool = [...mainPool, ...strengthDb.flatBench];
-                if (equip.adjBench && strengthDb.adjBench) mainPool = [...mainPool, ...strengthDb.adjBench];
-                if (equip.sled && strengthDb.sled) mainPool = [...mainPool, ...strengthDb.sled];
+                const addWithEquipment = (items, equipment) => {
+                    items.forEach(item => mainPool.push({ ...item, equipment }));
+                };
+                addWithEquipment(strengthDb.bodyweight, 'bodyweight');
+                if (equip.bands && strengthDb.bands) addWithEquipment(strengthDb.bands, 'bands');
+                if (equip.pullup && strengthDb.pullup) addWithEquipment(strengthDb.pullup, 'pullup');
+                if (equip.kettlebells && strengthDb.kettlebells) addWithEquipment(strengthDb.kettlebells, 'kettlebells');
+                if (equip.dumbbells && strengthDb.dumbbells) addWithEquipment(strengthDb.dumbbells, 'dumbbells');
+                if (equip.barbell && strengthDb.barbell) addWithEquipment(strengthDb.barbell, 'barbell');
+                if (equip.flatBench && strengthDb.flatBench) addWithEquipment(strengthDb.flatBench, 'flatBench');
+                if (equip.adjBench && strengthDb.adjBench) addWithEquipment(strengthDb.adjBench, 'adjBench');
+                if (equip.sled && strengthDb.sled) addWithEquipment(strengthDb.sled, 'sled');
             }
 
             if (focus === 'cardio' || focus === 'mixed') {
                 const cardioDb = db.cardio;
-                mainPool = [...mainPool, ...(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor)];
-                if (equip.jumprope && cardioDb.jumprope) mainPool = [...mainPool, ...cardioDb.jumprope];
-                if (equip.assaultBike && cardioDb.assaultBike) mainPool = [...mainPool, ...cardioDb.assaultBike];
-                if (equip.rower && cardioDb.rower) mainPool = [...mainPool, ...cardioDb.rower];
-                if (equip.cycle && cardioDb.cycle) mainPool = [...mainPool, ...cardioDb.cycle];
-                if (equip.bicycle && cardioDb.bicycle) mainPool = [...mainPool, ...cardioDb.bicycle];
-                if (equip.treadmill && cardioDb.treadmill) mainPool = [...mainPool, ...cardioDb.treadmill];
+                const addWithEquipment = (items, equipment) => {
+                    items.forEach(item => mainPool.push({ ...item, equipment }));
+                };
+                addWithEquipment(location === 'indoor' ? cardioDb.indoor : cardioDb.outdoor, location);
+                if (equip.jumprope && cardioDb.jumprope) addWithEquipment(cardioDb.jumprope, 'jumprope');
+                if (equip.assaultBike && cardioDb.assaultBike) addWithEquipment(cardioDb.assaultBike, 'assaultBike');
+                if (equip.rower && cardioDb.rower) addWithEquipment(cardioDb.rower, 'rower');
+                if (equip.cycle && cardioDb.cycle) addWithEquipment(cardioDb.cycle, 'cycle');
+                if (equip.bicycle && cardioDb.bicycle) addWithEquipment(cardioDb.bicycle, 'bicycle');
+                if (equip.treadmill && cardioDb.treadmill) addWithEquipment(cardioDb.treadmill, 'treadmill');
             }
 
             if (focus === 'core') {
@@ -2650,7 +2728,11 @@
                         alternative = 'Scale impact (slow tempo, reduced range)';
                     }
                 }
-                html += renderItem(ex.name, reps, ex.tip, alternative);
+                html += renderItem(ex.name, reps, ex.tip, alternative, {
+                    equipment: ex.equipment,
+                    bodyPart: isCardio ? 'cardio' : targetGroup,
+                    isLowImpact: lowImpact
+                });
             });
             html += `</ul>`;
 
@@ -2701,7 +2783,7 @@
                     const exercises = exerciseLists[index].querySelectorAll('.exercise-item');
                     exercises.forEach(exercise => {
                         const name = exercise.querySelector('.exercise-name')?.textContent || '';
-                        const meta = exercise.querySelector('.exercise-meta')?.textContent || '';
+                        const meta = exercise.querySelector('.exercise-meta .meta-text')?.textContent || '';
                         csv += `"${name}","${meta}"\n`;
                     });
                 }
