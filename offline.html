@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navy BCA Tools Offline Mode</title>
+    <meta name="description"
+        content="Offline mode for Navy BCA tools. Access the BCA calculator, PT generator, and watchbill tools in one place with tabs.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <style>
+        .offline-card {
+            background: var(--color-surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            margin-bottom: 24px;
+        }
+
+        .offline-card p {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .offline-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .offline-tab {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(15, 30, 50, 0.6);
+            color: var(--color-text-primary);
+            padding: 10px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+        }
+
+        .offline-tab.active {
+            background: var(--color-primary);
+            color: #091423;
+            border-color: transparent;
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.35);
+        }
+
+        .offline-tab:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .offline-panel {
+            display: none;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 22, 40, 0.65);
+        }
+
+        .offline-panel.active {
+            display: block;
+        }
+
+        .offline-frame {
+            width: 100%;
+            height: 75vh;
+            min-height: 640px;
+            border: none;
+            display: block;
+            background: #0a1628;
+        }
+
+        .offline-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            background: rgba(34, 197, 94, 0.12);
+            color: var(--color-text-primary);
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            font-size: 0.95rem;
+        }
+
+        .offline-note strong {
+            color: #b7f7c7;
+        }
+
+        @media (max-width: 768px) {
+            .offline-frame {
+                height: 70vh;
+                min-height: 520px;
+            }
+
+            .offline-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">⚓</div>
+                <h1>Navy BCA Tools</h1>
+            </div>
+            <p class="subtitle">OFFLINE MODE • ALL GENERATORS & CALCULATORS</p>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html">BCA Calculator</a>
+                <a href="generator.html">PT Generator</a>
+                <a href="exercises.html">Exercise Library</a>
+                <a href="watchbill.html">Watchbill</a>
+                <a href="prt-prep.html">PRT Prep</a>
+                <a href="offline.html" class="active">Offline Mode</a>
+                <a href="references.html">References</a>
+                <a href="about.html">About</a>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <section class="offline-card" aria-labelledby="offline-title">
+                <h2 id="offline-title">Offline Mode</h2>
+                <p>
+                    Download this site folder to your phone or computer, then open <strong>offline.html</strong> to access
+                    every generator and calculator in one place. Use the tabs below to switch tools without needing
+                    internet access.
+                </p>
+                <p>
+                    <strong>How to save for offline use (underway/deployed):</strong> download the full folder, keep all
+                    files together, and open <strong>offline.html</strong> from your Files app or file manager. This
+                    works with no internet once the files are stored locally.
+                </p>
+                <div class="offline-note">
+                    <span>✅</span>
+                    <div>
+                        <strong>Offline tip:</strong> Save the entire folder (including <code>index.html</code>,
+                        <code>generator.html</code>, and <code>watchbill.html</code>) so all tools load locally. The
+                        offline bundle may run slightly behind the live site while new calculators and generators are
+                        being updated.
+                    </div>
+                </div>
+            </section>
+
+            <section class="offline-card" aria-label="Offline tools">
+                <div class="offline-tabs" role="tablist" aria-label="Offline tools">
+                    <button class="offline-tab active" type="button" role="tab" aria-selected="true"
+                        aria-controls="tab-bca" data-tab="tab-bca">
+                        BCA Calculator
+                    </button>
+                    <button class="offline-tab" type="button" role="tab" aria-selected="false"
+                        aria-controls="tab-pt" data-tab="tab-pt">
+                        PT Generator
+                    </button>
+                    <button class="offline-tab" type="button" role="tab" aria-selected="false"
+                        aria-controls="tab-watchbill" data-tab="tab-watchbill">
+                        Watchbill Generator
+                    </button>
+                </div>
+
+                <div id="tab-bca" class="offline-panel active" role="tabpanel">
+                    <iframe class="offline-frame" src="index.html" title="Navy BCA Calculator"></iframe>
+                </div>
+                <div id="tab-pt" class="offline-panel" role="tabpanel">
+                    <iframe class="offline-frame" src="generator.html" title="Navy PT Generator"></iframe>
+                </div>
+                <div id="tab-watchbill" class="offline-panel" role="tabpanel">
+                    <iframe class="offline-frame" src="watchbill.html" title="PT Watchbill Generator"></iframe>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const tabs = Array.from(document.querySelectorAll('.offline-tab'));
+        const panels = Array.from(document.querySelectorAll('.offline-panel'));
+
+        const setActiveTab = (targetId) => {
+            tabs.forEach((tab) => {
+                const isActive = tab.dataset.tab === targetId;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            panels.forEach((panel) => {
+                panel.classList.toggle('active', panel.id === targetId);
+            });
+        };
+
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                setActiveTab(tab.dataset.tab);
+            });
+        });
+    </script>
+</body>
+
+</html>
