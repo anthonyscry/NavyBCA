@@ -2321,6 +2321,215 @@ footer a:hover {
             color: #ffd700;
         }
 
+        .exercise-library .search-box {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1e3250;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .exercise-library .search-box:focus {
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+            border-color: #ffd700;
+        }
+
+        .exercise-library .search-box::placeholder {
+            color: #6b7c94;
+        }
+
+        .exercise-library .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-library .filter-grid .form-group {
+            background: rgba(10, 20, 36, 0.65);
+            border: 1px solid rgba(74, 144, 226, 0.25);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .exercise-library .equipment-filter-group {
+            background: rgba(10, 20, 36, 0.65);
+            border: 1px solid rgba(74, 144, 226, 0.25);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .exercise-library select {
+            width: 100%;
+            padding: 12px;
+            background: #1e3250;
+            border: 1px solid #4a90e2;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .exercise-library select:focus {
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+
+        .exercise-library .results-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(100, 130, 180, 0.2);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .exercise-library .results-count {
+            color: #8fa3bf;
+            font-size: 14px;
+        }
+
+        .exercise-library .results-count strong {
+            color: #ffd700;
+        }
+
+        .exercise-library .clear-filters {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exercise-library .clear-filters:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .exercise-library .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .exercise-library .exercise-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 18px;
+            border-left: 3px solid #4a90e2;
+            transition: all 0.2s;
+        }
+
+        .exercise-library .exercise-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .exercise-library .exercise-card.upper-body {
+            border-left-color: #e74c3c;
+        }
+
+        .exercise-library .exercise-card.lower-body {
+            border-left-color: #27ae60;
+        }
+
+        .exercise-library .exercise-card.full-body {
+            border-left-color: #9b59b6;
+        }
+
+        .exercise-library .exercise-card.cardio {
+            border-left-color: #f39c12;
+        }
+
+        .exercise-library .exercise-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .exercise-library .exercise-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-library .exercise-tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .exercise-library .tag-equipment {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+        }
+
+        .exercise-library .tag-body-part {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+        }
+
+        .exercise-library .tag-low-impact {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+
+        .exercise-library .tag-core {
+            background: rgba(155, 89, 182, 0.2);
+            color: #caa5e9;
+        }
+
+        .exercise-library .exercise-tip {
+            font-size: 0.9em;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .exercise-library .exercise-reps {
+            font-size: 0.85em;
+            color: #6b7c94;
+            font-style: italic;
+        }
+
+        .exercise-library .search-link {
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .exercise-library .search-link:hover {
+            text-decoration: underline;
+            color: #ffd700;
+        }
+
+        .exercise-library .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7c94;
+        }
+
+        .exercise-library .no-results h3 {
+            color: #8fa3bf;
+            margin-bottom: 10px;
+        }
+
         footer {
             text-align: center;
             color: #6b7c94;
@@ -3454,6 +3663,10 @@ footer a:hover {
                         PT Generator
                     </button>
                     <button class="offline-tab" type="button" role="tab" aria-selected="false"
+                        aria-controls="tab-library" data-tab="tab-library">
+                        Exercise Library
+                    </button>
+                    <button class="offline-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="tab-watchbill" data-tab="tab-watchbill">
                         Watchbill Generator
                     </button>
@@ -3539,10 +3752,10 @@ footer a:hover {
 
                     <div class="form-group">
                         <label for="rememberBcaToggle">Remember Inputs</label>
-                        <label class="toggle-pill">
+                        <label class="toggle-pill toggle-pill-compact">
                             <input type="checkbox" id="rememberBcaToggle">
                             <span class="toggle-pill-track"></span>
-                            <span>Save inputs on this device</span>
+                            <span class="toggle-pill-text">Save inputs on this device</span>
                         </label>
                     </div>
 
@@ -4003,6 +4216,134 @@ footer a:hover {
             <p style="margin-top: 20px; font-size: 12px; color: #6b7c94; text-align: center;">
                 * All exercises filtered to remove contraindicated movements per NOFFS guidelines.
             </p>
+                    </div>
+                </div>
+                <div id="tab-library" class="offline-panel" role="tabpanel">
+                    <h3 class="offline-section-title">Exercise Library</h3>
+                    <div class="calculator-card exercise-library">
+                        <div class="form-group">
+                            <label for="searchInput">Search Exercises</label>
+                            <input type="text" class="search-box" id="searchInput"
+                                   placeholder="Search by exercise name or keyword..." oninput="filterExercises()">
+                        </div>
+
+                        <div class="filter-grid">
+                            <div class="form-group">
+                                <label for="typeFilter">Type</label>
+                                <select id="typeFilter" onchange="filterExercises()">
+                                    <option value="all">All Types</option>
+                                    <option value="strength">Strength</option>
+                                    <option value="cardio">Cardio</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bodyPartFilter">Body Part</label>
+                                <select id="bodyPartFilter" onchange="filterExercises()">
+                                    <option value="all">All Body Parts</option>
+                                    <option value="upper">Upper Body</option>
+                                    <option value="lower">Lower Body</option>
+                                    <option value="full">Full Body</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="modeFilter">Mode</label>
+                                <select id="modeFilter" onchange="filterExercises()">
+                                    <option value="all">All Modes</option>
+                                    <option value="standard">Standard</option>
+                                    <option value="lowImpact">Low Impact</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="equipment-filter-group">
+                            <label>Equipment</label>
+                            <div class="equip-grid" id="equipmentFilters">
+                                <label class="equip-checkbox equip-chip" data-equip="bodyweight">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Bodyweight</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="bands">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Bands</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="pullup">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Pull-up Bar</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="kettlebells">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Kettlebells</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="dumbbells">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Dumbbells</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="barbell">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Barbell</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="flatBench">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Flat Bench</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="adjBench">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Adj. Bench</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="sled">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Sled</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="indoor">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Indoor Track</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="outdoor">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Outdoor Track</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="jumprope">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Jump Rope</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="assaultBike">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Assault Bike</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="rower">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Rower</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="cycle">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Stationary Bike</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="bicycle">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Bicycles</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="treadmill">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Treadmill</span>
+                                </label>
+                                <label class="equip-checkbox equip-chip" data-equip="swimming">
+                                    <input type="checkbox" onchange="filterExercises()">
+                                    <span>Swimming</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="results-stats">
+                            <span class="results-count">Showing <strong id="resultsCount">0</strong> exercises</span>
+                            <button class="clear-filters" type="button" onclick="clearFilters()">Clear All Filters</button>
+                        </div>
+
+                        <div class="exercise-grid" id="exerciseGrid"></div>
+
+                        <div class="no-results" id="noResults" style="display: none;">
+                            <h3>No exercises found</h3>
+                            <p>Try adjusting your search or filters</p>
+                        </div>
                     </div>
                 </div>
                 <div id="tab-watchbill" class="offline-panel" role="tabpanel">
@@ -21850,18 +22191,18 @@ HeightWaistDiff,Weight,BodyFatPercent
                 outdoor: [
                     // Equipment-based games (with fitness penalties)
                     { name: "Kickball with PT", tip: "Standard baseball rules. FITNESS: Outs do 5 4-count pushups. Scored-on team does 10 4-count exercise chosen by scoring team.", requires: "kickball" },
-                    { name: "Ultimate Frisbee", tip: "Score by catching in end zone. FITNESS: Scored-on team does 10 4-count burpees. Turnover = 5 4-count mountain climbers.", requires: "frisbee", link: "https://www.youtube.com/watch?v=LPd-XdI5tuk" },
+                    { name: "Ultimate Frisbee", tip: "Score by catching in end zone. FITNESS: Scored-on team does 10 4-count burpees. Turnover = 5 4-count mountain climbers.", requires: "frisbee" },
                     { name: "Flag Football", tip: "Flag pull or two-hand touch only (no tackling). FITNESS: Scored-on team does 10 4-count exercise picked by scoring team. Turnover = 5 4-count pushups.", requires: "football" },
                     { name: "Soccer", tip: "Full field or small-sided. FITNESS: Scored-on team does 10 4-count squats. Penalty for offsides = 5 4-count situps.", requires: "soccer" },
                     { name: "Softball with Fitness", tip: "Slow pitch. FITNESS: Outs do 5 4-count pushups before returning to dugout. Scored-on team does 10 4-count exercise.", requires: "baseball" },
                     { name: "Capture the Flag", tip: "Two teams, two territories. FITNESS: Captured players do 10 4-count burpees in 'jail', freed by teammates. Great cardio!", requires: "flagSet" },
                     { name: "Tug of War", tip: "Equal teams by weight. FITNESS: Losing team does 15 4-count exercise chosen by winners. Best 2 of 3 rounds.", requires: "tugRope" },
                     { name: "Obstacle Course Time Trial", tip: "Set up PT stations with cones. FITNESS: Team with slowest time does 10 extra 4-count burpees. All exercises are 4-count.", requires: "cones" },
-                    { name: "Speedball", tip: "Hybrid sport - kick or throw to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Fast-paced!", requires: "soccer", link: "https://www.youtube.com/watch?v=yP3VvqYYlGI" },
-                    { name: "Spikeball (Roundnet)", tip: "2v2 teams, 3 touches to return. FITNESS: Losing team each game does 10 4-count pushups. Play best of 5 to 21 points.", requires: "spikeball", link: "https://www.youtube.com/watch?v=FRmjRZpHQH8" },
+                    { name: "Speedball", tip: "Hybrid sport - kick or throw to score. FITNESS: Scored-on team does 10 4-count exercise chosen by scoring team. Fast-paced!", requires: "soccer" },
+                    { name: "Spikeball (Roundnet)", tip: "2v2 teams, 3 touches to return. FITNESS: Losing team each game does 10 4-count pushups. Play best of 5 to 21 points.", requires: "spikeball" },
                     { name: "Kan Jam", tip: "Frisbee to can, partner deflects. FITNESS: Losing team does 10 4-count exercise. First to 21 wins!", requires: "frisbee" },
                     // No-equipment games (with facility preferences and fitness penalties)
-                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tag with two-hand touch (no tackling). FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField", link: "https://www.youtube.com/watch?v=7vtfR6EqPLE" },
+                    { name: "British Bulldog", tip: "Players run across field. Bulldogs tag with two-hand touch (no tackling). FITNESS: Tagged players do 10 4-count pushups before becoming bulldogs.", noEquipment: true, preferredFacility: "openField" },
                     { name: "Manhunt", tip: "Hide and seek meets tag. FITNESS: Tagged players do 10 4-count burpees before becoming hunters. Keeps fitness high!", noEquipment: true, preferredFacility: "openField" },
                     { name: "Tag Variations (Freeze Tag, Tunnel Tag)", tip: "Classic tag games. FITNESS: Tagged players do 10 4-count mountain climbers to unfreeze OR wait for teammate crawl-through.", noEquipment: true },
                     { name: "Red Light Green Light", tip: "Leader calls movements. FITNESS: Caught moving = 5 4-count pushups at start line, then rejoin.", noEquipment: true },
@@ -21890,7 +22231,7 @@ HeightWaistDiff,Weight,BodyFatPercent
                     { name: "Volleyball", tip: "Rally scoring to 25. Rotate servers. Modify net height as needed.", requires: "volleyball" },
                     { name: "Dodgeball Variations", tip: "Doctor Dodgeball: One 'doctor' per team can revive teammates. Or Jailbreak: Catch ball to free teammates.", requires: "dodgeball" },
                     { name: "Dodgeball", tip: "Soft balls only. Clear boundaries. Eliminated players do exercises on sideline.", requires: "dodgeball" },
-                    { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball", link: "https://www.youtube.com/watch?v=JQbqfK5Z8_A" },
+                    { name: "Bombardment", tip: "Dodgeball meets bowling. Hit cones behind opponent's line to win. 3 balls per side.", requires: "dodgeball" },
                     { name: "Floor Hockey", tip: "Plastic sticks and puck. No high sticking. Rotate goalies.", requires: "hockey" },
                     // No-equipment games (with facility preferences)
                     { name: "Octopus Tag", tip: "Tagger in middle can only pivot on one foot. Others run past. Tagged join as octopi.", noEquipment: true },
@@ -21906,7 +22247,7 @@ HeightWaistDiff,Weight,BodyFatPercent
                     { name: "Stuck in the Mud", tip: "Tagged players spread legs (stuck in mud). Freed when teammate crawls through. Fast-paced!", noEquipment: true },
                     { name: "Chain Tag", tip: "Tagged players join hands with tagger. Chain grows. Only end players can tag.", noEquipment: true },
                     { name: "Fitness Dice", tip: "Giant foam dice with exercises on each side. Roll dice, whole team does that exercise.", noEquipment: true },
-                    { name: "Ninja", tip: "Circle game. Take turns trying to 'chop' others' hands. Stay frozen until your turn. Strategy game!", noEquipment: true, link: "https://www.youtube.com/watch?v=Cq5WhjJpixk" },
+                    { name: "Ninja", tip: "Circle game. Take turns trying to 'chop' others' hands. Stay frozen until your turn. Strategy game!", noEquipment: true },
                     { name: "Human Knot", tip: "Circle up, grab random hands across circle. Untangle without letting go. Team building!", noEquipment: true },
                     { name: "Follow the Leader PT", tip: "Leader calls movements (burpees, jumping jacks, etc). Everyone follows. Rotate leaders every 3 min.", noEquipment: true }
                 ]
@@ -22391,7 +22732,7 @@ HeightWaistDiff,Weight,BodyFatPercent
         // --- Render Helpers ---
 
         function getSearchLink(term) {
-            return `https://www.google.com/search?q=${encodeURIComponent(term + " exercise technique")}+site:youtube.com`;
+            return `https://www.google.com/search?q=${encodeURIComponent(term + " exercise technique")}`;
         }
 
         function isPlankExercise(name) {
@@ -23596,6 +23937,241 @@ HeightWaistDiff,Weight,BodyFatPercent
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }
+
+        let allExercises = [];
+
+        function buildExerciseList() {
+            allExercises = [];
+
+            Object.entries(db.strength).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    allExercises.push({
+                        ...ex,
+                        equipment: equipment,
+                        type: 'strength',
+                        mode: 'standard',
+                        bodyPart: getBodyPart(ex.name),
+                        isCore: isCoreExercise(ex.name)
+                    });
+                });
+            });
+
+            Object.entries(db.cardio).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    allExercises.push({
+                        ...ex,
+                        equipment: equipment,
+                        type: 'cardio',
+                        mode: 'standard',
+                        bodyPart: 'lower',
+                        isCore: isCoreExercise(ex.name)
+                    });
+                });
+            });
+
+            Object.entries(db.lowImpact.strength).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
+                    if (existing) {
+                        existing.hasLowImpact = true;
+                    } else {
+                        allExercises.push({
+                            ...ex,
+                            equipment: equipment,
+                            type: 'strength',
+                            mode: 'lowImpact',
+                            bodyPart: getBodyPart(ex.name),
+                            isCore: isCoreExercise(ex.name)
+                        });
+                    }
+                });
+            });
+
+            Object.entries(db.lowImpact.cardio).forEach(([equipment, exercises]) => {
+                exercises.forEach(ex => {
+                    const existing = allExercises.find(e => e.name === ex.name && e.equipment === equipment);
+                    if (existing) {
+                        existing.hasLowImpact = true;
+                    } else {
+                        allExercises.push({
+                            ...ex,
+                            equipment: equipment,
+                            type: 'cardio',
+                            mode: 'lowImpact',
+                            bodyPart: 'lower',
+                            isCore: isCoreExercise(ex.name)
+                        });
+                    }
+                });
+            });
+        }
+
+        function getBodyPart(exerciseName) {
+            const name = exerciseName.toLowerCase();
+            const upperKeywords = ['push', 'press', 'curl', 'row', 'pull', 'tricep', 'bicep', 'dip', 'plank', 'shoulder', 'arm', 'chest', 'y-t-w'];
+            const lowerKeywords = ['squat', 'lunge', 'deadlift', 'bridge', 'calf', 'step', 'glute', 'hip', 'thrust', 'hinge', 'good morning'];
+
+            if (lowerKeywords.some(keyword => name.includes(keyword))) {
+                return 'lower';
+            }
+            if (upperKeywords.some(keyword => name.includes(keyword))) {
+                return 'upper';
+            }
+            return 'full';
+        }
+
+        function getEquipmentLabel(equip) {
+            const labels = {
+                bodyweight: 'Bodyweight',
+                bands: 'Bands',
+                pullup: 'Pull-up Bar',
+                kettlebells: 'Kettlebells',
+                dumbbells: 'Dumbbells',
+                barbell: 'Barbell',
+                flatBench: 'Flat Bench',
+                adjBench: 'Adj. Bench',
+                sled: 'Sled',
+                indoor: 'Indoor',
+                outdoor: 'Outdoor',
+                jumprope: 'Jump Rope',
+                assaultBike: 'Assault Bike',
+                rower: 'Rower',
+                cycle: 'Stationary Bike',
+                bicycle: 'Bicycle',
+                treadmill: 'Treadmill',
+                swimming: 'Swimming'
+            };
+            return labels[equip] || equip;
+        }
+
+        function getBodyPartLabel(part) {
+            const labels = {
+                upper: 'Upper Body',
+                lower: 'Lower Body',
+                full: 'Full Body'
+            };
+            return labels[part] || part;
+        }
+
+        function filterExercises() {
+            const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const typeFilter = document.getElementById('typeFilter')?.value || 'all';
+            const bodyPartFilter = document.getElementById('bodyPartFilter')?.value || 'all';
+            const modeFilter = document.getElementById('modeFilter')?.value || 'all';
+
+            const equipmentCheckboxes = document.querySelectorAll('#equipmentFilters input[type="checkbox"]');
+            const selectedEquipment = [];
+            equipmentCheckboxes.forEach(cb => {
+                const label = cb.closest('.equip-checkbox');
+                if (cb.checked) {
+                    selectedEquipment.push(label.dataset.equip);
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            });
+
+            let filtered = allExercises.filter(ex => {
+                if (search && !ex.name.toLowerCase().includes(search) && !ex.tip.toLowerCase().includes(search)) {
+                    return false;
+                }
+
+                if (typeFilter !== 'all' && ex.type !== typeFilter) {
+                    return false;
+                }
+
+                if (bodyPartFilter !== 'all' && ex.bodyPart !== bodyPartFilter) {
+                    return false;
+                }
+
+                if (modeFilter === 'standard' && ex.mode === 'lowImpact') {
+                    return false;
+                }
+                if (modeFilter === 'lowImpact' && ex.mode !== 'lowImpact' && !ex.hasLowImpact) {
+                    return false;
+                }
+
+                if (selectedEquipment.length > 0 && !selectedEquipment.includes(ex.equipment)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            const seen = new Set();
+            filtered = filtered.filter(ex => {
+                const key = `${ex.name}-${ex.equipment}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
+            renderExercises(filtered);
+        }
+
+        function renderExercises(exercises) {
+            const grid = document.getElementById('exerciseGrid');
+            const noResults = document.getElementById('noResults');
+            const countEl = document.getElementById('resultsCount');
+
+            if (!grid || !noResults || !countEl) return;
+
+            countEl.textContent = exercises.length;
+
+            if (exercises.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            grid.innerHTML = exercises.map(ex => {
+                const bodyPartClass = ex.type === 'cardio' ? 'cardio' : `${ex.bodyPart}-body`;
+                const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(ex.name + ' exercise demo')}`;
+
+                return `
+                    <div class="exercise-card ${bodyPartClass}">
+                        <div class="exercise-card-header">
+                            <span class="exercise-name">${ex.name}</span>
+                        </div>
+                        <div class="exercise-tags">
+                            <span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.equipment)}</span>
+                            <span class="exercise-tag tag-body-part">${ex.type === 'cardio' ? 'Cardio' : getBodyPartLabel(ex.bodyPart)}</span>
+                            ${ex.isCore ? '<span class="exercise-tag tag-core">Core</span>' : ''}
+                            ${ex.mode === 'lowImpact' || ex.hasLowImpact ? '<span class="exercise-tag tag-low-impact">Low Impact</span>' : ''}
+                        </div>
+                        <p class="exercise-tip">${ex.tip}</p>
+                        ${ex.reps ? `<p class="exercise-reps">${ex.reps}</p>` : ''}
+                        <a href="${searchUrl}" target="_blank" class="search-link">Watch demo →</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearFilters() {
+            const searchInput = document.getElementById('searchInput');
+            const typeFilter = document.getElementById('typeFilter');
+            const bodyPartFilter = document.getElementById('bodyPartFilter');
+            const modeFilter = document.getElementById('modeFilter');
+
+            if (searchInput) searchInput.value = '';
+            if (typeFilter) typeFilter.value = 'all';
+            if (bodyPartFilter) bodyPartFilter.value = 'all';
+            if (modeFilter) modeFilter.value = 'all';
+
+            document.querySelectorAll('#equipmentFilters input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+                cb.closest('.equip-checkbox').classList.remove('active');
+            });
+
+            filterExercises();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            buildExerciseList();
+            filterExercises();
+        });
     </script>
 </body>
 
