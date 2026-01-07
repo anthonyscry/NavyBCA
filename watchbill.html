@@ -814,8 +814,12 @@
 
         @media (max-width: 900px) {
             .calendar-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
                 gap: 15px;
+            }
+
+            .calendar-grid.weekday-only {
+                grid-template-columns: 1fr !important;
             }
 
             .calendar-day-header {
