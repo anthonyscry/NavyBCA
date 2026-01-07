@@ -386,7 +386,7 @@
 
         .injury-options {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 8px;
             margin-top: 10px;
             width: 100%;
@@ -396,6 +396,8 @@
             font-size: 0.8em;
             padding: 6px 10px;
             min-width: 0;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         .injury-options p {
@@ -412,6 +414,12 @@
         .helper-text.tight {
             margin: 8px 0 10px;
             font-style: italic;
+        }
+
+        @media (max-width: 520px) {
+            .injury-options {
+                grid-template-columns: 1fr;
+            }
         }
 
         .equip-grid.disabled {
