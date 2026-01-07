@@ -564,6 +564,7 @@
                             <option value="all">All Types</option>
                             <option value="cardio">Cardio</option>
                             <option value="strength">Strength</option>
+                            <option value="funday">Fun Games</option>
                         </select>
                     </div>
 
@@ -663,6 +664,74 @@
                             <input type="checkbox" onchange="filterExercises()">
                             <span>Treadmill</span>
                         </label>
+                        <label class="equip-checkbox equip-chip" data-equip="noEquipment">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>No Equipment</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="openField">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Open Field</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="baseballField">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Baseball Field</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="basketballCourt">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Basketball Court</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="volleyballCourt">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Volleyball Court</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="track">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Track</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="baseball">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Baseball</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="basketball">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Basketball</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="cones">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Cones</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="dodgeball">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Dodgeball</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="flagSet">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Flag Set</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="football">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Football</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="frisbee">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Frisbee</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="kickball">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Kickball</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="soccer">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Soccer</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="tugRope">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Tug Rope</span>
+                        </label>
+                        <label class="equip-checkbox equip-chip" data-equip="volleyball">
+                            <input type="checkbox" onchange="filterExercises()">
+                            <span>Volleyball</span>
+                        </label>
                     </div>
                 </div>
 
@@ -683,15 +752,6 @@
                 </div>
             </div>
 
-            <div class="calculator-card fun-day-library">
-                <div class="card-header">
-                    <h2>Fun Day Games</h2>
-                </div>
-                <div class="results-stats">
-                    <span class="results-count">Showing <strong id="funDayCount">0</strong> games</span>
-                </div>
-                <div class="exercise-grid" id="funDayGrid"></div>
-            </div>
         </main>
 
         <footer>
@@ -1118,6 +1178,7 @@
                     allExercises.push({
                         ...ex,
                         equipment: equipment,
+                        equipmentTags: [equipment],
                         type: 'strength',
                         mode: 'standard',
                         bodyPart: getBodyPart(ex.name),
@@ -1132,6 +1193,7 @@
                     allExercises.push({
                         ...ex,
                         equipment: equipment,
+                        equipmentTags: [equipment],
                         type: 'cardio',
                         mode: 'standard',
                         bodyPart: 'lower',
@@ -1151,6 +1213,7 @@
                         allExercises.push({
                             ...ex,
                             equipment: equipment,
+                            equipmentTags: [equipment],
                             type: 'strength',
                             mode: 'lowImpact',
                             bodyPart: getBodyPart(ex.name),
@@ -1170,12 +1233,42 @@
                         allExercises.push({
                             ...ex,
                             equipment: equipment,
+                            equipmentTags: [equipment],
                             type: 'cardio',
                             mode: 'lowImpact',
                             bodyPart: 'lower',
                             isCore: isCoreExercise(ex.name)
                         });
                     }
+                });
+            });
+
+            const funDayGames = [
+                ...db.funday.outdoor.map(game => ({ ...game, location: 'Outdoor' })),
+                ...db.funday.indoor.map(game => ({ ...game, location: 'Indoor' }))
+            ];
+
+            funDayGames.forEach(game => {
+                const equipmentTags = [];
+                if (game.requires) {
+                    equipmentTags.push(game.requires);
+                }
+                if (game.noEquipment) {
+                    equipmentTags.push('noEquipment');
+                }
+                if (game.preferredFacility) {
+                    equipmentTags.push(game.preferredFacility);
+                }
+
+                allExercises.push({
+                    ...game,
+                    equipment: game.requires || (game.noEquipment ? 'noEquipment' : null),
+                    equipmentTags: equipmentTags.length ? equipmentTags : ['noEquipment'],
+                    type: 'funday',
+                    mode: 'standard',
+                    bodyPart: 'full',
+                    isCore: false,
+                    preferredFacility: game.preferredFacility || null
                 });
             });
         }
@@ -1238,7 +1331,24 @@
                 cycle: 'Stationary Bike',
                 bicycle: 'Bicycle',
                 treadmill: 'Treadmill',
-                swimming: 'Swimming'
+                swimming: 'Swimming',
+                noEquipment: 'No Equipment',
+                openField: 'Open Field',
+                baseballField: 'Baseball Field',
+                basketballCourt: 'Basketball Court',
+                volleyballCourt: 'Volleyball Court',
+                track: 'Track',
+                baseball: 'Baseball',
+                basketball: 'Basketball',
+                cones: 'Cones',
+                dodgeball: 'Dodgeball',
+                flagSet: 'Flag Set',
+                football: 'Football',
+                frisbee: 'Frisbee',
+                kickball: 'Kickball',
+                soccer: 'Soccer',
+                tugRope: 'Tug Rope',
+                volleyball: 'Volleyball'
             };
             return labels[equip] || equip;
         }
@@ -1282,22 +1392,27 @@
                     return false;
                 }
 
-                // Body part filter
-                if (bodyPartFilter !== 'all' && ex.bodyPart !== bodyPartFilter) {
-                    return false;
-                }
+                if (!(ex.type === 'funday' && typeFilter === 'funday')) {
+                    // Body part filter
+                    if (bodyPartFilter !== 'all' && ex.bodyPart !== bodyPartFilter) {
+                        return false;
+                    }
 
-                // Mode filter
-                if (modeFilter === 'standard' && ex.mode === 'lowImpact') {
-                    return false;
-                }
-                if (modeFilter === 'lowImpact' && ex.mode !== 'lowImpact' && !ex.hasLowImpact) {
-                    return false;
+                    // Mode filter
+                    if (modeFilter === 'standard' && ex.mode === 'lowImpact') {
+                        return false;
+                    }
+                    if (modeFilter === 'lowImpact' && ex.mode !== 'lowImpact' && !ex.hasLowImpact) {
+                        return false;
+                    }
                 }
 
                 // Equipment filter
-                if (selectedEquipment.length > 0 && !selectedEquipment.includes(ex.equipment)) {
-                    return false;
+                if (selectedEquipment.length > 0) {
+                    const equipmentTags = ex.equipmentTags || (ex.equipment ? [ex.equipment] : []);
+                    if (!selectedEquipment.some(tag => equipmentTags.includes(tag))) {
+                        return false;
+                    }
                 }
 
                 return true;
@@ -1331,8 +1446,15 @@
             noResults.style.display = 'none';
 
             grid.innerHTML = exercises.map(ex => {
-                const bodyPartClass = ex.type === 'cardio' ? 'cardio' : ex.bodyPart + '-body';
+                const isFunDay = ex.type === 'funday';
+                const bodyPartClass = ex.type === 'cardio' ? 'cardio' : (isFunDay ? 'full-body' : ex.bodyPart + '-body');
                 const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(ex.name + ' exercise demo')}`;
+                const demoLink = ex.link || searchUrl;
+                const demoLabel = ex.link ? 'Watch demo →' : 'Watch demo →';
+                const typeLabel = ex.type === 'cardio' ? 'Cardio' : (isFunDay ? 'Fun Game' : getBodyPartLabel(ex.bodyPart));
+                const facilityTag = isFunDay && ex.preferredFacility
+                    ? `<span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.preferredFacility)}</span>`
+                    : '';
 
                 return `
                     <div class="exercise-card ${bodyPartClass}">
@@ -1340,50 +1462,16 @@
                             <span class="exercise-name">${ex.name}</span>
                         </div>
                         <div class="exercise-tags">
-                            <span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.equipment)}</span>
-                            <span class="exercise-tag tag-body-part">${ex.type === 'cardio' ? 'Cardio' : getBodyPartLabel(ex.bodyPart)}</span>
-                            ${ex.isCore ? '<span class="exercise-tag tag-core">Core</span>' : ''}
-                            ${ex.mode === 'lowImpact' || ex.hasLowImpact ? '<span class="exercise-tag tag-low-impact">Low Impact</span>' : ''}
+                            ${ex.equipment ? `<span class="exercise-tag tag-equipment">${getEquipmentLabel(ex.equipment)}</span>` : ''}
+                            <span class="exercise-tag tag-body-part">${typeLabel}</span>
+                            ${isFunDay && ex.location ? `<span class="exercise-tag tag-body-part">${ex.location}</span>` : ''}
+                            ${facilityTag}
+                            ${!isFunDay && ex.isCore ? '<span class="exercise-tag tag-core">Core</span>' : ''}
+                            ${!isFunDay && (ex.mode === 'lowImpact' || ex.hasLowImpact) ? '<span class="exercise-tag tag-low-impact">Low Impact</span>' : ''}
                         </div>
                         <p class="exercise-tip">${ex.tip}</p>
                         ${ex.reps ? `<p class="exercise-reps">${ex.reps}</p>` : ''}
-                        <a href="${searchUrl}" target="_blank" class="search-link">Watch demo →</a>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderFunDayGames() {
-            const grid = document.getElementById('funDayGrid');
-            const countEl = document.getElementById('funDayCount');
-            if (!grid || !countEl) {
-                return;
-            }
-
-            const games = [
-                ...db.funday.outdoor.map(game => ({ ...game, location: 'Outdoor' })),
-                ...db.funday.indoor.map(game => ({ ...game, location: 'Indoor' }))
-            ];
-
-            countEl.textContent = games.length;
-            grid.innerHTML = games.map(game => {
-                const equipmentLabel = game.requires ? 'Equipment' : 'No Equipment';
-                const equipmentClass = game.requires ? 'tag-equipment' : 'tag-low-impact';
-                const linkHtml = game.link
-                    ? `<a href="${game.link}" target="_blank" class="search-link">Watch demo →</a>`
-                    : '';
-
-                return `
-                    <div class="exercise-card">
-                        <div class="exercise-card-header">
-                            <span class="exercise-name">${game.name}</span>
-                        </div>
-                        <div class="exercise-tags">
-                            <span class="exercise-tag tag-body-part">${game.location}</span>
-                            <span class="exercise-tag ${equipmentClass}">${equipmentLabel}</span>
-                        </div>
-                        <p class="exercise-tip">${game.tip}</p>
-                        ${linkHtml}
+                        <a href="${demoLink}" target="_blank" class="search-link">${demoLabel}</a>
                     </div>
                 `;
             }).join('');
@@ -1407,7 +1495,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             buildExerciseList();
             filterExercises();
-            renderFunDayGames();
         });
     </script>
 </body>
