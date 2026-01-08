@@ -62,6 +62,7 @@ html {
     scroll-padding-top: 20px;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    overscroll-behavior-x: none;
     width: 100%;
 }
 
@@ -72,6 +73,7 @@ body {
     color: var(--color-text-primary);
     line-height: 1.7;
     overflow-x: hidden;
+    overscroll-behavior-x: none;
     width: 100%;
 }
 
@@ -91,6 +93,7 @@ body {
     margin: 0 auto;
     padding: 24px;
     overflow-x: hidden;
+    width: 100%;
 }
 
 header {
@@ -3821,6 +3824,7 @@ footer a:hover {
             gap: 12px;
             margin-bottom: 20px;
             width: 100%;
+            max-width: 100%;
         }
 
         .offline-tab {
@@ -3834,6 +3838,7 @@ footer a:hover {
             font-weight: 600;
             flex: 1 1 180px;
             text-align: center;
+            min-width: 0;
         }
 
         .offline-tab.active {
@@ -3850,6 +3855,8 @@ footer a:hover {
 
         .offline-panel {
             display: none;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .offline-panel.active {
@@ -3874,6 +3881,7 @@ footer a:hover {
             box-shadow: none;
             overflow-x: hidden;
             max-width: 100%;
+            width: 100%;
         }
 
         .offline-tools-panel .calculator-card {
