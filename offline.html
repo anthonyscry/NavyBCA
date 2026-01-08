@@ -3814,54 +3814,130 @@ footer a:hover {
             }
         }
 
+        /* ============================================
+           OFFLINE PAGE SPECIFIC STYLES
+           ============================================ */
+
+        /* Info Card - First card with instructions */
         .offline-card {
             background: var(--color-surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(100, 130, 180, 0.25);
             border-radius: var(--radius-xl);
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin-bottom: 24px;
             max-width: 100%;
         }
 
+        .offline-card h2 {
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+        }
+
         .offline-card p {
             color: var(--color-text-secondary);
-            margin-bottom: var(--space-md);
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .offline-card p:last-of-type {
+            margin-bottom: 16px;
+        }
+
+        .offline-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--color-text-primary);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        .offline-note span {
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .offline-note strong {
+            color: #6ee7a0;
+        }
+
+        /* Tool Selector - Tab container */
+        .offline-tool-selector {
+            background: var(--color-surface);
+            border: 1px solid rgba(100, 130, 180, 0.25);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: 24px 28px 20px;
+            margin-bottom: 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .offline-selector-title {
+            margin: 0 0 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .offline-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             width: 100%;
-            max-width: 100%;
         }
 
         .offline-tab {
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(15, 30, 50, 0.6);
-            color: var(--color-text-primary);
-            padding: 10px 16px;
-            border-radius: 999px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            background: rgba(10, 25, 45, 0.6);
+            color: var(--color-text-secondary);
+            padding: 12px 16px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: all 0.2s ease;
             font-weight: 600;
-            flex: 1 1 180px;
+            font-size: 0.9rem;
             text-align: center;
-            min-width: 0;
+            white-space: nowrap;
+        }
+
+        .offline-tab:hover {
+            background: rgba(100, 130, 180, 0.15);
+            border-color: rgba(100, 130, 180, 0.5);
+            color: var(--color-text-primary);
         }
 
         .offline-tab.active {
-            background: var(--color-primary);
-            color: #091423;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: #0a1628;
             border-color: transparent;
-            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.35);
+            box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
         }
 
         .offline-tab:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
+        }
+
+        /* Tools Panel - Content area */
+        .offline-tools-panel {
+            background: var(--color-surface);
+            border: 1px solid rgba(100, 130, 180, 0.25);
+            border-top: none;
+            border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+            padding: 0;
+            margin-top: 0;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 100%;
+            width: 100%;
         }
 
         .offline-panel {
@@ -3874,93 +3950,93 @@ footer a:hover {
             display: block;
         }
 
-        .offline-tool-selector {
-            padding: 20px 24px;
-            margin-bottom: 0;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-bottom: none;
-        }
-
-        .offline-selector-title {
-            margin: 0 0 12px;
-            font-size: 1.05rem;
-            color: var(--color-text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .offline-tools-panel {
-            padding: 0;
-            margin-top: 0;
-            border: none;
-            box-shadow: none;
-            overflow-x: hidden;
-            max-width: 100%;
-            width: 100%;
-            background: transparent;
-        }
-
+        /* Calculator card inside tools panel */
         .offline-tools-panel .calculator-card {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
             width: 100%;
             max-width: 100%;
             margin: 0;
-            box-sizing: border-box;
-            overflow-x: clip;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-top: none;
         }
 
         .offline-tools-panel .input-section {
-            padding: 0;
-            overflow-x: hidden;
+            padding: 28px;
         }
 
-        .offline-note {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            background: rgba(34, 197, 94, 0.12);
-            color: var(--color-text-primary);
-            border: 1px solid rgba(34, 197, 94, 0.35);
-            font-size: 0.95rem;
-        }
-
-        .offline-note strong {
-            color: #b7f7c7;
-        }
-
+        /* ============================================
+           MOBILE RESPONSIVE - OFFLINE PAGE
+           ============================================ */
         @media (max-width: 768px) {
+            .offline-card {
+                padding: 20px;
+                margin-left: -4px;
+                margin-right: -4px;
+                border-radius: 12px;
+            }
+
             .offline-tabs {
-                justify-content: center;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .offline-tab {
+                padding: 10px 12px;
+                font-size: 0.85rem;
             }
 
             .offline-tool-selector {
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
-                margin-left: -24px;
-                margin-right: -24px;
-                width: calc(100% + 48px);
+                padding: 20px 20px 16px;
+                margin-left: -4px;
+                margin-right: -4px;
+                border-radius: 12px 12px 0 0;
             }
 
             .offline-tools-panel {
-                padding: 0;
-                margin-left: -24px;
-                margin-right: -24px;
-                width: calc(100% + 48px);
+                margin-left: -4px;
+                margin-right: -4px;
+                border-radius: 0 0 12px 12px;
             }
 
-            .offline-tools-panel .calculator-card {
-                width: 100%;
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
-                border-top: none;
+            .offline-tools-panel .input-section {
+                padding: 20px;
+            }
+
+            .offline-note {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .offline-card,
+            .offline-tool-selector,
+            .offline-tools-panel {
+                margin-left: -8px;
+                margin-right: -8px;
+                border-radius: 8px;
+            }
+
+            .offline-tool-selector {
+                border-radius: 8px 8px 0 0;
+            }
+
+            .offline-tools-panel {
+                border-radius: 0 0 8px 8px;
+            }
+
+            .offline-tabs {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .offline-tab {
+                padding: 10px 8px;
+                font-size: 0.8rem;
+            }
+
+            .offline-tools-panel .input-section {
+                padding: 16px;
             }
         }
     </style>
@@ -4008,7 +4084,7 @@ footer a:hover {
                 </div>
             </section>
 
-            <section class="offline-card offline-tool-selector" aria-label="Offline tools">
+            <section class="offline-tool-selector" aria-label="Offline tools">
                 <h3 class="offline-selector-title">Choose your tool</h3>
                 <div class="offline-tabs" role="tablist" aria-label="Offline tools">
                     <button class="offline-tab active" type="button" role="tab" aria-selected="true"
@@ -4030,7 +4106,7 @@ footer a:hover {
                 </div>
             </section>
 
-            <section class="offline-card offline-tools-panel" aria-live="polite">
+            <section class="offline-tools-panel" aria-live="polite">
                 <div id="tab-bca" class="offline-panel active" role="tabpanel">
                     <div class="calculator-card">
                 <div class="input-section">
