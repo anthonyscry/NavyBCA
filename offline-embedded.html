@@ -25551,6 +25551,34 @@ if (typeof module !== 'undefined' && module.exports) {
             filterExercises();
         });
     </script>
+
+    <!-- Debug script to find overflow element - REMOVE AFTER DEBUGGING -->
+    <script>
+        setTimeout(function() {
+            const docWidth = document.documentElement.offsetWidth;
+            const elements = document.querySelectorAll('*');
+            let overflowElements = [];
+            elements.forEach(function(el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.right > docWidth + 5) {
+                    overflowElements.push({
+                        tag: el.tagName,
+                        class: el.className,
+                        id: el.id,
+                        width: rect.width,
+                        right: rect.right,
+                        docWidth: docWidth
+                    });
+                }
+            });
+            if (overflowElements.length > 0) {
+                console.log('OVERFLOW ELEMENTS:', overflowElements);
+                alert('Found ' + overflowElements.length + ' overflow elements. First: ' +
+                    overflowElements[0].tag + '.' + overflowElements[0].class +
+                    ' (right: ' + Math.round(overflowElements[0].right) + ', docWidth: ' + docWidth + ')');
+            }
+        }, 2000);
+    </script>
 </body>
 
 </html>
