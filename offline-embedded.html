@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Navy BCA Tools Offline Mode</title>
     <meta name="description"
         content="Offline-ready Navy BCA tools in a single file. Includes the BCA calculator, PT generator, and watchbill generator.">
@@ -4122,6 +4122,7 @@ footer a:hover {
 </head>
 
 <body>
+    <div class="page-wrapper" style="width: 100%; max-width: 100vw; overflow-x: hidden; position: relative;">
     <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
         <div class="loading-spinner"></div>
         <div class="loading-text">Loading BCA data...</div>
@@ -25552,33 +25553,7 @@ if (typeof module !== 'undefined' && module.exports) {
         });
     </script>
 
-    <!-- Debug script to find overflow element - REMOVE AFTER DEBUGGING -->
-    <script>
-        setTimeout(function() {
-            const docWidth = document.documentElement.offsetWidth;
-            const elements = document.querySelectorAll('*');
-            let overflowElements = [];
-            elements.forEach(function(el) {
-                const rect = el.getBoundingClientRect();
-                if (rect.right > docWidth + 5) {
-                    overflowElements.push({
-                        tag: el.tagName,
-                        class: el.className,
-                        id: el.id,
-                        width: rect.width,
-                        right: rect.right,
-                        docWidth: docWidth
-                    });
-                }
-            });
-            if (overflowElements.length > 0) {
-                console.log('OVERFLOW ELEMENTS:', overflowElements);
-                alert('Found ' + overflowElements.length + ' overflow elements. First: ' +
-                    overflowElements[0].tag + '.' + overflowElements[0].class +
-                    ' (right: ' + Math.round(overflowElements[0].right) + ', docWidth: ' + docWidth + ')');
-            }
-        }, 2000);
-    </script>
+    </div><!-- end page-wrapper -->
 </body>
 
 </html>

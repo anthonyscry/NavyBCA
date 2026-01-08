@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Navy BCA Tools Offline Mode</title>
     <meta name="description"
         content="Offline-ready Navy BCA tools in a single file. Includes the BCA calculator, PT generator, and watchbill generator.">
@@ -4122,6 +4122,7 @@ footer a:hover {
 </head>
 
 <body>
+    <div class="page-wrapper" style="width: 100%; max-width: 100vw; overflow-x: hidden; position: relative;">
     <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
         <div class="loading-spinner"></div>
         <div class="loading-text">Loading BCA data...</div>
@@ -25058,6 +25059,7 @@ HeightWaistDiff,Weight,BodyFatPercent
             filterExercises();
         });
     </script>
+    </div><!-- end page-wrapper -->
 </body>
 
 </html>
