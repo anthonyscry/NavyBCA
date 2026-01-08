@@ -61,8 +61,8 @@
 html {
     scroll-padding-top: 20px;
     scroll-behavior: smooth;
-    overflow-x: clip;
-    overscroll-behavior-x: none;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
 }
 
@@ -72,8 +72,8 @@ body {
     min-height: 100vh;
     color: var(--color-text-primary);
     line-height: 1.7;
-    overflow-x: clip;
-    overscroll-behavior-x: none;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
     position: relative;
 }
@@ -4037,12 +4037,13 @@ footer a:hover {
            ============================================ */
         @media (max-width: 768px) {
             html, body {
-                overflow-x: clip !important;
+                overflow-x: hidden !important;
                 width: 100% !important;
+                -webkit-overflow-scrolling: touch;
             }
 
             .container {
-                overflow-x: clip !important;
+                overflow-x: hidden !important;
                 width: 100% !important;
                 max-width: 100% !important;
                 padding-left: 16px !important;
@@ -4057,7 +4058,7 @@ footer a:hover {
             .offline-panel,
             .calculator-card,
             .input-section {
-                overflow-x: clip !important;
+                overflow-x: hidden !important;
                 width: 100% !important;
                 max-width: 100% !important;
                 box-sizing: border-box !important;
