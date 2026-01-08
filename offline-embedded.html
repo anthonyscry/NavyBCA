@@ -63,6 +63,8 @@ html {
     scroll-behavior: smooth;
     overflow-x: hidden;
     overscroll-behavior-x: none;
+    max-width: 100vw;
+    touch-action: pan-y;
     width: 100%;
 }
 
@@ -74,6 +76,8 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     overscroll-behavior-x: none;
+    max-width: 100vw;
+    touch-action: pan-y;
     width: 100%;
 }
 
@@ -3811,6 +3815,7 @@ footer a:hover {
             padding: 24px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             margin-bottom: 24px;
+            max-width: 100%;
         }
 
         .offline-card p {
@@ -3836,6 +3841,8 @@ footer a:hover {
             cursor: pointer;
             transition: var(--transition-fast);
             font-weight: 600;
+            flex: 1 1 180px;
+            text-align: center;
             min-width: 0;
         }
 
@@ -3861,6 +3868,39 @@ footer a:hover {
             display: block;
         }
 
+        .offline-tool-selector {
+            padding: 20px 24px;
+        }
+
+        .offline-selector-title {
+            margin: 0 0 12px;
+            font-size: 1.05rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .offline-tools-panel {
+            padding-top: 28px;
+            border: none;
+            box-shadow: none;
+            overflow-x: hidden;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .offline-tools-panel .calculator-card {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            box-sizing: border-box;
+            overflow-x: clip;
+        }
+
+        .offline-tools-panel .input-section {
+            padding: 0;
+        }
+
         .offline-note {
             display: inline-flex;
             align-items: center;
@@ -3877,15 +3917,20 @@ footer a:hover {
             color: #b7f7c7;
         }
 
-        .offline-section-title {
-            margin-bottom: 16px;
-            font-size: 1.2rem;
-            color: var(--color-text-primary);
-        }
-
         @media (max-width: 768px) {
             .offline-tabs {
                 justify-content: center;
+            }
+
+            .offline-tools-panel {
+                padding: 0;
+            }
+
+            .offline-tools-panel .calculator-card {
+                width: 100%;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
             }
         }
     </style>
@@ -3919,6 +3964,11 @@ footer a:hover {
                     when available so everything works properly, then open <strong>Navy BCA Tools Offline Mode.html</strong>
                     (the default filename) from your Files app or file manager.
                 </p>
+                <p>
+                    <strong>Mobile shortcut:</strong> download the fully embedded single-file version
+                    <a href="offline-embedded.html" download>here</a> so you can long-press and save it directly on your
+                    device.
+                </p>
                 <div class="offline-note">
                     <span>✅</span>
                     <div>
@@ -3928,7 +3978,8 @@ footer a:hover {
                 </div>
             </section>
 
-            <section class="offline-card" aria-label="Offline tools">
+            <section class="offline-card offline-tool-selector" aria-label="Offline tools">
+                <h3 class="offline-selector-title">Choose your tool</h3>
                 <div class="offline-tabs" role="tablist" aria-label="Offline tools">
                     <button class="offline-tab active" type="button" role="tab" aria-selected="true"
                         aria-controls="tab-bca" data-tab="tab-bca">
@@ -3947,9 +3998,10 @@ footer a:hover {
                         Watchbill Generator
                     </button>
                 </div>
+            </section>
 
+            <section class="offline-card offline-tools-panel" aria-live="polite">
                 <div id="tab-bca" class="offline-panel active" role="tabpanel">
-                    <h3 class="offline-section-title">BCA Calculator</h3>
                     <div class="calculator-card">
                 <div class="input-section">
                     <!-- Gender -->
@@ -4204,7 +4256,6 @@ footer a:hover {
             </section>
                 </div>
                 <div id="tab-pt" class="offline-panel" role="tabpanel">
-                    <h3 class="offline-section-title">PT Generator</h3>
                     <div class="calculator-card">
                         <!-- PPAQ Section - Always Visible for CFLs -->
             <div class="ppaq-section">
@@ -4496,7 +4547,6 @@ footer a:hover {
                     </div>
                 </div>
                 <div id="tab-library" class="offline-panel" role="tabpanel">
-                    <h3 class="offline-section-title">Exercise Library</h3>
                     <div class="calculator-card exercise-library">
                         <div class="form-group">
                             <label for="searchInput">Search Exercises</label>
@@ -4698,7 +4748,6 @@ footer a:hover {
                     </div>
                 </div>
                 <div id="tab-watchbill" class="offline-panel" role="tabpanel">
-                    <h3 class="offline-section-title">Watchbill Generator</h3>
                     <div class="calculator-card">
                         <div class="form-group">
                 <label>Select Month and Year</label>
@@ -22629,11 +22678,12 @@ const db = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { warmupExercises, preCardioWarmup, cooldownExercises, db };
 }
+
 </script>
 
     <script>
-        // --- Data: Official Lists --- (Embedded below for offline single-file use)
-        // warmupExercises, preCardioWarmup, cooldownExercises, and db are defined inline in this file.
+        // --- Data: Official Lists --- (Now loaded from exercises-data.js)
+        // warmupExercises, preCardioWarmup, cooldownExercises, and db are imported from exercises-data.js
 
         /* MOVED TO exercises-data.js - Single source of truth for all exercise data
         const warmupExercises = [
