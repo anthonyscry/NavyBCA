@@ -352,8 +352,8 @@
             border: 2px solid var(--color-primary);
             border-radius: var(--radius-md);
             padding: var(--space-md) var(--space-lg);
-            min-width: 300px;
-            max-width: 400px;
+            min-width: 280px;
+            max-width: min(400px, calc(100vw - 40px));
             box-shadow: var(--shadow-lg);
             z-index: 9999;
             animation: slideInRight 0.3s ease;
@@ -720,9 +720,15 @@
             margin-bottom: 30px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1005,8 +1011,8 @@
         }
 
         .export-btn {
-            flex: 1;
-            min-width: 150px;
+            flex: 1 1 auto;
+            min-width: min(150px, calc(50% - 5px));
             padding: 12px 20px;
             background: rgba(74, 144, 226, 0.2);
             border: 2px solid rgba(74, 144, 226, 0.4);
