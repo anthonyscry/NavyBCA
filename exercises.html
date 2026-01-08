@@ -35,6 +35,8 @@
         html {
             overflow-x: hidden;
             width: 100%;
+            max-width: 100vw;
+            overscroll-behavior-x: none;
         }
 
         body {
@@ -45,6 +47,8 @@
             line-height: 1.6;
             overflow-x: hidden;
             width: 100%;
+            max-width: 100vw;
+            overscroll-behavior-x: none;
         }
 
         .container {
@@ -52,6 +56,7 @@
             margin: 0 auto;
             padding: 20px;
             overflow-x: hidden;
+            width: 100%;
         }
 
         header {
@@ -368,7 +373,7 @@
         /* Exercise Grid */
         .exercise-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
             gap: 15px;
         }
 
