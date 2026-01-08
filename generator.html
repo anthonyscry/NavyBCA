@@ -850,6 +850,65 @@
             }
         }
 
+        /* ============================================
+           COMPREHENSIVE MOBILE OVERFLOW PREVENTION
+           ============================================ */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .container {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+            }
+
+            main,
+            section,
+            .calculator-card,
+            .input-section,
+            .form-group {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Fix min-width values that could cause overflow */
+            .pt-banner-text,
+            .exercise-main,
+            .exercise-alt {
+                min-width: 0 !important;
+                flex: 1 1 auto !important;
+            }
+
+            /* Ensure flexbox items wrap properly */
+            .row,
+            .form-group,
+            .pt-banner {
+                flex-wrap: wrap !important;
+            }
+
+            /* Ensure buttons don't overflow */
+            button,
+            .btn,
+            .export-btn,
+            .calculate-btn,
+            .reset-btn,
+            .action-btn {
+                max-width: 100% !important;
+                white-space: normal !important;
+                word-wrap: break-word !important;
+            }
+
+            /* Prevent text overflow */
+            * {
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+        }
+
         /* Skip to Content Link - Accessibility */
         /* Print Styles */
         @media print {

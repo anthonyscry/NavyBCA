@@ -4034,6 +4034,92 @@ footer a:hover {
                 padding: 16px;
             }
         }
+
+        /* ============================================
+           COMPREHENSIVE MOBILE OVERFLOW PREVENTION
+           ============================================ */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .container {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+
+            main,
+            section,
+            .offline-card,
+            .offline-tool-selector,
+            .offline-tools-panel,
+            .offline-panel,
+            .calculator-card,
+            .input-section {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Fix min-width values that could cause overflow */
+            .pt-banner-text,
+            .exercise-main,
+            .exercise-alt {
+                min-width: 0 !important;
+                flex: 1 1 auto !important;
+            }
+
+            /* Ensure flexbox items wrap properly */
+            .row,
+            .form-group,
+            .pt-banner {
+                flex-wrap: wrap !important;
+            }
+
+            /* Fix any inline grids that might overflow */
+            [style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Ensure buttons don't overflow */
+            button,
+            .btn,
+            .export-btn,
+            .calculate-btn,
+            .reset-btn {
+                max-width: 100% !important;
+                white-space: normal !important;
+                word-wrap: break-word !important;
+            }
+
+            /* Prevent text overflow */
+            * {
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            .offline-tool-selector,
+            .offline-tools-panel {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            /* Force single column layout on very small screens */
+            .equip-grid:not(.equip-grid-pt) {
+                grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)) !important;
+            }
+        }
     </style>
 </head>
 
