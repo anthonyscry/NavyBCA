@@ -12,16 +12,56 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "8-Week PRT Prep Program",
+        "description": "8-week structured training program focusing on pushups, planks, and 1.5-mile run. Build muscular endurance and cardio speed for Navy PRT.",
+        "url": "https://navybca.com/prt-prep.html",
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://navybca.com/#organization"
+        },
+        "coursePrerequisites": "None - suitable for all fitness levels",
+        "educationalLevel": "Beginner to Intermediate",
+        "timeRequired": "PT56D",
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "online",
+            "courseWorkload": "3-5 days per week"
+        },
+        "teaches": [
+            "Push-up technique and endurance",
+            "Plank form and duration",
+            "1.5-mile run speed improvement",
+            "Cardio conditioning"
+        ],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://navybca.com/#website"
+        }
+    }
     </script>
 
     <style>
@@ -964,6 +1004,9 @@
             </p>
         </footer>
     </div>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 

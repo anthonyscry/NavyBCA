@@ -12,16 +12,40 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Navy BCA Calculator",
+        "description": "Learn about the Navy BCA Calculator - an unofficial tool built by a retired Sailor to help CFLs and Sailors prepare for Body Composition Assessments",
+        "url": "https://navybca.com/about.html",
+        "mainEntity": {
+            "@type": "Organization",
+            "@id": "https://navybca.com/#organization",
+            "name": "Navy BCA Tools",
+            "description": "Unofficial Navy fitness tools for Sailors to prepare for PRT and BCA assessments",
+            "url": "https://navybca.com"
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://navybca.com/#website"
+        }
+    }
     </script>
 
     <style>
@@ -170,6 +194,9 @@
             </p>
         </footer>
     </div>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
 </body>
 
 </html>

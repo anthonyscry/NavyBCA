@@ -12,16 +12,49 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PT Watchbill Generator",
+        "description": "Generate Command PT and FEP watchbills with automatic CFL/ACFL rotation. Free tool for creating monthly PT schedules.",
+        "url": "https://navybca.com/watchbill.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Automatic CFL/ACFL rotation",
+            "Federal holiday blocking",
+            "PT and FEP day scheduling",
+            "Print-ready calendar format",
+            "Calendar export (.ics)"
+        ],
+        "author": {"@id": "https://navybca.com/#organization"},
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://navybca.com/#website"
+        }
+    }
     </script>
 
     <style>
@@ -1852,6 +1885,9 @@
             window.URL.revokeObjectURL(url);
         }
     </script>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 

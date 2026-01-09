@@ -13,16 +13,57 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Navy BCA References & Official Guides",
+        "description": "Official Navy Physical Readiness Program references, guides, and instructions. Access Guide-4, OPNAVINST 6110.1L, and PRT resources.",
+        "url": "https://navybca.com/references.html",
+        "mainEntity": {
+            "@type": "ItemList",
+            "name": "Navy PRP Guides",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "OPNAVINST 6110.1L - Physical Readiness Program",
+                    "url": "https://www.secnav.navy.mil/doni/Directives/06000%20Medical%20and%20Dental%20Services/06-100%20General%20Physical%20Fitness/6110.1L.pdf"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Guide-4: Body Composition Assessment (BCA)",
+                    "url": "https://www.mynavyhr.navy.mil/Portals/55/Support/Culture Resilience/Physical/Guide-4 Body Composition Assessment.pdf"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Guide-5A: Physical Readiness Test (PRT)",
+                    "url": "https://www.mynavyhr.navy.mil/Portals/55/Support/Culture Resilience/Physical/Guide-5A Physical Readiness Test.pdf"
+                }
+            ]
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://navybca.com/#website"
+        }
+    }
     </script>
 
     <style>
@@ -235,6 +276,9 @@
             </p>
         </footer>
     </div>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
 </body>
 
 </html>

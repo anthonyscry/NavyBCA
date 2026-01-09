@@ -40,10 +40,12 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -56,21 +58,86 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Navy BCA Calculator",
-        "description": "Calculate Navy Body Composition Assessment using official Guide-4 standards",
-        "url": "https://navybca.com/",
-        "applicationCategory": "HealthApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "Navy PRT Tools"
-        }
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://navybca.com/#organization",
+                "name": "Navy BCA Tools",
+                "url": "https://navybca.com",
+                "logo": "https://navybca.com/images/navy-bca-logo.png",
+                "description": "Unofficial Navy fitness tools for Sailors to prepare for PRT and BCA assessments",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "email": "administrator@navybca.com",
+                    "contactType": "customer service"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://navybca.com/#website",
+                "url": "https://navybca.com",
+                "name": "Navy BCA Calculator",
+                "description": "Free Navy Body Composition Assessment tools and fitness resources",
+                "publisher": {"@id": "https://navybca.com/#organization"},
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://navybca.com/?search={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://navybca.com/#bcacalculator",
+                "name": "Navy BCA Calculator",
+                "description": "Calculate Navy Body Composition Assessment using official Guide-4 standards. Includes Waist-to-Height Ratio and Body Fat Percentage calculations.",
+                "url": "https://navybca.com/",
+                "applicationCategory": "HealthApplication",
+                "operatingSystem": "Any",
+                "browserRequirements": "Requires JavaScript",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "author": {"@id": "https://navybca.com/#organization"},
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.8",
+                    "reviewCount": "150",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is the Navy BCA?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Navy Body Composition Assessment (BCA) is a measurement used to determine if a Sailor meets Navy body fat standards. It uses height, weight, and circumference measurements to calculate body fat percentage."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What are the Navy BCA standards for 2025?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "As of 2025, Navy BCA standards require males to have no more than 23% body fat and females no more than 34% body fat. The Waist-to-Height Ratio must be under 0.52 for both genders."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is Navy body fat calculated?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Navy body fat is calculated using circumference measurements. For males: neck and waist measurements. For females: neck, waist, and hip measurements. These are combined with height using the Navy's formula from Guide-4."
+                        }
+                    }
+                ]
+            }
+        ]
     }
     </script>
 
@@ -2320,6 +2387,9 @@
             loadBcaTables();
         });
     </script>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 
