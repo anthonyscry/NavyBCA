@@ -13,7 +13,7 @@
   "author": "Navy PRT Tools",
   "license": "MIT",
   "devDependencies": {
-    "@vitest/ui": "^1.1.0",
-    "vitest": "^1.1.0"
+    "@vitest/ui": "^4.0.16",
+    "vitest": "^4.0.16"
   }
 }
