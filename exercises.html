@@ -12,16 +12,63 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
     <!-- Google AdSense -->
+    <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
+    <!-- Note: SRI not applicable - Google Tag Manager serves dynamic, frequently updated scripts -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7D2BBFK1WP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7D2BBFK1WP');
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Navy PT Exercise Library",
+        "description": "Searchable exercise library for Navy PT. Browse strength and cardio exercises filtered by equipment, body part, and intensity level.",
+        "url": "https://navybca.com/exercises.html",
+        "numberOfItems": "100+",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "ExerciseAction",
+                    "name": "Push-ups",
+                    "description": "Standard push-up exercise for upper body strength"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                    "@type": "ExerciseAction",
+                    "name": "Planks",
+                    "description": "Core strengthening isometric exercise"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                    "@type": "ExerciseAction",
+                    "name": "Squats",
+                    "description": "Lower body compound exercise"
+                }
+            }
+        ],
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://navybca.com/#website"
+        }
+    }
     </script>
 
     <style>
@@ -1621,6 +1668,9 @@
             filterExercises();
         });
     </script>
+
+    <!-- Security: Input sanitization utilities -->
+    <script src="security.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 
