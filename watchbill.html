@@ -11,6 +11,9 @@
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
+    <!-- Theme Switcher (load early to prevent flash) -->
+    <script src="theme.js"></script>
+
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
         crossorigin="anonymous"></script>
@@ -994,6 +997,9 @@
                 <a href="references.html">References</a>
                 <a href="about.html">About</a>
             </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                <span class="theme-icon">🌙</span>
+            </button>
         </header>
 
         <main id="main-content" class="calculator-card">
