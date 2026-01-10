@@ -2,7 +2,7 @@
   "name": "Navy BCA Calculator",
   "short_name": "Navy BCA",
   "description": "Navy Body Composition Assessment Calculator - Guide-4 Dec 2025",
-  "start_url": "/index.html",
+  "start_url": "/offline.html",
   "display": "standalone",
   "background_color": "#0a1628",
   "theme_color": "#ffd700",

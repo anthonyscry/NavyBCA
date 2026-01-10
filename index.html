@@ -39,13 +39,6 @@
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
 
-    <!-- PWA Manifest for Add to Home Screen -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Navy BCA">
-    <link rel="apple-touch-icon" href="/icons/icon-192.svg">
-
     <!-- Google AdSense -->
     <!-- Note: SRI (Subresource Integrity) not used for Google scripts as they serve dynamic content -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4254899096040096"
@@ -2398,21 +2391,6 @@
     <!-- Security: Input sanitization utilities -->
     <script src="security.js"></script>
     <script src="shared-utils.js"></script>
-
-    <!-- Service Worker Registration for offline support -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function(registration) {
-                    console.log('SW registered:', registration.scope);
-                })
-                .catch(function(error) {
-                    console.log('SW registration failed:', error);
-                });
-        });
-    }
-    </script>
     </div><!-- end page-wrapper -->
 </body>
 
