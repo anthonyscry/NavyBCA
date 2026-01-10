@@ -1987,7 +1987,7 @@
             try {
                 const [maleResp, femaleResp] = await Promise.all([
                     fetch('male_bca_table_FULL_NORMALIZED.csv'),
-                    fetch('female_bca_table_FULL_NORMALIZED%20(2).csv')
+                    fetch('female_bca_table_FULL_NORMALIZED.csv')
                 ]);
                 const [maleCsv, femaleCsv] = await Promise.all([
                     maleResp.text(),
