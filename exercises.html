@@ -1638,7 +1638,7 @@
                         </div>
                         <p class="exercise-tip">${ex.tip}</p>
                         ${ex.reps ? `<p class="exercise-reps">${ex.reps}</p>` : ''}
-                        <a href="${demoLink}" target="_blank" class="search-link">${demoLabel}</a>
+                        <a href="${demoLink}" target="_blank" rel="noopener noreferrer" class="search-link">${demoLabel}</a>
                     </div>
                 `;
             }).join('');
@@ -1671,6 +1671,7 @@
 
     <!-- Security: Input sanitization utilities -->
     <script src="security.js"></script>
+    <script src="shared-utils.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 

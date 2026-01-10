@@ -41,7 +41,7 @@ NavyBCA/
 ├── exercises-data.js       # Exercise database
 │
 ├── male_bca_table_FULL_NORMALIZED.csv      # Male BCA lookup table
-├── female_bca_table_FULL_NORMALIZED (2).csv # Female BCA lookup table
+├── female_bca_table_FULL_NORMALIZED.csv     # Female BCA lookup table
 │
 ├── Guide-4 Body Composition Assessment.pdf  # Official Navy guide
 ├── Guide-5A Physical Readiness Test.pdf     # Official Navy guide

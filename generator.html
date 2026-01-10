@@ -2493,7 +2493,7 @@
                         </div>
                         ${altHtml}
                     </div>${tipHtml}
-                    <a href="${getSearchLink(name)}" target="_blank" class="search-link">▶ Watch Demo</a>
+                    <a href="${getSearchLink(name)}" target="_blank" rel="noopener noreferrer" class="search-link">▶ Watch Demo</a>
                 </li>
             `;
         }
@@ -2731,13 +2731,13 @@
                 html += `<p style="margin-bottom:15px; padding:15px; background:rgba(255,215,0,0.1); border-radius:8px; border:1px solid rgba(255,215,0,0.3); font-size:0.95em;">
                             <strong class="activity-title">Today's Activity: ${primary.name}</strong><br>
                             <span style="color:#8fa3bf;">💡 ${primary.tip}</span>
-                            ${primary.link ? `<br><a href="${primary.link}" target="_blank" style="color:#4a90e2; text-decoration:none; font-size:0.9em; margin-top:8px; display:inline-block;">▶ Watch How to Play</a>` : ''}
+                            ${primary.link ? `<br><a href="${primary.link}" target="_blank" rel="noopener noreferrer" style="color:#4a90e2; text-decoration:none; font-size:0.9em; margin-top:8px; display:inline-block;">▶ Watch How to Play</a>` : ''}
                          </p>`;
 
                 html += `<p style="margin-bottom:10px; color:#8fa3bf; font-size:0.9em;"><strong>Alternative Options:</strong></p>`;
                 html += `<ul class="exercise-list">`;
                 alternatives.forEach(activity => {
-                    const linkHtml = activity.link ? `<br><a href="${activity.link}" target="_blank" style="color:#4a90e2; text-decoration:none; font-size:0.85em;">▶ Watch How to Play</a>` : '';
+                    const linkHtml = activity.link ? `<br><a href="${activity.link}" target="_blank" rel="noopener noreferrer" style="color:#4a90e2; text-decoration:none; font-size:0.85em;">▶ Watch How to Play</a>` : '';
                     html += `<li class="exercise-item">
                                 <span class="exercise-name">${activity.name}</span>
                                 <div class="exercise-meta">Team Sport</div>
@@ -2995,6 +2995,7 @@
 
     <!-- Security: Input sanitization utilities -->
     <script src="security.js"></script>
+    <script src="shared-utils.js"></script>
     </div><!-- end page-wrapper -->
 </body>
 
