@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Navy BCA Calculator 2025 | Portable Offline Version</title>
+    <meta name="description" content="Free Navy BCA Calculator - Portable offline version. Calculate your Body Composition Assessment, Waist-to-Height Ratio, and Body Fat Percentage.">
+
+    <!-- Favicon as data URI -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+    <style>
+        /* Design System Variables */
+        :root {
+            --color-primary: #ffd700;
+            --color-primary-dark: #b8860b;
+            --color-background: #0a1628;
+            --color-background-alt: #1a2a4a;
+            --color-surface: rgba(20, 35, 60, 0.8);
+            --color-surface-light: rgba(30, 50, 80, 0.5);
+            --color-text-primary: #e8eef5;
+            --color-text-secondary: #a0b0cf;
+            --color-text-hint: #94a3bf;
+            --color-success: #22c55e;
+            --color-error: #ef4444;
+            --color-warning: #f59e0b;
+            --color-info: #3b82f6;
+            --space-xs: 5px;
+            --space-sm: 10px;
+            --space-md: 15px;
+            --space-lg: 20px;
+            --space-xl: 30px;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-padding-top: 20px;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-alt) 50%, var(--color-background) 100%);
+            min-height: 100vh;
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        h1 {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-primary);
+            background: linear-gradient(90deg, var(--color-primary), #fff, var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        /* Safari fallback for background-clip */
+        @supports not (-webkit-background-clip: text) {
+            h1 {
+                background: none;
+                color: var(--color-primary);
+                -webkit-text-fill-color: var(--color-primary);
+            }
+        }
+
+        .subtitle {
+            color: #8fa3bf;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            margin-top: 10px;
+        }
+
+        .offline-badge {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 10px;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        /* Main Card */
+        .calculator-card {
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(100, 130, 180, 0.3);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .input-section {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8fa3bf;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hint {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-hint);
+            margin-top: var(--space-sm);
+        }
+
+        /* Gender Buttons */
+        .gender-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gender-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 10px;
+            background: rgba(15, 25, 45, 0.5);
+            color: #8fa3bf;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .gender-btn.active {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            color: #ffd700;
+        }
+
+        .gender-btn:hover {
+            border-color: #ffd700;
+        }
+
+        .gender-btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Inputs */
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 10px;
+            background: rgba(15, 25, 45, 0.8);
+            color: #e8eef5;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238fa3bf' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        select:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        select option {
+            background: #1a2a4a;
+            color: #e8eef5;
+        }
+
+        /* Remove spinner buttons on number inputs */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Toggle */
+        .toggle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #d9e5f6;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .toggle-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-pill-track {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            background: rgba(216, 222, 231, 0.7);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-pill-track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track {
+            background: #4a90e2;
+        }
+
+        .toggle-pill input:checked + .toggle-pill-track::after {
+            transform: translateX(16px);
+        }
+
+        .toggle-pill input:focus + .toggle-pill-track {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Calculate Button */
+        .calculate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--color-background);
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.6px;
+            box-shadow: var(--shadow-glow);
+            transition: var(--transition-base);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .calculate-btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: rgba(10, 20, 40, 0.9);
+            border-top: 1px solid rgba(100, 130, 180, 0.3);
+            padding: 30px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        /* Status Banner */
+        .status-banner {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .status-banner.pass {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+            border: 2px solid rgba(34, 197, 94, 0.5);
+        }
+
+        .status-banner.fail {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.05));
+            border: 2px solid rgba(239, 68, 68, 0.5);
+        }
+
+        .status-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .status-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .status-banner.pass .status-text {
+            color: #22c55e;
+        }
+
+        .status-banner.fail .status-text {
+            color: #ef4444;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            padding: 15px;
+            background: rgba(30, 50, 80, 0.5);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metric-label {
+            color: #6b7c94;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e8eef5;
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            color: #6b7c94;
+            margin-top: 2px;
+        }
+
+        /* Step Cards */
+        .step-card {
+            padding: 20px;
+            background: rgba(30, 50, 80, 0.3);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .step-card.pass {
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .step-card.fail {
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .step-card.dimmed {
+            opacity: 0.5;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .step-badge {
+            background: rgba(100, 130, 180, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .step-title {
+            font-weight: 600;
+        }
+
+        .step-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-status.pass {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .step-status.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .step-metric-label {
+            color: #6b7c94;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .step-metric-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .step-metric-value.large {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .step-metric-value.pass {
+            color: #22c55e;
+        }
+
+        .step-metric-value.fail {
+            color: #ef4444;
+        }
+
+        .step-success-msg {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            color: #22c55e;
+            font-size: 13px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            padding: 15px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            margin-bottom: 25px;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            color: #ef4444;
+            margin-bottom: 8px;
+        }
+
+        .warning-text {
+            color: #8fa3bf;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Goal Section */
+        .goal-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+        }
+
+        .goal-section h3 {
+            color: #4a90e2;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .goal-intro {
+            color: #8fa3bf;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .goal-paths {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .goal-path-card {
+            background: rgba(30, 50, 80, 0.5);
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 10px;
+            padding: 18px;
+            position: relative;
+        }
+
+        .goal-path-card.easiest {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .goal-path-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #22c55e;
+            color: #0a1628;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .goal-path-title {
+            color: #e8eef5;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .goal-path-card.easiest .goal-path-title {
+            color: #22c55e;
+        }
+
+        .goal-path-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .goal-detail {
+            background: rgba(10, 20, 40, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .goal-detail-label {
+            color: #6b7c94;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .goal-detail-value {
+            color: #e8eef5;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .goal-detail-value.highlight {
+            color: #22c55e;
+        }
+
+        .goal-path-note {
+            color: #8fa3bf;
+            font-size: 12px;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Export Buttons */
+        .export-section {
+            margin-top: 25px;
+            display: none;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .export-section.show {
+            display: flex;
+        }
+
+        .export-btn {
+            flex: 1 1 auto;
+            min-width: 150px;
+            padding: 12px 20px;
+            background: rgba(74, 144, 226, 0.2);
+            border: 2px solid rgba(74, 144, 226, 0.4);
+            border-radius: 8px;
+            color: #4a90e2;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .export-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+        }
+
+        .export-btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .export-btn.pdf {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+
+        .export-btn.pdf:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid rgba(100, 130, 180, 0.3);
+            border-radius: 10px;
+            color: #8fa3bf;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .reset-btn:hover {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .reset-btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(20, 35, 60, 0.5);
+            border-radius: 16px;
+            border: 1px solid rgba(100, 130, 180, 0.2);
+        }
+
+        .info-section h2 {
+            color: #ffd700;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-section h3 {
+            color: #e8eef5;
+            font-size: 16px;
+            margin: 20px 0 10px;
+        }
+
+        .info-section p,
+        .info-section li {
+            color: #8fa3bf;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .info-section ul {
+            padding-left: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7c94;
+            font-size: 12px;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-lg);
+            min-width: 280px;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            animation: slideInRight 0.3s ease;
+        }
+
+        .notification.success {
+            border-color: var(--color-success);
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .notification.error {
+            border-color: var(--color-error);
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .notification.warning {
+            border-color: var(--color-warning);
+            background: rgba(245, 158, 11, 0.15);
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text-primary);
+        }
+
+        .notification-message {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-primary);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .calculate-btn,
+            .export-btn,
+            .reset-btn,
+            .info-section,
+            footer,
+            .offline-badge {
+                display: none !important;
+            }
+
+            .input-section {
+                page-break-after: avoid;
+            }
+
+            .results-section {
+                display: block !important;
+            }
+
+            header {
+                padding: 10px 0;
+            }
+
+            h1 {
+                -webkit-text-fill-color: black !important;
+                color: black !important;
+                font-size: 20px;
+            }
+
+            .status-banner {
+                border: 2px solid #333 !important;
+            }
+
+            .status-banner.pass {
+                background: #f0f9ff !important;
+                border-color: #22c55e !important;
+            }
+
+            .status-banner.fail {
+                background: #fff5f5 !important;
+                border-color: #ef4444 !important;
+            }
+
+            .metrics-grid,
+            .step-card,
+            .goal-section {
+                page-break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ccc !important;
+            }
+
+            .metric-card,
+            .goal-detail {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .metric-value,
+            .step-metric-value,
+            .goal-detail-value {
+                color: #333 !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .step-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-icon {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">&#9875;</div>
+                <h1>Navy BCA Calculator</h1>
+            </div>
+            <p class="subtitle">BODY COMPOSITION ASSESSMENT &bull; GUIDE-4 &bull; DEC 2025</p>
+            <div class="offline-badge">&#10003; Works Offline - No Internet Required</div>
+        </header>
+
+        <main>
+            <div class="calculator-card">
+                <div class="input-section">
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label id="gender-label">Gender</label>
+                        <div class="gender-buttons" role="group" aria-labelledby="gender-label">
+                            <button type="button" class="gender-btn active" data-gender="male" id="btn-male" aria-pressed="true">
+                                &#9794; Male
+                            </button>
+                            <button type="button" class="gender-btn" data-gender="female" id="btn-female" aria-pressed="false">
+                                &#9792; Female
+                            </button>
+                        </div>
+                        <p class="hint">Max BF%: <span id="maxBfDisplay">26%</span> for <span id="genderDisplay">males</span></p>
+                    </div>
+
+                    <!-- Height -->
+                    <div class="form-group">
+                        <label for="heightFeet">Height (rounded up to nearest 1/2")</label>
+                        <div class="row">
+                            <div class="col">
+                                <select id="heightFeet" aria-label="Height feet">
+                                    <option value="4">4 ft</option>
+                                    <option value="5" selected>5 ft</option>
+                                    <option value="6">6 ft</option>
+                                    <option value="7">7 ft</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select id="heightInches" aria-label="Height inches">
+                                    <option value="0">0 in</option>
+                                    <option value="0.5">0.5 in</option>
+                                    <option value="1">1 in</option>
+                                    <option value="1.5">1.5 in</option>
+                                    <option value="2">2 in</option>
+                                    <option value="2.5">2.5 in</option>
+                                    <option value="3">3 in</option>
+                                    <option value="3.5">3.5 in</option>
+                                    <option value="4">4 in</option>
+                                    <option value="4.5">4.5 in</option>
+                                    <option value="5">5 in</option>
+                                    <option value="5.5">5.5 in</option>
+                                    <option value="6">6 in</option>
+                                    <option value="6.5">6.5 in</option>
+                                    <option value="7">7 in</option>
+                                    <option value="7.5">7.5 in</option>
+                                    <option value="8">8 in</option>
+                                    <option value="8.5">8.5 in</option>
+                                    <option value="9">9 in</option>
+                                    <option value="9.5">9.5 in</option>
+                                    <option value="10" selected>10 in</option>
+                                    <option value="10.5">10.5 in</option>
+                                    <option value="11">11 in</option>
+                                    <option value="11.5">11.5 in</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="form-group">
+                        <label for="weight">Weight (lbs) - Rounded to nearest pound</label>
+                        <input type="number" id="weight" value="180" min="61" max="400" aria-label="Weight in pounds">
+                    </div>
+
+                    <!-- Waist -->
+                    <div class="form-group">
+                        <label for="waist">Waist at Umbilicus (inches) - Rounded down to nearest 1/2"</label>
+                        <input type="number" id="waist" value="34" min="20" max="60" step="0.5" aria-label="Waist measurement in inches">
+                        <p class="hint">Measured at bellybutton level, tape parallel to deck</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rememberBcaToggle">Remember Inputs</label>
+                        <label class="toggle-pill">
+                            <input type="checkbox" id="rememberBcaToggle">
+                            <span class="toggle-pill-track"></span>
+                            <span>Save inputs on this device</span>
+                        </label>
+                    </div>
+
+                    <button type="button" class="calculate-btn" id="calculateBtn">
+                        Calculate BCA
+                    </button>
+                </div>
+
+                <!-- Results -->
+                <div class="results-section" id="resultsSection">
+                    <!-- Status Banner -->
+                    <div class="status-banner" id="statusBanner">
+                        <div class="status-icon" id="statusIcon">&#10003;</div>
+                        <div class="status-text" id="statusText">WITHIN STANDARDS</div>
+                        <div style="color: #8fa3bf; font-size: 14px; margin-top: 5px;">BCA Result</div>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Height</div>
+                            <div class="metric-value" id="resultHeight">70"</div>
+                            <div class="metric-sub" id="resultHeightFt">5' 10"</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Weight</div>
+                            <div class="metric-value" id="resultWeight">180 lbs</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Waist</div>
+                            <div class="metric-value" id="resultWaist">34"</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">H-W Diff</div>
+                            <div class="metric-value" id="resultDiff">36"</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="step-card" id="step1Card">
+                        <div class="step-header">
+                            <div>
+                                <span class="step-badge">STEP 1</span>
+                                <span class="step-title">Waist-to-Height Ratio</span>
+                            </div>
+                            <span class="step-status" id="step1Status">PASS</span>
+                        </div>
+                        <div class="step-grid">
+                            <div>
+                                <div class="step-metric-label">Your WHtR</div>
+                                <div class="step-metric-value" id="whtrValue">0.4857</div>
+                            </div>
+                            <div>
+                                <div class="step-metric-label">Max Allowed</div>
+                                <div class="step-metric-value">0.5499</div>
+                            </div>
+                            <div>
+                                <div class="step-metric-label">Max Waist</div>
+                                <div class="step-metric-value" id="maxWaistValue">38"</div>
+                            </div>
+                        </div>
+                        <div class="step-success-msg" id="step1Success" style="display: none;">
+                            &#10003; Step 2 not required - Within Standards
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card" id="step2Card">
+                        <div class="step-header">
+                            <div>
+                                <span class="step-badge">STEP 2</span>
+                                <span class="step-title">Body Composition</span>
+                            </div>
+                            <span class="step-status" id="step2Status">PASS</span>
+                        </div>
+                        <div class="step-grid">
+                            <div>
+                                <div class="step-metric-label">Est. Body Fat</div>
+                                <div class="step-metric-value large" id="bfValue">18%</div>
+                            </div>
+                            <div>
+                                <div class="step-metric-label">Max Allowed</div>
+                                <div class="step-metric-value large" id="maxBfValue">26%</div>
+                            </div>
+                            <div>
+                                <div class="step-metric-label">Difference</div>
+                                <div class="step-metric-value large" id="bfDiff">-8%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warning Box -->
+                    <div class="warning-box" id="warningBox" style="display: none;">
+                        <div class="warning-title">&#9888; Action Required</div>
+                        <div class="warning-text">
+                            Sailors not within standards for both Step-1 and Step-2 must obtain medical clearance
+                            prior to participating in the PRT/CFT. Refer to Guide-1 for High-Performance BCA Exemption
+                            details.
+                        </div>
+                    </div>
+
+                    <!-- Goal Calculator / Path to Standards -->
+                    <div class="goal-section" id="goalSection" style="display: none;">
+                        <h3>&#127919; Your Path to Standards</h3>
+                        <p class="goal-intro">
+                            Here are your options to pass BCA. The <strong style="color: #22c55e;">easiest path</strong> is highlighted based on the smallest changes needed.
+                        </p>
+                        <div class="goal-paths" id="goalPaths">
+                            <!-- Paths will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Export Buttons -->
+                    <div class="export-section" id="exportSection">
+                        <button type="button" class="export-btn" id="exportCsvBtn">
+                            &#128202; Export to CSV
+                        </button>
+                        <button type="button" class="export-btn pdf" id="exportPdfBtn">
+                            &#128196; Print / Save PDF
+                        </button>
+                    </div>
+
+                    <button type="button" class="reset-btn" id="resetBtn">
+                        Reset Calculator
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEO Content Section -->
+            <section class="info-section">
+                <h2>About the Navy Body Composition Assessment (BCA)</h2>
+                <p>The Navy Body Composition Assessment (BCA) is a critical component of the Physical Fitness Assessment
+                    (PFA) that all Sailors must complete. This calculator implements the official two-step BCA process
+                    outlined in Guide-4 (December 2025).</p>
+
+                <h3>How the Navy BCA Works</h3>
+                <p>The updated BCA procedures consist of a two-step process:</p>
+                <ul>
+                    <li><strong>Step 1 - Waist-to-Height Ratio (WHtR):</strong> This measurement indicates body fat
+                        distribution, particularly visceral fat. If your WHtR is less than or equal to 0.5499, you pass Step 1 and are Within
+                        Standards.</li>
+                    <li><strong>Step 2 - Body Composition Calculation:</strong> If you don't pass Step 1, your body fat
+                        percentage is estimated using height, waist, and weight measurements. Maximum allowable body fat
+                        is 26% for males and 36% for females.</li>
+                </ul>
+
+                <h3>Measurement Guidelines</h3>
+                <ul>
+                    <li><strong>Height:</strong> Measured without shoes, rounded UP to nearest 1/2 inch</li>
+                    <li><strong>Weight:</strong> In Navy PTU/OPTU, rounded to nearest pound</li>
+                    <li><strong>Waist:</strong> Measured at umbilicus (bellybutton), tape parallel to deck, rounded DOWN
+                        to nearest 1/2 inch</li>
+                </ul>
+
+                <h3>Important Notes</h3>
+                <ul>
+                    <li>Official BCA measurements can only be conducted by certified CFL/ACFLs</li>
+                    <li>BCA must be completed within 45 days of, but not less than 24 hours prior to, participation in
+                        the PRT</li>
+                    <li>BCA retests are not authorized</li>
+                    <li>This calculator is for unofficial planning purposes only</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>Portable Offline Version - Works in any browser without internet</p>
+            <p style="margin-top: 10px;">Disclaimer: This site is not an official U.S. Navy website. This is an unofficial tool for planning purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // State
+        var currentGender = 'male';
+        var storageAvailable = false;
+        var STORAGE_KEY = 'navyBcaPortable';
+        var REMEMBER_KEY = 'navyBcaRemember';
+
+        // Check localStorage availability
+        function checkStorageAvailable() {
+            try {
+                var test = '__storage_test__';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Initialize storage check
+        storageAvailable = checkStorageAvailable();
+
+        // DOM Ready
+        function domReady(fn) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fn);
+            } else {
+                fn();
+            }
+        }
+
+        // Escape HTML for security
+        function escapeHtml(text) {
+            if (!text) return '';
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Notification system
+        function showNotification(message, type, title) {
+            type = type || 'info';
+            title = title || '';
+
+            var notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+
+            var icons = {
+                success: '&#10003;',
+                error: '&#10007;',
+                warning: '&#9888;',
+                info: '&#8505;'
+            };
+
+            var html = '<div class="notification-icon">' + (icons[type] || icons.info) + '</div>';
+            html += '<div class="notification-content">';
+            if (title) {
+                html += '<div class="notification-title">' + escapeHtml(title) + '</div>';
+            }
+            html += '<div class="notification-message">' + escapeHtml(message) + '</div>';
+            html += '</div>';
+            html += '<button type="button" class="notification-close" aria-label="Close notification">&times;</button>';
+
+            notification.innerHTML = html;
+            document.body.appendChild(notification);
+
+            // Close button handler
+            var closeBtn = notification.querySelector('.notification-close');
+            if (closeBtn) {
+                closeBtn.onclick = function() {
+                    notification.remove();
+                };
+            }
+
+            // Auto-remove after 5 seconds
+            setTimeout(function() {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(function() {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // BCA Calculation Functions
+        function getMaleBF(heightWaistDiff, weight) {
+            weight = Math.min(400, Math.max(100, Math.round(weight)));
+            var baseBF = 39.0 - (0.76 * heightWaistDiff) + (0.04 * weight);
+            return Math.max(0, Math.floor(baseBF + 1e-6));
+        }
+
+        function getFemaleBF(heightWaistDiff, weight) {
+            weight = Math.min(400, Math.max(61, Math.round(weight)));
+            var baseBF = 39.0 - (0.62 * heightWaistDiff) + (0.08 * weight);
+            return Math.max(0, Math.floor(baseBF + 1e-6));
+        }
+
+        function getMaxWaist(height) {
+            return Math.floor(height * 0.5499 * 2) / 2;
+        }
+
+        function setGender(gender) {
+            currentGender = gender;
+
+            // Update button states
+            var maleBtn = document.getElementById('btn-male');
+            var femaleBtn = document.getElementById('btn-female');
+
+            if (gender === 'male') {
+                maleBtn.className = 'gender-btn active';
+                maleBtn.setAttribute('aria-pressed', 'true');
+                femaleBtn.className = 'gender-btn';
+                femaleBtn.setAttribute('aria-pressed', 'false');
+            } else {
+                femaleBtn.className = 'gender-btn active';
+                femaleBtn.setAttribute('aria-pressed', 'true');
+                maleBtn.className = 'gender-btn';
+                maleBtn.setAttribute('aria-pressed', 'false');
+            }
+
+            // Update display
+            document.getElementById('maxBfDisplay').textContent = gender === 'male' ? '26%' : '36%';
+            document.getElementById('genderDisplay').textContent = gender === 'male' ? 'males' : 'females';
+
+            saveData();
+        }
+
+        function calculateBCA() {
+            saveData();
+
+            // Get inputs
+            var heightFeet = parseInt(document.getElementById('heightFeet').value, 10);
+            var heightInches = parseFloat(document.getElementById('heightInches').value);
+            var weight = parseFloat(document.getElementById('weight').value);
+            var waist = parseFloat(document.getElementById('waist').value);
+
+            // Validate inputs
+            if (isNaN(heightFeet) || isNaN(heightInches) || isNaN(weight) || isNaN(waist)) {
+                showNotification('Please enter valid values for all fields.', 'error', 'Invalid Input');
+                return;
+            }
+
+            if (weight < 61 || weight > 400) {
+                showNotification('Weight must be between 61 and 400 lbs.', 'error', 'Invalid Weight');
+                return;
+            }
+
+            if (waist < 20 || waist > 60) {
+                showNotification('Waist must be between 20 and 60 inches.', 'error', 'Invalid Waist');
+                return;
+            }
+
+            // Calculate rounded values
+            var rawHeight = (heightFeet * 12) + heightInches;
+            var roundedHeight = Math.ceil(rawHeight * 2) / 2;
+            var roundedWeight = Math.round(weight);
+            var roundedWaist = Math.floor(waist * 2) / 2;
+
+            // Step 1: WHtR
+            var whtr = roundedWaist / roundedHeight;
+            var whtrRounded = Math.floor(whtr * 10000) / 10000;
+            var step1Pass = whtrRounded <= 0.5499;
+
+            // Step 2: Body Fat
+            var heightWaistDiff = Math.round((roundedHeight - roundedWaist) * 2) / 2;
+            var bodyFatPercent = currentGender === 'male'
+                ? getMaleBF(heightWaistDiff, roundedWeight)
+                : getFemaleBF(heightWaistDiff, roundedWeight);
+
+            var maxBF = currentGender === 'male' ? 26 : 36;
+            var step2Pass = bodyFatPercent <= maxBF;
+            var overallPass = step1Pass || step2Pass;
+            var maxWaist = getMaxWaist(roundedHeight);
+
+            // Update UI
+            var resultsSection = document.getElementById('resultsSection');
+            resultsSection.className = 'results-section show';
+
+            // Status banner
+            var statusBanner = document.getElementById('statusBanner');
+            statusBanner.className = 'status-banner ' + (overallPass ? 'pass' : 'fail');
+            document.getElementById('statusIcon').innerHTML = overallPass ? '&#10003;' : '&#10007;';
+            document.getElementById('statusText').textContent = overallPass ? 'WITHIN STANDARDS' : 'NOT WITHIN STANDARDS';
+
+            // Metrics
+            document.getElementById('resultHeight').textContent = roundedHeight + '"';
+            document.getElementById('resultHeightFt').textContent = Math.floor(roundedHeight / 12) + "' " + (roundedHeight % 12) + '"';
+            document.getElementById('resultWeight').textContent = roundedWeight + ' lbs';
+            document.getElementById('resultWaist').textContent = roundedWaist + '"';
+            document.getElementById('resultDiff').textContent = heightWaistDiff + '"';
+
+            // Step 1
+            var step1Card = document.getElementById('step1Card');
+            step1Card.className = 'step-card ' + (step1Pass ? 'pass' : 'fail');
+            var step1StatusEl = document.getElementById('step1Status');
+            step1StatusEl.className = 'step-status ' + (step1Pass ? 'pass' : 'fail');
+            step1StatusEl.textContent = step1Pass ? 'PASS' : 'FAIL';
+            document.getElementById('whtrValue').textContent = whtrRounded.toFixed(4);
+            document.getElementById('maxWaistValue').textContent = maxWaist + '"';
+            document.getElementById('step1Success').style.display = step1Pass ? 'block' : 'none';
+
+            // Step 2
+            var step2Card = document.getElementById('step2Card');
+            step2Card.className = 'step-card ' + (step2Pass ? 'pass' : 'fail') + (step1Pass ? ' dimmed' : '');
+            var step2StatusEl = document.getElementById('step2Status');
+            step2StatusEl.className = 'step-status ' + (step2Pass ? 'pass' : 'fail');
+            step2StatusEl.textContent = step2Pass ? 'PASS' : 'FAIL';
+
+            var bfValue = document.getElementById('bfValue');
+            bfValue.textContent = bodyFatPercent + '%';
+            bfValue.className = 'step-metric-value large ' + (step2Pass ? 'pass' : 'fail');
+
+            document.getElementById('maxBfValue').textContent = maxBF + '%';
+
+            var bfDiffEl = document.getElementById('bfDiff');
+            var diffValue = maxBF - bodyFatPercent;
+            bfDiffEl.textContent = (diffValue >= 0 ? '-' : '+') + Math.abs(diffValue) + '%';
+            bfDiffEl.className = 'step-metric-value large ' + (step2Pass ? 'pass' : 'fail');
+
+            // Warning box
+            document.getElementById('warningBox').style.display = overallPass ? 'none' : 'block';
+
+            // Goal Calculator - show only if failed
+            var goalSection = document.getElementById('goalSection');
+            if (!overallPass) {
+                calculateGoalPaths(roundedHeight, roundedWeight, roundedWaist, currentGender, maxBF, maxWaist);
+                goalSection.style.display = 'block';
+            } else {
+                goalSection.style.display = 'none';
+            }
+
+            // Show export buttons
+            document.getElementById('exportSection').className = 'export-section show';
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function calculateGoalPaths(height, weight, waist, gender, maxBF, maxWaist) {
+            var paths = [];
+            var getBF = gender === 'male' ? getMaleBF : getFemaleBF;
+
+            // Path 1: Reduce waist only (keep current weight)
+            var targetWaist = maxWaist;
+            var waistChange = Math.abs(waist - targetWaist);
+            if (waist > targetWaist) {
+                var timelineWeeks = Math.ceil((waist - targetWaist) / 0.5);
+                paths.push({
+                    title: "Reduce Waist Only",
+                    targetWaist: targetWaist,
+                    targetWeight: weight,
+                    waistChange: waistChange,
+                    weightChange: 0,
+                    totalChange: waistChange,
+                    timeline: timelineWeeks,
+                    note: "Focus on core work and nutrition. Typical waist reduction: 0.5\"/week with consistent effort."
+                });
+            }
+
+            // Path 2: Reduce weight only
+            var targetWeight = weight;
+            var foundWeightPath = false;
+            for (var testWeight = weight - 1; testWeight >= Math.max(100, weight - 100); testWeight--) {
+                var heightWaistDiff = Math.round((height - waist) * 2) / 2;
+                var testBF = getBF(heightWaistDiff, testWeight);
+                if (testBF <= maxBF) {
+                    targetWeight = testWeight;
+                    foundWeightPath = true;
+                    break;
+                }
+            }
+
+            if (foundWeightPath && targetWeight < weight) {
+                var weightChange = weight - targetWeight;
+                var timelineWeeks2 = Math.ceil(weightChange / 2);
+                paths.push({
+                    title: "Reduce Weight Only",
+                    targetWaist: waist,
+                    targetWeight: targetWeight,
+                    waistChange: 0,
+                    weightChange: weightChange,
+                    totalChange: weightChange / 2,
+                    timeline: timelineWeeks2,
+                    note: "Healthy weight loss: 1-2 lbs/week through calorie deficit and exercise."
+                });
+            }
+
+            // Path 3: Balanced approach
+            var waistToTarget = waist > maxWaist ? (waist - maxWaist) / 2 : 0;
+            var balancedWaist = waist - waistToTarget;
+
+            var balancedWeight = weight;
+            for (var testWeight2 = weight - 1; testWeight2 >= Math.max(100, weight - 50); testWeight2--) {
+                var heightWaistDiff2 = Math.round((height - balancedWaist) * 2) / 2;
+                var testBF2 = getBF(heightWaistDiff2, testWeight2);
+                var testWhtr = balancedWaist / height;
+                if (testBF2 <= maxBF && Math.floor(testWhtr * 10000) / 10000 <= 0.5499) {
+                    balancedWeight = testWeight2;
+                    break;
+                }
+            }
+
+            if (balancedWeight < weight || waistToTarget > 0) {
+                var weightChange2 = weight - balancedWeight;
+                var waistChange2 = waist - balancedWaist;
+                var timelineWeeks3 = Math.max(
+                    Math.ceil(weightChange2 / 2),
+                    Math.ceil(waistChange2 / 0.5)
+                );
+                paths.push({
+                    title: "Balanced Approach",
+                    targetWaist: balancedWaist,
+                    targetWeight: balancedWeight,
+                    waistChange: waistChange2,
+                    weightChange: weightChange2,
+                    totalChange: waistChange2 + (weightChange2 / 2),
+                    timeline: timelineWeeks3,
+                    note: "Combined cardio, strength training, and nutrition. Most sustainable long-term approach."
+                });
+            }
+
+            // Determine easiest path
+            if (paths.length > 0) {
+                paths.sort(function(a, b) { return a.totalChange - b.totalChange; });
+                paths[0].easiest = true;
+            }
+
+            renderGoalPaths(paths);
+        }
+
+        function renderGoalPaths(paths) {
+            var container = document.getElementById('goalPaths');
+
+            if (paths.length === 0) {
+                container.innerHTML = '<p style="color: #8fa3bf; text-align: center;">Unable to calculate achievable paths. Please consult with your CFL.</p>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < paths.length; i++) {
+                var path = paths[i];
+                var easiestClass = path.easiest ? ' easiest' : '';
+                var badge = path.easiest ? '<div class="goal-path-badge">&#10003; Easiest Path</div>' : '';
+
+                html += '<div class="goal-path-card' + easiestClass + '">';
+                html += badge;
+                html += '<div class="goal-path-title">' + escapeHtml(path.title) + '</div>';
+                html += '<div class="goal-path-details">';
+
+                if (path.waistChange > 0) {
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Target Waist</div>';
+                    html += '<div class="goal-detail-value' + (path.easiest ? ' highlight' : '') + '">' + path.targetWaist.toFixed(1) + '"</div>';
+                    html += '</div>';
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Waist to Lose</div>';
+                    html += '<div class="goal-detail-value' + (path.easiest ? ' highlight' : '') + '">' + path.waistChange.toFixed(1) + '"</div>';
+                    html += '</div>';
+                } else {
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Keep Waist</div>';
+                    html += '<div class="goal-detail-value">' + path.targetWaist.toFixed(1) + '"</div>';
+                    html += '</div>';
+                }
+
+                if (path.weightChange > 0) {
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Target Weight</div>';
+                    html += '<div class="goal-detail-value' + (path.easiest ? ' highlight' : '') + '">' + Math.round(path.targetWeight) + ' lbs</div>';
+                    html += '</div>';
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Weight to Lose</div>';
+                    html += '<div class="goal-detail-value' + (path.easiest ? ' highlight' : '') + '">' + Math.round(path.weightChange) + ' lbs</div>';
+                    html += '</div>';
+                } else {
+                    html += '<div class="goal-detail">';
+                    html += '<div class="goal-detail-label">Keep Weight</div>';
+                    html += '<div class="goal-detail-value">' + Math.round(path.targetWeight) + ' lbs</div>';
+                    html += '</div>';
+                }
+
+                html += '<div class="goal-detail">';
+                html += '<div class="goal-detail-label">Est. Timeline</div>';
+                html += '<div class="goal-detail-value' + (path.easiest ? ' highlight' : '') + '">' + path.timeline + ' weeks</div>';
+                html += '</div>';
+
+                html += '</div>';
+                html += '<div class="goal-path-note">' + escapeHtml(path.note) + '</div>';
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        function resetCalculator() {
+            clearSavedData();
+
+            document.getElementById('resultsSection').className = 'results-section';
+            setGender('male');
+            document.getElementById('heightFeet').value = '5';
+            document.getElementById('heightInches').value = '10';
+            document.getElementById('weight').value = '180';
+            document.getElementById('waist').value = '34';
+            document.getElementById('exportSection').className = 'export-section';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shouldRemember() {
+            var toggle = document.getElementById('rememberBcaToggle');
+            return toggle && toggle.checked;
+        }
+
+        function saveData() {
+            if (!storageAvailable || !shouldRemember()) {
+                return;
+            }
+
+            try {
+                var data = {
+                    gender: currentGender,
+                    heightFeet: document.getElementById('heightFeet').value,
+                    heightInches: document.getElementById('heightInches').value,
+                    weight: document.getElementById('weight').value,
+                    waist: document.getElementById('waist').value,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                localStorage.setItem(REMEMBER_KEY, 'true');
+            } catch (e) {
+                // Storage failed, silently ignore
+            }
+        }
+
+        function loadSavedData() {
+            if (!storageAvailable) {
+                return;
+            }
+
+            try {
+                var remember = localStorage.getItem(REMEMBER_KEY) === 'true';
+                var toggle = document.getElementById('rememberBcaToggle');
+                if (toggle) {
+                    toggle.checked = remember;
+                }
+
+                if (!remember) {
+                    return;
+                }
+
+                var savedData = localStorage.getItem(STORAGE_KEY);
+                if (savedData) {
+                    var data = JSON.parse(savedData);
+
+                    if (data.gender && (data.gender === 'male' || data.gender === 'female')) {
+                        setGender(data.gender);
+                    }
+
+                    if (data.heightFeet) {
+                        document.getElementById('heightFeet').value = data.heightFeet;
+                    }
+
+                    if (data.heightInches) {
+                        document.getElementById('heightInches').value = data.heightInches;
+                    }
+
+                    if (data.weight && !isNaN(data.weight) && data.weight >= 61 && data.weight <= 400) {
+                        document.getElementById('weight').value = data.weight;
+                    }
+
+                    if (data.waist && !isNaN(data.waist) && data.waist >= 20 && data.waist <= 60) {
+                        document.getElementById('waist').value = data.waist;
+                    }
+                }
+            } catch (e) {
+                // Failed to load, clear corrupted data
+                clearSavedData();
+            }
+        }
+
+        function clearSavedData() {
+            if (!storageAvailable) {
+                return;
+            }
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(REMEMBER_KEY);
+            } catch (e) {
+                // Ignore errors
+            }
+        }
+
+        // Export Functions
+        function exportToCSV() {
+            var resultsSection = document.getElementById('resultsSection');
+            if (!resultsSection.classList.contains('show')) {
+                showNotification('Please calculate BCA first before exporting.', 'warning', 'No Results');
+                return;
+            }
+
+            var status = document.getElementById('statusText').textContent;
+            var height = document.getElementById('resultHeight').textContent;
+            var weight = document.getElementById('resultWeight').textContent;
+            var waist = document.getElementById('resultWaist').textContent;
+            var whtr = document.getElementById('whtrValue').textContent;
+            var bodyFat = document.getElementById('bfValue').textContent;
+            var maxBF = document.getElementById('maxBfValue').textContent;
+            var step1Status = document.getElementById('step1Status').textContent;
+            var step2Status = document.getElementById('step2Status').textContent;
+
+            var today = new Date().toISOString().split('T')[0];
+            var csv = 'Navy BCA Results\n';
+            csv += 'Date,' + today + '\n';
+            csv += 'Gender,' + currentGender + '\n';
+            csv += '\n';
+            csv += 'Measurements\n';
+            csv += 'Height,' + height + '\n';
+            csv += 'Weight,' + weight + '\n';
+            csv += 'Waist,' + waist + '\n';
+            csv += '\n';
+            csv += 'Results\n';
+            csv += 'Overall Status,' + status + '\n';
+            csv += 'Step 1 (WHtR),' + step1Status + '\n';
+            csv += 'WHtR Value,' + whtr + '\n';
+            csv += 'Step 2 (Body Fat),' + step2Status + '\n';
+            csv += 'Body Fat %,' + bodyFat + '\n';
+            csv += 'Max Allowed BF%,' + maxBF + '\n';
+
+            // Download CSV
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'Navy-BCA-Results-' + today + '.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('CSV file downloaded successfully!', 'success', 'Export Complete');
+        }
+
+        function exportToPDF() {
+            var resultsSection = document.getElementById('resultsSection');
+            if (!resultsSection.classList.contains('show')) {
+                showNotification('Please calculate BCA first before printing.', 'warning', 'No Results');
+                return;
+            }
+
+            window.print();
+        }
+
+        // Initialize
+        domReady(function() {
+            // Load saved data
+            loadSavedData();
+
+            // Gender button handlers
+            document.getElementById('btn-male').addEventListener('click', function() {
+                setGender('male');
+            });
+
+            document.getElementById('btn-female').addEventListener('click', function() {
+                setGender('female');
+            });
+
+            // Calculate button
+            document.getElementById('calculateBtn').addEventListener('click', calculateBCA);
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', resetCalculator);
+
+            // Export buttons
+            document.getElementById('exportCsvBtn').addEventListener('click', exportToCSV);
+            document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
+
+            // Remember toggle
+            var rememberToggle = document.getElementById('rememberBcaToggle');
+            if (rememberToggle) {
+                rememberToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        saveData();
+                    } else {
+                        clearSavedData();
+                    }
+                });
+            }
+
+            // Save on input change
+            var inputIds = ['heightFeet', 'heightInches', 'weight', 'waist'];
+            for (var i = 0; i < inputIds.length; i++) {
+                var el = document.getElementById(inputIds[i]);
+                if (el) {
+                    el.addEventListener('change', saveData);
+                    el.addEventListener('input', saveData);
+                }
+            }
+
+            // Enter key on inputs triggers calculate
+            document.getElementById('weight').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateBCA();
+                }
+            });
+
+            document.getElementById('waist').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateBCA();
+                }
+            });
+        });
+
+    })();
+    </script>
+</body>
+</html>
