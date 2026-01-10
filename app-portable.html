@@ -1335,7 +1335,9 @@
             var closeBtn = notification.querySelector('.notification-close');
             if (closeBtn) {
                 closeBtn.onclick = function() {
-                    notification.remove();
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
                 };
             }
 
@@ -1344,7 +1346,7 @@
                 notification.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(function() {
                     if (notification.parentNode) {
-                        notification.remove();
+                        notification.parentNode.removeChild(notification);
                     }
                 }, 300);
             }, 5000);
@@ -1757,10 +1759,18 @@
             }
         }
 
+        // Helper to check if element has a class (IE/old Safari compatible)
+        function hasClass(el, className) {
+            if (el.classList) {
+                return el.classList.contains(className);
+            }
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+        }
+
         // Export Functions
         function exportToCSV() {
             var resultsSection = document.getElementById('resultsSection');
-            if (!resultsSection.classList.contains('show')) {
+            if (!hasClass(resultsSection, 'show')) {
                 showNotification('Please calculate BCA first before exporting.', 'warning', 'No Results');
                 return;
             }
@@ -1793,23 +1803,40 @@
             csv += 'Body Fat %,' + bodyFat + '\n';
             csv += 'Max Allowed BF%,' + maxBF + '\n';
 
-            // Download CSV
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
+            // Download CSV - use data URI as fallback for iOS Safari file:// compatibility
             var a = document.createElement('a');
-            a.href = url;
-            a.download = 'Navy-BCA-Results-' + today + '.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showNotification('CSV file downloaded successfully!', 'success', 'Export Complete');
+            try {
+                // Try blob URL first (works on most browsers)
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                a.href = url;
+                a.download = 'Navy-BCA-Results-' + today + '.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showNotification('CSV file downloaded successfully!', 'success', 'Export Complete');
+            } catch (err) {
+                // Fallback to data URI for iOS Safari
+                try {
+                    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+                    a.download = 'Navy-BCA-Results-' + today + '.csv';
+                    a.target = '_blank';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    showNotification('CSV file ready! Check your downloads.', 'success', 'Export Complete');
+                } catch (err2) {
+                    // Last resort - show the data in a prompt
+                    showNotification('Copy the CSV data from the prompt that appears.', 'info', 'Manual Export');
+                    prompt('Copy this CSV data:', csv);
+                }
+            }
         }
 
         function exportToPDF() {
             var resultsSection = document.getElementById('resultsSection');
-            if (!resultsSection.classList.contains('show')) {
+            if (!hasClass(resultsSection, 'show')) {
                 showNotification('Please calculate BCA first before printing.', 'warning', 'No Results');
                 return;
             }
@@ -1863,15 +1890,15 @@
                 }
             }
 
-            // Enter key on inputs triggers calculate
+            // Enter key on inputs triggers calculate (keyCode 13 for old browser compat)
             document.getElementById('weight').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
                     calculateBCA();
                 }
             });
 
             document.getElementById('waist').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
                     calculateBCA();
                 }
             });
