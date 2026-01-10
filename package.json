@@ -1,0 +1,36 @@
+{
+  "name": "navy-bca-calculator",
+  "version": "1.0.0",
+  "description": "Navy Body Composition Assessment Calculator and PT Tools",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "test:unit": "jest --testPathPattern=tests/unit",
+    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test:unit && npm run test:integration"
+  },
+  "keywords": [
+    "navy",
+    "bca",
+    "body-composition",
+    "prt",
+    "fitness",
+    "calculator"
+  ],
+  "author": "Navy BCA Tools",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@testing-library/jest-dom": "^6.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthonyscry/NavyBCA"
+  }
+}
