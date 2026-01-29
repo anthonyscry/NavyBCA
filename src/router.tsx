@@ -5,6 +5,8 @@ import BCACalculator from './pages/BCACalculator'
 import PDFGenerator from './pages/PDFGenerator'
 import WorkoutGenerator from './pages/WorkoutGenerator'
 import ExerciseLibrary from './pages/ExerciseLibrary'
+import WatchbillGenerator from './pages/WatchbillGenerator'
+import PRTPrep from './pages/PRTPrep'
 import Placeholder from './pages/Placeholder'
 import ComponentDemo from './pages/ComponentDemo'
 
@@ -19,8 +21,8 @@ const routes: RouteObject[] = [
       { path: 'pdf', element: <PDFGenerator /> },
       { path: 'workout', element: <WorkoutGenerator /> },
       { path: 'exercises', element: <ExerciseLibrary /> },
-      { path: 'watchbill', element: <Placeholder /> },
-      { path: 'prt-prep', element: <Placeholder /> },
+      { path: 'watchbill', element: <WatchbillGenerator /> },
+      { path: 'prt-prep', element: <PRTPrep /> },
 
       /* ── Dev / Demo ── */
       { path: 'demo', element: <ComponentDemo /> },
