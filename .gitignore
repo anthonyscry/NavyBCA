@@ -1,1 +1,11 @@
 .planning/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-offline/
+
+# Environment
+.env*.local

@@ -1,36 +1,29 @@
 {
-  "name": "navy-bca-calculator",
+  "name": "navy-bca",
+  "private": true,
   "version": "1.0.0",
-  "description": "Navy Body Composition Assessment Calculator and PT Tools",
-  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:verbose": "jest --verbose",
-    "test:unit": "jest --testPathPattern=tests/unit",
-    "test:integration": "jest --testPathPattern=tests/integration",
-    "test:e2e": "playwright test",
-    "test:all": "npm run test:unit && npm run test:integration"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:offline": "tsc -b && vite build --mode offline",
+    "preview": "vite preview",
+    "preview:offline": "vite preview --outDir dist-offline"
   },
-  "keywords": [
-    "navy",
-    "bca",
-    "body-composition",
-    "prt",
-    "fitness",
-    "calculator"
-  ],
-  "author": "Navy BCA Tools",
-  "license": "MIT",
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.0.0"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
-    "@testing-library/jest-dom": "^6.1.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/anthonyscry/NavyBCA"
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^25.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "~5.7.0",
+    "vite": "^7.0.0",
+    "vite-plugin-singlefile": "^2.3.0"
   }
 }
