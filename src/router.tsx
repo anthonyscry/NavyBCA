@@ -3,6 +3,7 @@ import type { RouteObject } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import Placeholder from './pages/Placeholder'
+import ComponentDemo from './pages/ComponentDemo'
 
 const routes: RouteObject[] = [
   {
@@ -17,6 +18,9 @@ const routes: RouteObject[] = [
       { path: 'exercises', element: <Placeholder /> },
       { path: 'watchbill', element: <Placeholder /> },
       { path: 'prt-prep', element: <Placeholder /> },
+
+      /* ── Dev / Demo ── */
+      { path: 'demo', element: <ComponentDemo /> },
 
       /* ── Static Pages (placeholder until implemented) ── */
       { path: 'about', element: <Placeholder /> },
