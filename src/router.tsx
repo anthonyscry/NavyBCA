@@ -1,7 +1,7 @@
 import { createBrowserRouter, createHashRouter } from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
-import Home from './pages/Home'
+import BCACalculator from './pages/BCACalculator'
 import Placeholder from './pages/Placeholder'
 import ComponentDemo from './pages/ComponentDemo'
 
@@ -10,7 +10,7 @@ const routes: RouteObject[] = [
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <BCACalculator /> },
 
       /* ── Tool Routes (placeholder until implemented) ── */
       { path: 'pdf', element: <Placeholder /> },
