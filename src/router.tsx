@@ -4,6 +4,7 @@ import RootLayout from './layouts/RootLayout'
 import BCACalculator from './pages/BCACalculator'
 import PDFGenerator from './pages/PDFGenerator'
 import WorkoutGenerator from './pages/WorkoutGenerator'
+import ExerciseLibrary from './pages/ExerciseLibrary'
 import Placeholder from './pages/Placeholder'
 import ComponentDemo from './pages/ComponentDemo'
 
@@ -17,7 +18,7 @@ const routes: RouteObject[] = [
       /* ── Tool Routes ── */
       { path: 'pdf', element: <PDFGenerator /> },
       { path: 'workout', element: <WorkoutGenerator /> },
-      { path: 'exercises', element: <Placeholder /> },
+      { path: 'exercises', element: <ExerciseLibrary /> },
       { path: 'watchbill', element: <Placeholder /> },
       { path: 'prt-prep', element: <Placeholder /> },
 
