@@ -7,7 +7,10 @@ import WorkoutGenerator from './pages/WorkoutGenerator'
 import ExerciseLibrary from './pages/ExerciseLibrary'
 import WatchbillGenerator from './pages/WatchbillGenerator'
 import PRTPrep from './pages/PRTPrep'
-import Placeholder from './pages/Placeholder'
+import About from './pages/About'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
+import References from './pages/References'
 import ComponentDemo from './pages/ComponentDemo'
 
 const routes: RouteObject[] = [
@@ -27,11 +30,11 @@ const routes: RouteObject[] = [
       /* ── Dev / Demo ── */
       { path: 'demo', element: <ComponentDemo /> },
 
-      /* ── Static Pages (placeholder until implemented) ── */
-      { path: 'about', element: <Placeholder /> },
-      { path: 'privacy', element: <Placeholder /> },
-      { path: 'terms', element: <Placeholder /> },
-      { path: 'references', element: <Placeholder /> },
+      /* ── Static Pages ── */
+      { path: 'about', element: <About /> },
+      { path: 'privacy', element: <Privacy /> },
+      { path: 'terms', element: <Terms /> },
+      { path: 'references', element: <References /> },
     ],
   },
 ]
